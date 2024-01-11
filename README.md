@@ -1,6 +1,6 @@
 # dogadjaj_ba
 
-A new Flutter project.
+Dogadjaj_ba is mobile app for online ticket purchase and reservation
 
 ## Getting Started
 
