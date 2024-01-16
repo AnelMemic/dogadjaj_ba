@@ -3155,11 +3155,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Git\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj",
       "projectName": "dogadjaj_ba.Services",
-      "projectPath": "C:\\Users\\User\\Desktop\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj",
+      "projectPath": "C:\\Users\\User\\Desktop\\Git\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\obj\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Git\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3176,8 +3176,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\User\\Desktop\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj": {
-              "projectPath": "C:\\Users\\User\\Desktop\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj"
+            "C:\\Users\\User\\Desktop\\Git\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\Git\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj"
             }
           }
         }

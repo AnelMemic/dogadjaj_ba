@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Git\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj",
       "projectName": "dogadjaj_ba.Model",
-      "projectPath": "C:\\Users\\User\\Desktop\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj",
+      "projectPath": "C:\\Users\\User\\Desktop\\Git\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\obj\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Git\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
