@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\dogadjaj_ba.props" />
+</Project>

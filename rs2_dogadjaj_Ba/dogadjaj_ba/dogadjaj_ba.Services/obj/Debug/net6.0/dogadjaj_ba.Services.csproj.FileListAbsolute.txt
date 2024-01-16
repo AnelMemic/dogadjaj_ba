@@ -1,0 +1,17 @@
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\bin\Debug\net6.0\dogadjaj_ba.Services.deps.json
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\bin\Debug\net6.0\dogadjaj_ba.Services.runtimeconfig.json
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\bin\Debug\net6.0\dogadjaj_ba.Services.dll
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\bin\Debug\net6.0\dogadjaj_ba.Services.pdb
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\bin\Debug\net6.0\dogadjaj_ba.Model.dll
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\bin\Debug\net6.0\dogadjaj_ba.Model.pdb
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.AssemblyInfo.cs
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.csproj.CopyComplete
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.dll
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\refint\dogadjaj_ba.Services.dll
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.pdb
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\dogadjaj_ba.Services.genruntimeconfig.cache
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Services\obj\Debug\net6.0\ref\dogadjaj_ba.Services.dll

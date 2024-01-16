@@ -1,0 +1,11 @@
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\bin\Debug\net6.0\dogadjaj_ba.Model.deps.json
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\bin\Debug\net6.0\dogadjaj_ba.Model.dll
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\bin\Debug\net6.0\dogadjaj_ba.Model.pdb
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.AssemblyInfo.cs
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.dll
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\refint\dogadjaj_ba.Model.dll
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.pdb
+C:\Users\User\Desktop\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\ref\dogadjaj_ba.Model.dll
