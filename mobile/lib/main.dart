@@ -1,24 +1,44 @@
+import 'dart:io';
+import 'package:dogadjaj_ba/helpers/my_overrides.dart';
+import 'package:dogadjaj_ba/providers/ticket_provider.dart';
+import 'package:dogadjaj_ba/providers/user_provider.dart';
+import 'package:dogadjaj_ba/route/rutes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
-import 'app.dart';
+void main() {
+  HttpOverrides.global = MyHttpOverrides();
+ 
 
-Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
   ]);
 
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-      overlays: [SystemUiOverlay.bottom]);
+  ///Please update theme as per your need if required.
+ 
+  runApp(MyApp());
+}
 
-  final container = ProviderContainer(overrides: []);
-
-  runApp(UncontrolledProviderScope(
-    container: container,
-    child: App(),
-  ));
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return 
+    MultiProvider(
+      providers: [
+         ChangeNotifierProvider(create: (_) => UserProvider()),
+         ChangeNotifierProvider(create: (_) => TicketProvider()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData.light(),
+        themeMode: ThemeMode.light,
+        darkTheme: ThemeData.light(),
+        title: 'DogadjajBa',
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.startScreen,
+        routes: AppRoutes.routes,
+      ),
+    );
+  }
 }

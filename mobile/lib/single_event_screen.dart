@@ -59,7 +59,7 @@ class _SingleEventScreenState extends ConsumerState<SingleEventScreen> {
                   content: Text('Ulaznica uspjesno dodana u kosaricu'),
                   duration: Duration(seconds: 3),
                 ));
-                ref.watch(persistentControllerProvider).jumpToTab(1);
+                // ref.watch(persistentControllerProvider).jumpToTab(1);
               },
               child: Center(
                 child: Text(

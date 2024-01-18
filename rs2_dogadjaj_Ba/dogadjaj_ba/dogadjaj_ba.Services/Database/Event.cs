@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dogadjaj_ba.Model.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace dogadjaj_ba.Services.Database;
@@ -18,9 +19,10 @@ public partial class Event
     public int? EventTypeId { get; set; }
 
     public byte[]? EventImage { get; set; }
-    public string?  StateMachine { get; set; }
+    public string? StateMachine { get; set; }
 
-    public virtual EventType? EventType { get; set; }
+    public TypeEvent eventType { get; set; }
+    public SubtypeOfEventType subType { get; set; }
 
     public virtual Lokacija? Lokacija { get; set; }
 

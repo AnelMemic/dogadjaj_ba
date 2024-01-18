@@ -2,12 +2,26 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+const apiUrl = String.fromEnvironment('baseUrl', defaultValue: 'https://localhost:7056/');
+
+
+const stripePublishKey = String.fromEnvironment('stripePublishKey',
+    defaultValue:
+        'pk_test_51OZcIgJakb96Ych39tUxnt3bcnR6doEieDIly9hO3qKZvzXCcX1YWtq6Y1bSX1ZaEbUmfxaTuAGHWr8JN8PCi3dJ00T678putE');
+const stripeSecretKey = String.fromEnvironment('stripeSecretKey',
+    defaultValue:
+        'sk_test_51OZcIgJakb96Ych3a73oti4ToMASIFA3zzypns6XMIEYMqKVZgEAMZUaDf7BdZc7XhE0Gt7m9eJfa29BpnXrKZAX00yFHN558A');
+
 const kPrimaryColor = Color(0xff653090);
 const kEventPrimaryColor = Colors.blue;
 const kBackgroundColor = Color.fromARGB(255, 43, 46, 49);
 const kRedishColor = Color.fromRGBO(254, 52, 86, 1);
 const kDarkGreyColor = Color(0xFF5E5E5E);
 
+Color get primary => const Color(0XFF12B422);
+Color get teal => Colors.teal;
+Color get white => Colors.white;
+Color get black => Colors.black;
 const kDefaultElevation = 2.0;
 
 const kBodyPadding = EdgeInsets.symmetric(horizontal: Sizes.p8);

@@ -15,8 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<IEventiService, EventiService>();
  builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IService<dogadjaj_ba.Model.EventType, BaseSearchObject>, BaseService<dogadjaj_ba.Model.EventType
-    ,dogadjaj_ba.Services.Database.EventType,BaseSearchObject>>();
 builder.Services.AddTransient<BaseState>();
 builder.Services.AddTransient<InitialEventState>();
 builder.Services.AddTransient<ActiveEventState>();
@@ -24,7 +22,6 @@ builder.Services.AddTransient<DraftEventState>();
 builder.Services.AddTransient<IGradService, GradServices>();
 builder.Services.AddTransient<ILokacijaService, LokacijaService>();
 builder.Services.AddTransient<IPaymentService, PaymentService>();
-builder.Services.AddTransient<IPotKategorijaService, PotKategorijaService>();
 builder.Services.AddTransient<IReportDatumServices, ReportDatumServices>();
 builder.Services.AddTransient<IReservationService, ReservationService>();
 builder.Services.AddTransient<ITicketService, TicketServices>();

@@ -38,7 +38,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^2.4.4
+  cached_network_image: ^3.2.3
+  flutter_svg: ^1.1.6
   persistent_bottom_nav_bar: ^5.0.2
+  provider: ^6.0.5
+  loading_indicator: ^3.1.0
+  flutter_stripe: ^9.2.2
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +76,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icons/
+    - assets/icons/basket.svg
+    - assets/icons/chair.svg
+    - assets/icons/payment.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

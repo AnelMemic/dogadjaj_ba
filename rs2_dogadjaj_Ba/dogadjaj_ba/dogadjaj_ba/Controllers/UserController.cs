@@ -4,6 +4,9 @@ using dogadjaj_ba.Model.SearchObjects;
 using dogadjaj_ba.Services;
 using dogadjaj_ba.Services.Database;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Logging;
+using System.Threading;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace dogadjaj_ba.Controllers
@@ -18,8 +21,15 @@ namespace dogadjaj_ba.Controllers
         {
             
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginSearchRequest searchObject)
+        {
+                var response = await (_service as IUserService).Login(searchObject.username, searchObject.password);
+                return Ok(response);
+            //return await (_service as IEventiService).AllowedActions(id);
 
-       
+        }
+
 
         //[HttpGet()]
         //public async Task<IEnumerable<Model.Users>> Get()

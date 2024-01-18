@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dogadjaj_ba/route/app_router.gr.dart';
+import 'package:dogadjaj_ba/route/rutes.dart';
 import 'package:flutter/material.dart';
 import '../buttons/custom_icon_button.dart';
 
@@ -25,14 +26,14 @@ class InitScreen extends StatelessWidget {
               icon: Icons.mail,
               backgroundColor: Colors.white70,
               textColor: Colors.black,
-              onPressed: () => context.navigateTo(const LoginRoute()),
+              onPressed: () => Navigator.pushNamed(context, AppRoutes.loginScreen)
             ),
             CustomIconButton(
                 text: 'Registruj se',
                 icon: Icons.phone_android,
                 backgroundColor: Colors.black,
                 textColor: Colors.grey,
-                onPressed: () => context.navigateTo(const RegisterRoute())),
+                onPressed: () => Navigator.pushNamed(context, AppRoutes.registrationScreen)),
           ],
         ),
       ),

@@ -19,7 +19,6 @@ namespace dogadjaj_ba.Services
             CreateMap<Model.Requests.EventUpdateRequest, Services.Database.Event>().
                 ForAllMembers(opts => opts.Condition((src, dest,srcMember) => srcMember != null));
             CreateMap<Services.Database.Event, Model.Event>();
-            CreateMap<Services.Database.EventType, Model.EventType>();
             CreateMap<Services.Database.Grad, Model.Grad>();
             CreateMap<Model.Requests.GradInsertRequest, Services.Database.Grad>();
             CreateMap<Model.Requests.GradUpdateRequest, Services.Database.Grad>();
@@ -29,9 +28,6 @@ namespace dogadjaj_ba.Services
             CreateMap<Services.Database.Payment, Model.Payment>();
             CreateMap<Model.Requests.PaymentInsertRequest, Services.Database.Payment>();
             CreateMap<Model.Requests.PaymentUpdateRequest, Services.Database.Payment>();
-            CreateMap<Services.Database.PotKategorija, Model.PotKategorija>();
-            CreateMap<Model.Requests.PotKategorijaInsertRequest, Services.Database.PotKategorija>();
-            CreateMap<Model.Requests.PotKategorijaUpdateRequest, Services.Database.PotKategorija>();
             CreateMap<Services.Database.ReportDatum, Model.ReportDatum>();
             CreateMap<Model.Requests.ReportDatumInsertRequest, Services.Database.ReportDatum>();
             CreateMap<Model.Requests.ReportDatumUpdateRequest, Services.Database.ReportDatum>();

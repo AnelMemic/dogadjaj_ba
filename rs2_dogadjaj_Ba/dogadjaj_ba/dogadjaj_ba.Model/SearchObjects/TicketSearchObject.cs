@@ -8,5 +8,9 @@ namespace dogadjaj_ba.Model.SearchObjects
 {
     public class TicketSearchObject : BaseSearchObject
     {
+
+        public int? UserId { get; set; }
+
+        public int? EventId { get; set; }
     }
 }

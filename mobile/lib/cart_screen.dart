@@ -1,225 +1,245 @@
+import 'package:dogadjaj_ba/cart_payment.dart';
+import 'package:dogadjaj_ba/cart_screen.dart';
 import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/event_info_card.dart';
-import 'package:dogadjaj_ba/single_event_screen.dart';
+import 'package:dogadjaj_ba/helpers/app_decoration.dart';
+import 'package:dogadjaj_ba/helpers/error_dialog.dart';
+import 'package:dogadjaj_ba/helpers/theme_helper.dart';
+import 'package:dogadjaj_ba/models/SearchObjects/ticket_search_object.dart';
+import 'package:dogadjaj_ba/models/ticket.dart';
+import 'package:dogadjaj_ba/providers/ticket_provider.dart';
+import 'package:dogadjaj_ba/providers/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-import 'modals/purchase_confirmation_dialog.dart';
-
-class CartScreen extends ConsumerStatefulWidget {
-  const CartScreen({super.key});
-
+class TicketsScreen extends StatefulWidget {
   @override
-  ConsumerState<CartScreen> createState() => _CartScreenState();
+  _TicketsScreenState createState() => _TicketsScreenState();
 }
 
-class _CartScreenState extends ConsumerState<CartScreen> {
-  TextEditingController cardNameController = TextEditingController();
-  TextEditingController cardNumberController = TextEditingController();
-  String selectedDate = '1';
-  String selectedYear = '2023';
-  TextEditingController cvvController = TextEditingController();
+class _TicketsScreenState extends State<TicketsScreen> {
+  late MediaQueryData mediaQueryData;
 
-  List<String> dateOptions =
-      List.generate(31, (index) => (index + 1).toString());
-  List<String> yearOptions =
-      List.generate(51, (index) => (2023 + index).toString());
+  late UserProvider _loginProvider;
+  late TicketProvider _ticketProvider;
+  int currentPage = 1;
+  int pageSize = 1000000;
+  int? _userId;
+  int? _eventId;
+  bool? _expired = false;
+  int _status = 1;
+  List<Ticket> _userTickets = <Ticket>[];
+  List<Ticket> _tickets = <Ticket>[];
 
   @override
-  void dispose() {
-    cardNameController.dispose();
-    cardNumberController.dispose();
-
-    cvvController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _loginProvider = context.read<UserProvider>();
+    _ticketProvider = context.read<TicketProvider>();
+    loadUser();
+    loadTickets();
   }
 
-  InputBorder customInputBorder() {
-    return const UnderlineInputBorder(
-      borderSide:
-          BorderSide(color: Colors.white), // Change the border color to white
-    );
+  void loadUser() async {
+    var id = _loginProvider.getUserId();
+    _userId = id;
   }
+
+ void loadTickets() async {
+    try {
+      
+      var Response =
+          await _ticketProvider.get();
+      if (mounted) {
+        setState(() {
+          _tickets = Response;
+        });
+      }
+    } on Exception catch (e) {
+      showErrorDialog(context, e.toString().substring(11));
+    }
+  }
+
+  // void loadUserTickets() async {
+  //   try {
+  //     loadUser();
+  //   TicketSearchObject searchObject = TicketSearchObject(
+  //         eventId: _eventId,
+  //         PageNumber: currentPage,
+  //         PageSize: pageSize,
+  //         userId: _userId);
+  //     var Response =
+  //         await _ticketProvider.getPaged(searchObject: searchObject);
+  //     if (mounted) {
+  //       setState(() {
+  //         _userTickets = Response;
+  //       });
+  //     }
+  //   } on Exception catch (e) {
+  //     showErrorDialog(context, e.toString().substring(11));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    var events = ref.watch(eventSenderProvider);
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: events != null
-          ? SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      scale: 3,
-                    ),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: events.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return EventInfoCard(event: events[index]);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 50.0, right: 50, bottom: 50),
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          style: const TextStyle(color: Colors.grey),
-                          controller: cardNameController,
-                          decoration: InputDecoration(
-                              enabledBorder: customInputBorder(),
-                              focusedBorder: customInputBorder(),
-                              label: const Text('Card Name'),
-                              hintText: 'Enter card name',
-                              hintStyle: const TextStyle(color: Colors.grey),
-                              labelStyle: const TextStyle(color: Colors.white)),
-                        ),
-                        TextFormField(
-                          style: const TextStyle(color: Colors.white),
-                          controller: cardNumberController,
-                          decoration: InputDecoration(
-                            enabledBorder: customInputBorder(),
-                            focusedBorder: customInputBorder(),
-                            label: const Text('Enter Card Number'),
-                            hintText: '0000-0000-0000-0000',
-                            hintStyle: const TextStyle(color: Colors.grey),
-                            labelStyle: const TextStyle(color: Colors.white),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
-                        gapH32,
-                        Row(
-                          children: [
-                            Expanded(
-                              child: DropdownButtonFormField<String>(
-                                dropdownColor: Colors.grey,
-                                isDense: true,
-                                items: dateOptions.map((date) {
-                                  return DropdownMenuItem<String>(
-                                    value: date,
-                                    child: Text(date,
-                                        style: const TextStyle(
-                                            color: Colors.white)),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedDate = value!;
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(0.0),
-                                  label: const Text('Date'),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  labelStyle:
-                                      const TextStyle(color: Colors.white),
-                                  enabledBorder: customInputBorder(),
-                                  focusedBorder: customInputBorder(),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            Expanded(
-                              child: DropdownButtonFormField<String>(
-                                isDense: true,
-                                items: yearOptions.map((year) {
-                                  return DropdownMenuItem<String>(
-                                    value: year,
-                                    child: Text(year,
-                                        style: const TextStyle(
-                                            color: Colors.white)),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedYear = value!;
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(0.0),
-                                  label: const Text('Year'),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  labelStyle:
-                                      const TextStyle(color: Colors.white),
-                                  enabledBorder: customInputBorder(),
-                                  focusedBorder: customInputBorder(),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            Expanded(
-                              child: TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                maxLines: 1,
-                                controller: cvvController,
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(0.0),
-                                  label: const Text('CVV'),
-                                  hintText: 'Enter CVV',
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                  labelStyle:
-                                      const TextStyle(color: Colors.white),
-                                  enabledBorder: customInputBorder(),
-                                  focusedBorder: customInputBorder(),
-                                ),
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    width: double.infinity,
-                    color: Colors.redAccent,
-                    child: InkWell(
-                      onTap: () {
-                        showCustomDialog(context);
-                      },
-                      child: Center(
-                        child: Text(
-                          'PLATI'.toUpperCase(),
-                          style: const TextStyle(fontSize: 28),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )
-          : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(35.0),
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      scale: 2,
-                    ),
-                  ),
-                  const Text(
-                    'You shopping cart is empty!',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ],
+    mediaQueryData = MediaQuery.of(context);
+
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
+        body: Column(
+          children: [
+           
+            Container(
+              height: 1.0,
+              color: const Color.fromARGB(255, 214, 214, 214),
+            ),
+            SizedBox(height: 5,),
+            Row(
+              children: [
+                _buildStatusButton(1, "Aktivna"),
+                _buildStatusButton(2, "Istekle"),
+              ],
+            ),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 5,
+                  right: 5,
+                ),
+                child: Column(
+                  children: [_buildUserPackageInfo(context)],
+                ),
               ),
             ),
+            Spacer(),
+            Container(
+              width: double.maxFinite,
+              padding: EdgeInsets.all(16),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: teal),
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return TicketPaymentForm();
+                    },
+                  );
+                },
+                child: Text(
+                  'Uplati članarinu',
+                  style: TextStyle(color: white),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserPackageInfo(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
+      decoration: AppDecoration.fillBlack.copyWith(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: _tickets.length,
+        itemBuilder: (context, index) {
+          // return Container(
+          //   padding: EdgeInsets.all(5),
+          //   child: Row(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Expanded(
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             if (_tickets[index].package != null) ...[
+          //               Text(
+          //                 'Paket: ${_userPackages[index].package!.name} ',
+          //                 style: const TextStyle(
+          //                   fontWeight: FontWeight.bold,
+          //                   color: Colors.white, // White text color
+          //                 ),
+          //               ),
+          //             ],
+          //             _buildUserPaackageData('Datum aktivacije:',
+          //                 '${_formatDate(_tickets[index]!.cijena!)}'),
+          //             _buildUserPaackageData('Datum isteka:',
+          //                 '${_formatDate(_userPackages[index].expirationDate)}'),
+          //             Divider()
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // );
+        },
+      ),
+    );
+  }
+
+  Widget _buildUserPaackageData(String label, String value) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            Text(
+              value,
+              style: TextStyle(fontSize: 14),
+            ),
+          ],
+        ),
+        SizedBox(height: 2),
+      ],
+    );
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) {
+      return '';
+    }
+    return DateFormat('dd.MM.yyyy').format(date);
+  }
+
+  Expanded _buildStatusButton(int status, String label) {
+    return Expanded(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: _status == status ? Colors.teal : Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero,
+          ),
+          padding: EdgeInsets.all(2),
+          minimumSize: Size(2, 40),
+          elevation: 0,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        onPressed: () {
+          setState(() {
+            _status = status;
+            _expired = status == 2;
+            loadTickets();
+          });
+        },
+        child: Text(
+          label,
+          style: TextStyle(color: white, fontSize: 12),
+        ),
+      ),
     );
   }
 }

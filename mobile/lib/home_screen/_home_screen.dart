@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Spacer(
-            flex: 2,
+            flex: 1,
           ),
           const LogoWidget(),
           gapH32,
@@ -37,7 +37,6 @@ class HomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
-                  gapH24,
                   Expanded(
                       child: EventTypesList(
                     eventTypes: eventTypes,
@@ -65,7 +64,6 @@ class HomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
-                  gapH20,
                   Row(
                     children: [
                       Image.asset(

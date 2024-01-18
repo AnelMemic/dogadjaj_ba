@@ -17,7 +17,6 @@ public partial class Ib190074DogadjaBaContext : DbContext
 
     public virtual DbSet<Event> Events { get; set; }
 
-    public virtual DbSet<EventType> EventTypes { get; set; }
 
     public virtual DbSet<Grad> Grads { get; set; }
 
@@ -27,7 +26,6 @@ public partial class Ib190074DogadjaBaContext : DbContext
 
    // public virtual DbSet<Payment1> Payments1 { get; set; }
 
-    public virtual DbSet<PotKategorija> PotKategorijas { get; set; }
 
     public virtual DbSet<ReportDatum> ReportData { get; set; }
 
@@ -51,21 +49,14 @@ public partial class Ib190074DogadjaBaContext : DbContext
             entity.Property(e => e.EventName).HasMaxLength(100);
             entity.Property(e => e.Opis).HasMaxLength(100);
 
-            entity.HasOne(d => d.EventType).WithMany(p => p.Events)
-                .HasForeignKey(d => d.EventTypeId)
-                .HasConstraintName("FK__Events__EventTyp__49C3F6B7");
+            
 
             entity.HasOne(d => d.Lokacija).WithMany(p => p.Events)
                 .HasForeignKey(d => d.LokacijaId)
                 .HasConstraintName("FK__Events__Lokacija__48CFD27E");
         });
 
-        modelBuilder.Entity<EventType>(entity =>
-        {
-            entity.HasKey(e => e.EventTypeId).HasName("PK__EventTyp__A9216B3F3F4D37B5");
-
-            entity.Property(e => e.TypeName).HasMaxLength(50);
-        });
+       
 
         modelBuilder.Entity<Grad>(entity =>
         {
@@ -118,18 +109,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
         //        .HasConstraintName("FK__Payments__UserId__4CA06362");
         //});
 
-        modelBuilder.Entity<PotKategorija>(entity =>
-        {
-            entity.HasKey(e => e.PotkategorijaId).HasName("PK__PotKateg__8A36653A79399DEA");
-
-            entity.ToTable("PotKategorija");
-
-            entity.Property(e => e.ImeKategorija).HasMaxLength(50);
-
-            entity.HasOne(d => d.EventType).WithMany(p => p.PotKategorijas)
-                .HasForeignKey(d => d.EventTypeId)
-                .HasConstraintName("FK__PotKatego__Event__5812160E");
-        });
+       
 
         modelBuilder.Entity<ReportDatum>(entity =>
         {

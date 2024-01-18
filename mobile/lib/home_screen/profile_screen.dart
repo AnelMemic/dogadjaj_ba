@@ -1,5 +1,6 @@
 import 'package:dogadjaj_ba/constants.dart';
 import 'package:dogadjaj_ba/home_screen/home_screen.dart';
+import 'package:dogadjaj_ba/route/rutes.dart';
 import 'package:dogadjaj_ba/single_event_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +36,7 @@ class ProfileScreen extends ConsumerWidget {
                       title: 'Početna',
                       icon: Icons.home,
                       onTap: () =>
-                          ref.watch(persistentControllerProvider).jumpToTab(0),
+                         Navigator.pushNamed(context, AppRoutes.homePage),
                     ),
                     const ProfileOptionCard(
                         title: 'Moje ulaznice', icon: Icons.widgets),
@@ -45,9 +46,7 @@ class ProfileScreen extends ConsumerWidget {
                       title: 'Korpa',
                       icon: Icons.shopping_cart,
                       onTap: () {
-                        ref.watch(eventSenderProvider);
-
-                        ref.watch(persistentControllerProvider).jumpToTab(1);
+                        Navigator.pushNamed(context, AppRoutes.payment);
                       },
                     ),
                   ],
