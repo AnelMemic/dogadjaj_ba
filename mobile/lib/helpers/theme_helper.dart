@@ -159,7 +159,7 @@ class PrimaryColors {
   // Black
   Color get black900 => Color(0XFF060807);
   Color get black90001 => Color(0XFF000000);
-  Color get black200 => Color.fromARGB(221, 3, 5, 19);
+  Color get black200 => Color.fromARGB(221, 0, 0, 0);
 
   // BlueCc
   Color get blue600Cc => Color(0XCC2299DD);

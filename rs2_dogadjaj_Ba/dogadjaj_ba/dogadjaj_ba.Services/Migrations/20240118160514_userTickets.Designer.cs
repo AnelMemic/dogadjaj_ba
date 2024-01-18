@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dogadjaj_ba.Services.Database;
 
@@ -11,9 +12,11 @@ using dogadjaj_ba.Services.Database;
 namespace dogadjaj_ba.Services.Migrations
 {
     [DbContext(typeof(Ib190074DogadjaBaContext))]
-    partial class Ib190074DogadjaBaContextModelSnapshot : ModelSnapshot
+    [Migration("20240118160514_userTickets")]
+    partial class userTickets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

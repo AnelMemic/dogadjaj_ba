@@ -18,7 +18,6 @@ namespace dogadjaj_ba.Model
 
         public string? Opis { get; set; }
 
-        public int? EventTypeId { get; set; }
         public string? StateMachine { get; set; }
         public byte[]? EventImage { get; set; }
     }

@@ -2,16 +2,11 @@ import 'package:dogadjaj_ba/cart_screen.dart';
 import 'package:dogadjaj_ba/constants.dart';
 import 'package:dogadjaj_ba/helpers/app_decoration.dart';
 import 'package:dogadjaj_ba/helpers/bottom_bar.dart';
-import 'package:dogadjaj_ba/helpers/error_dialog.dart';
 import 'package:dogadjaj_ba/home_screen/_home_screen.dart';
 import 'package:dogadjaj_ba/home_screen/profile_screen.dart';
 import 'package:dogadjaj_ba/lists/events_list.dart';
-import 'package:dogadjaj_ba/models/user.dart';
-import 'package:dogadjaj_ba/providers/user_provider.dart';
 import 'package:dogadjaj_ba/route/rutes.dart';
-import 'package:dogadjaj_ba/utils/authorization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeContainerScreen extends StatefulWidget {
   const HomeContainerScreen({Key? key}) : super(key: key);
@@ -38,7 +33,7 @@ class _HomeContainerScreenState extends State<HomeContainerScreen> {
 
     return SafeArea(
       child: Scaffold(
-         backgroundColor: kBackgroundColor,
+         
         body: Navigator(
           key: navigatorKey,
           initialRoute: AppRoutes.homePage,

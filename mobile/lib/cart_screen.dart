@@ -1,11 +1,9 @@
-import 'package:dogadjaj_ba/cart_payment.dart';
-import 'package:dogadjaj_ba/cart_screen.dart';
 import 'package:dogadjaj_ba/constants.dart';
 import 'package:dogadjaj_ba/helpers/app_decoration.dart';
 import 'package:dogadjaj_ba/helpers/error_dialog.dart';
-import 'package:dogadjaj_ba/helpers/theme_helper.dart';
-import 'package:dogadjaj_ba/models/SearchObjects/ticket_search_object.dart';
+import 'package:dogadjaj_ba/models/event.dart';
 import 'package:dogadjaj_ba/models/ticket.dart';
+import 'package:dogadjaj_ba/providers/event_provider.dart';
 import 'package:dogadjaj_ba/providers/ticket_provider.dart';
 import 'package:dogadjaj_ba/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +20,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
 
   late UserProvider _loginProvider;
   late TicketProvider _ticketProvider;
+  late EventProvider _eventProvider;
   int currentPage = 1;
   int pageSize = 1000000;
   int? _userId;
@@ -30,14 +29,17 @@ class _TicketsScreenState extends State<TicketsScreen> {
   int _status = 1;
   List<Ticket> _userTickets = <Ticket>[];
   List<Ticket> _tickets = <Ticket>[];
+  List<Event> _events = <Event>[];
 
   @override
   void initState() {
     super.initState();
     _loginProvider = context.read<UserProvider>();
     _ticketProvider = context.read<TicketProvider>();
+    _eventProvider = context.read<EventProvider>();
     loadUser();
     loadTickets();
+    loadEvents();
   }
 
   void loadUser() async {
@@ -53,13 +55,32 @@ class _TicketsScreenState extends State<TicketsScreen> {
       if (mounted) {
         setState(() {
           _tickets = Response;
+          print("Tickets");
+          print(_tickets[0].cijena);
         });
       }
     } on Exception catch (e) {
       showErrorDialog(context, e.toString().substring(11));
     }
   }
-
+  
+void loadEvents() async {
+    try {
+      
+      var Response =
+          await _eventProvider.get();
+      if (mounted) {
+        setState(() {
+          _events = Response;
+             print("Events");
+          print(_events);
+        });
+      }
+    } on Exception catch (e) {
+      showErrorDialog(context, e.toString().substring(11));
+    }
+  }
+  
   // void loadUserTickets() async {
   //   try {
   //     loadUser();
@@ -97,8 +118,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
             SizedBox(height: 5,),
             Row(
               children: [
-                _buildStatusButton(1, "Aktivna"),
-                _buildStatusButton(2, "Istekle"),
+              
               ],
             ),
             SingleChildScrollView(
@@ -108,37 +128,37 @@ class _TicketsScreenState extends State<TicketsScreen> {
                   right: 5,
                 ),
                 child: Column(
-                  children: [_buildUserPackageInfo(context)],
+                  children: [_buildEvensInfo(context)],
                 ),
               ),
             ),
             Spacer(),
-            Container(
-              width: double.maxFinite,
-              padding: EdgeInsets.all(16),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: teal),
-                onPressed: () async {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return TicketPaymentForm();
-                    },
-                  );
-                },
-                child: Text(
-                  'Uplati članarinu',
-                  style: TextStyle(color: white),
-                ),
-              ),
-            ),
+            // Container(
+            //   width: double.maxFinite,
+            //   padding: EdgeInsets.all(16),
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(backgroundColor: teal),
+            //     onPressed: () async {
+            //       showDialog(
+            //         context: context,
+            //         builder: (BuildContext context) {
+            //           return TicketPaymentForm();
+            //         },
+            //       );
+            //     },
+            //     child: Text(
+            //       'Uplati članarinu',
+            //       style: TextStyle(color: white),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildUserPackageInfo(BuildContext context) {
+  Widget _buildEvensInfo(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(10),
@@ -148,43 +168,44 @@ class _TicketsScreenState extends State<TicketsScreen> {
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: _tickets.length,
+        itemCount: _events.length,
         itemBuilder: (context, index) {
-          // return Container(
-          //   padding: EdgeInsets.all(5),
-          //   child: Row(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Expanded(
-          //         child: Column(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           children: [
-          //             if (_tickets[index].package != null) ...[
-          //               Text(
-          //                 'Paket: ${_userPackages[index].package!.name} ',
-          //                 style: const TextStyle(
-          //                   fontWeight: FontWeight.bold,
-          //                   color: Colors.white, // White text color
-          //                 ),
-          //               ),
-          //             ],
-          //             _buildUserPaackageData('Datum aktivacije:',
-          //                 '${_formatDate(_tickets[index]!.cijena!)}'),
-          //             _buildUserPaackageData('Datum isteka:',
-          //                 '${_formatDate(_userPackages[index].expirationDate)}'),
-          //             Divider()
-          //           ],
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // );
+          return Container(
+            padding: EdgeInsets.all(5),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // if (_events[index].lokacijaId != null) ...[
+                      //   Text(
+                      //     'Paket: ${_events[index].package!.name} ',
+                      //     style: const TextStyle(
+                      //       fontWeight: FontWeight.bold,
+                      //       color: Colors.white,
+                      //     ),
+                      //   ),
+                      // ],
+                      _buildEventsData("Naziv eventa: ", _events[index].eventName?? "--"),
+                      _buildEventsData("Opis: ", _events[index].opis?? "--"),
+                       _buildEventsData('Datum održavnja: ',
+                          '${_formatDate(_events[index].eventDate)}'),
+                      
+                      Divider()
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
         },
       ),
     );
   }
 
-  Widget _buildUserPaackageData(String label, String value) {
+  Widget _buildEventsData(String label, String value) {
     return Column(
       children: [
         Row(
@@ -195,11 +216,13 @@ class _TicketsScreenState extends State<TicketsScreen> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
+                color: white
               ),
             ),
             Text(
               value,
-              style: TextStyle(fontSize: 14),
+              style: TextStyle(fontSize: 14,color: white),
+              
             ),
           ],
         ),
@@ -215,31 +238,4 @@ class _TicketsScreenState extends State<TicketsScreen> {
     return DateFormat('dd.MM.yyyy').format(date);
   }
 
-  Expanded _buildStatusButton(int status, String label) {
-    return Expanded(
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: _status == status ? Colors.teal : Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-          ),
-          padding: EdgeInsets.all(2),
-          minimumSize: Size(2, 40),
-          elevation: 0,
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        ),
-        onPressed: () {
-          setState(() {
-            _status = status;
-            _expired = status == 2;
-            loadTickets();
-          });
-        },
-        child: Text(
-          label,
-          style: TextStyle(color: white, fontSize: 12),
-        ),
-      ),
-    );
-  }
 }

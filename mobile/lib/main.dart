@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dogadjaj_ba/helpers/my_overrides.dart';
+import 'package:dogadjaj_ba/providers/event_provider.dart';
 import 'package:dogadjaj_ba/providers/ticket_provider.dart';
 import 'package:dogadjaj_ba/providers/user_provider.dart';
 import 'package:dogadjaj_ba/route/rutes.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       providers: [
          ChangeNotifierProvider(create: (_) => UserProvider()),
          ChangeNotifierProvider(create: (_) => TicketProvider()),
+         ChangeNotifierProvider(create: (_) => EventProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData.light(),

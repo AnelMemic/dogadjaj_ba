@@ -13,6 +13,7 @@ namespace dogadjaj_ba.Model.Requests
         public int? UserId { get; set; }
 
         public int? EventId { get; set; }
+        public int Available { get; set; }
 
         public decimal? Cijena { get; set; }
     }

@@ -37,6 +37,9 @@ namespace dogadjaj_ba.Services
             CreateMap<Services.Database.Ticket, Model.Ticket>();
             CreateMap<Model.Requests.TicketInsertRequest, Services.Database.Ticket>();
             CreateMap<Model.Requests.TicketUpdateRequest, Services.Database.Ticket>();
+            CreateMap<Services.Database.UserTicket, Model.UserTicket>();
+            CreateMap<Model.Requests.UserTicketUpdateRequest, Services.Database.UserTicket>();
+            CreateMap<Model.Requests.UserTicketInsertRequest, Services.Database.UserTicket>();
         }
     }
     //public UserProfile()
