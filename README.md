@@ -2,6 +2,12 @@
 
 Dogadjaj_ba is mobile app for online ticket purchase and reservation
 
+Payment: 
+4242 4242 4242 4242
+12/27, cvv: 123
+United States
+88360
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.a
