@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace dogadjaj_ba.Services.Migrations
 {
     /// <inheritdoc />
-    public partial class edit : Migration
+    public partial class _ : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -103,7 +103,6 @@ namespace dogadjaj_ba.Services.Migrations
                     LokacijaId = table.Column<int>(type: "int", nullable: true),
                     EventDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    EventTypeId = table.Column<int>(type: "int", nullable: true),
                     EventImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     StateMachine = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     eventType = table.Column<int>(type: "int", nullable: false),
@@ -153,6 +152,7 @@ namespace dogadjaj_ba.Services.Migrations
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     ticketNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Available = table.Column<int>(type: "int", nullable: false),
                     EventId = table.Column<int>(type: "int", nullable: true),
                     Cijena = table.Column<decimal>(type: "decimal(10,2)", nullable: true)
                 },

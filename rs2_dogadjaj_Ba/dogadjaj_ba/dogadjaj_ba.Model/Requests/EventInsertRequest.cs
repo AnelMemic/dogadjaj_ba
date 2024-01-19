@@ -19,7 +19,7 @@ namespace dogadjaj_ba.Model.Requests
 
         public string? Opis { get; set; }
 
-        public byte[]? EventImage { get; set; }
+        //public byte[]? EventImage { get; set; }
         public string? StateMachine { get; set; }
 
         public TypeEvent eventType { get; set; }

@@ -12,8 +12,8 @@ using dogadjaj_ba.Services.Database;
 namespace dogadjaj_ba.Services.Migrations
 {
     [DbContext(typeof(Ib190074DogadjaBaContext))]
-    [Migration("20240118012936_edit")]
-    partial class edit
+    [Migration("20240119133732_test2")]
+    partial class test2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,9 +43,6 @@ namespace dogadjaj_ba.Services.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("EventTypeId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("LokacijaId")
                         .HasColumnType("int");
@@ -196,6 +193,9 @@ namespace dogadjaj_ba.Services.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketId"));
 
+                    b.Property<int>("Available")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("Cijena")
                         .HasColumnType("decimal(10, 2)");
 
@@ -255,6 +255,29 @@ namespace dogadjaj_ba.Services.Migrations
                         .HasName("PK__Users__1788CC4C6285AE3B");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.UserTicket", b =>
+                {
+                    b.Property<int>("UserTicketID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserTicketID"));
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserTicketID");
+
+                    b.HasIndex("TicketId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTicket");
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Event", b =>
@@ -317,6 +340,25 @@ namespace dogadjaj_ba.Services.Migrations
                         .HasConstraintName("FK__Tickets__UserId__5441852A");
 
                     b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.UserTicket", b =>
+                {
+                    b.HasOne("dogadjaj_ba.Services.Database.Ticket", "Ticket")
+                        .WithMany()
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dogadjaj_ba.Services.Database.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ticket");
 
                     b.Navigation("User");
                 });

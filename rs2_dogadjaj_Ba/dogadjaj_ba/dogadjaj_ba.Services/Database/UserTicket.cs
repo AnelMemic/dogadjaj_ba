@@ -9,8 +9,8 @@ namespace dogadjaj_ba.Services.Database
     public class UserTicket
     {
         public int UserTicketID { get; set; }
-        public int UserID { get; set; }
-        public int TicketID { get; set; }
+        public int UserId { get; set; }
+        public int TicketId { get; set; }
 
         public User User { get; set; }
         public Ticket Ticket { get; set; }

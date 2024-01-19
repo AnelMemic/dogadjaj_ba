@@ -1,5 +1,6 @@
-import 'package:desktop_app/models/event_model.dart';
-import 'package:desktop_app/screens/dodaj_dogadjaj_screen.dart';
+import 'package:dogadjaj_ba/models/event.dart';
+import 'package:dogadjaj_ba/providers/eventprovider.dart';
+import 'package:dogadjaj_ba/screens/dodaj_dogadjaj_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,10 @@ class DogadjajiScreen extends StatefulWidget {
 }
 
 class _DogadjajiScreenState extends State<DogadjajiScreen> {
-  TextEditingController searchController =
-      TextEditingController(text: 'Search');
-  var dropdownValue = mockEventData.first.kategorija;
+  TextEditingController searchController = TextEditingController(text: '');
   final ScrollController controller = ScrollController();
+  final EventProvider eventProvider = EventProvider();
+  String searchEventName = ''; // Default value for eventName filtering
 
   @override
   void dispose() {
@@ -33,109 +34,109 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: TextFormField(
-                  controller: searchController,
-                  decoration: const InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                flex: 2,
-                child: DropdownButtonFormField<String>(
-                  isDense: true,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(0.0),
-                    hintStyle: TextStyle(color: Colors.grey),
-                    labelStyle: TextStyle(color: Colors.white),
-                  ),
-                  focusColor: Colors.transparent,
-                  value: dropdownValue,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownValue = newValue.toString();
-                    });
-                  },
-                  items: mockEventData.map((event) {
-                    return DropdownMenuItem<String>(
-                      value: event.kategorija,
-                      child: Text(event.kategorija),
-                    );
-                  }).toList(),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    _openAddEventScreen(context);
-                  },
-                  child: const Text('Dodaj'),
-                ),
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dogadjaji'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _openAddEventScreen(context);
+            },
+            icon: Icon(Icons.add),
           ),
-          const SizedBox(height: 16.0),
-          Expanded(
-            child: Scrollbar(
-              controller: controller,
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context)
-                    .copyWith(dragDevices: {PointerDeviceKind.mouse}),
-                child: SingleChildScrollView(
-                  controller: controller,
-                  child: DataTable(
-                    border: const TableBorder(
-                      right: BorderSide(),
-                      left: BorderSide(),
-                      top: BorderSide(),
-                      bottom: BorderSide(),
-                      verticalInside: BorderSide(),
-                      horizontalInside: BorderSide(),
+        ],
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('Filter po EventName:'),
+                const SizedBox(width: 8.0),
+                Expanded(
+                  child: TextField(
+                    controller: searchController,
+                    onChanged: (value) {
+                      setState(() {
+                        searchEventName = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Unesi ime eventa...',
                     ),
-                    columns: const [
-                      DataColumn(label: Text('Naziv')),
-                      DataColumn(label: Text('Datum')),
-                      DataColumn(label: Text('Kategorija')),
-                      DataColumn(label: Text('Podkategorija')),
-                      DataColumn(label: Text('Lokacija')),
-                      DataColumn(label: Text('Slika')),
-                    ],
-                    rows: mockEventData
-                        .map(
-                          (event) => DataRow(
-                            cells: [
-                              DataCell(Text(event.naziv)),
-                              DataCell(Text(event.datum)),
-                              DataCell(Text(event.kategorija)),
-                              DataCell(Text(event.podkategorija)),
-                              DataCell(Text(event.lokacija)),
-                              DataCell(Text(event.slika)),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16.0),
+            Expanded(
+              child: Scrollbar(
+                controller: controller,
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context)
+                      .copyWith(dragDevices: {PointerDeviceKind.mouse}),
+                  child: SingleChildScrollView(
+                    controller: controller,
+                    child: FutureBuilder<List<Event>>(
+                      future: eventProvider.get(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else {
+                          List<Event> events = snapshot.data ?? [];
+
+                          return DataTable(
+                            border: const TableBorder(
+                              right: BorderSide(),
+                              left: BorderSide(),
+                              top: BorderSide(),
+                              bottom: BorderSide(),
+                              verticalInside: BorderSide(),
+                              horizontalInside: BorderSide(),
+                            ),
+                            columns: const [
+                              DataColumn(label: Text('Naziv')),
+                              DataColumn(label: Text('Datum')),
+                              DataColumn(label: Text('Kategorija')),
+                              DataColumn(label: Text('Opis')),
                             ],
-                          ),
-                        )
-                        .toList(),
+                            rows: events
+                                .where((event) =>
+                                    searchEventName.isEmpty ||
+                                    event.eventName!.toLowerCase().contains(
+                                        searchEventName.toLowerCase()))
+                                .map(
+                                  (event) => DataRow(
+                                    cells: [
+                                      DataCell(Text(event.eventName ?? 'N/A')),
+                                      DataCell(Text(
+                                          event.eventDate.toString() ?? 'N/A')),
+                                      DataCell(Text(
+                                          EventCategoryMapper.mapCategory(
+                                                  event.eventType!) ??
+                                              'N/A')),
+                                      DataCell(Text(event.opis ?? 'N/A')),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

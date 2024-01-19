@@ -8,7 +8,7 @@ namespace dogadjaj_ba.Model.Requests
 {
     public class UserTicketInsertRequest
     {
-        public int UserID { get; set; }
-        public int TicketID { get; set; }
+        public int UserId { get; set; }
+        public int TicketId { get; set; }
     }
 }

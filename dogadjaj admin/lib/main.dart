@@ -1,11 +1,22 @@
-import 'package:desktop_app/custom_container.dart';
-import 'package:desktop_app/screens/dogadjaji_screen.dart';
-import 'package:desktop_app/screens/karte_screen.dart';
-import 'package:desktop_app/screens/pregled_korisnika_screen.dart';
+import 'package:dogadjaj_ba/custom_container.dart';
+import 'package:dogadjaj_ba/providers/dataprovider.dart';
+import 'package:dogadjaj_ba/providers/eventprovider.dart';
+import 'package:dogadjaj_ba/providers/ticket_provider.dart';
+import 'package:dogadjaj_ba/providers/user_provider.dart';
+import 'package:dogadjaj_ba/screens/dogadjaji_screen.dart';
+import 'package:dogadjaj_ba/screens/izvjestajscreen.dart';
+import 'package:dogadjaj_ba/screens/karte_screen.dart';
+import 'package:dogadjaj_ba/screens/pregled_korisnika_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => EventProvider()),
+    ChangeNotifierProvider(create: (_) => TicketProvider()),
+    ChangeNotifierProvider(create: (_) => UserProvider()),
+    // ChangeNotifierProvider(create: (_) => DataProvider()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,6 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData.dark(),
       home: const MyHomePage(),
     );
   }
@@ -38,25 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _buildIzvjestajScreen() {
-    return const SingleChildScrollView(
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.all(28.0),
-          child: Row(
-            children: [
-              CustomContainer(count: 2, title: 'Dogadjaji'),
-              SizedBox(width: 20),
-              CustomContainer(count: 2, title: 'Karte'),
-              SizedBox(width: 20),
-              CustomContainer(count: 2, title: 'Useri'),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -69,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
         case 2:
           return const KarteScreen();
         case 3:
-          return _buildIzvjestajScreen();
+          return IzvjestajWidget();
         default:
           return Container();
       }
@@ -83,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red,
         actions: [
           TextButton(
             onPressed: () {
@@ -90,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: const Text(
               'Dogadjaji',
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           TextButton(
@@ -98,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onNavItemTapped(1);
             },
             child: const Text('Pregled Korisnika',
-                style: TextStyle(color: Colors.red)),
+                style: TextStyle(color: Colors.white)),
           ),
           TextButton(
             onPressed: () {
@@ -106,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: const Text('Karte',
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Colors.white,
                 )),
           ),
           TextButton(
@@ -115,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: const Text('Izvjestaj',
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Colors.white,
                 )),
           ),
         ],

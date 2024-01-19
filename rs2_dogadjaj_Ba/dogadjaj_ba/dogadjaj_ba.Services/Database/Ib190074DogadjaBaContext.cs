@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Microsoft.EntityFrameworkCore;
 
 namespace dogadjaj_ba.Services.Database;
@@ -17,7 +18,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
 
     public virtual DbSet<Event> Events { get; set; }
 
-
+    public virtual DbSet<UserTicket> UserTicket { get; set; }
     public virtual DbSet<Grad> Grads { get; set; }
 
     public virtual DbSet<Lokacija> Lokacijas { get; set; }
@@ -37,7 +38,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=IB190074_dogadja.ba; Trusted_Connection=true;TrustServerCertificate=True ");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-H93N0OC\\MSSQLSERVER_OLAP;Initial Catalog=IB190074_dogadjajj.ba; Trusted_Connection=true;TrustServerCertificate=True ");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -158,6 +159,22 @@ public partial class Ib190074DogadjaBaContext : DbContext
             entity.Property(e => e.ImePrezime).HasMaxLength(50);
             entity.Property(e => e.KorisnickoIme).HasMaxLength(50);
             entity.Property(e => e.Sifra).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<UserTicket>(entity =>
+        {
+            entity.HasKey(e => e.UserTicketID).HasName("PK__UserTick__5B0E19B06A29E69D");
+
+           
+            
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserTicket)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__UserTicket__UserId__12345678");
+
+            entity.HasOne(d => d.Ticket).WithMany(p => p.UserTicket)
+                .HasForeignKey(d => d.TicketId)
+                .HasConstraintName("FK__UserTicket__TicketId__87654321");
         });
 
         OnModelCreatingPartial(modelBuilder);

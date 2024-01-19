@@ -12,8 +12,8 @@ using dogadjaj_ba.Services.Database;
 namespace dogadjaj_ba.Services.Migrations
 {
     [DbContext(typeof(Ib190074DogadjaBaContext))]
-    [Migration("20240118160514_userTickets")]
-    partial class userTickets
+    [Migration("20240119133407_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -257,6 +257,29 @@ namespace dogadjaj_ba.Services.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.UserTicket", b =>
+                {
+                    b.Property<int>("UserTicketID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserTicketID"));
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserTicketID");
+
+                    b.HasIndex("TicketId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTicket");
+                });
+
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Event", b =>
                 {
                     b.HasOne("dogadjaj_ba.Services.Database.Lokacija", "Lokacija")
@@ -317,6 +340,25 @@ namespace dogadjaj_ba.Services.Migrations
                         .HasConstraintName("FK__Tickets__UserId__5441852A");
 
                     b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.UserTicket", b =>
+                {
+                    b.HasOne("dogadjaj_ba.Services.Database.Ticket", "Ticket")
+                        .WithMany()
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dogadjaj_ba.Services.Database.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ticket");
 
                     b.Navigation("User");
                 });

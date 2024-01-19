@@ -84,7 +84,10 @@ class _TicketsScreenState extends State<TicketsScreen> {
             _eventDropdownItems.add(
               DropdownMenuItem<int>(
                 value: null,
-                child: Text('Svi',style: TextStyle(color: white),),
+                child: Text(
+                  'Svi',
+                  style: TextStyle(color: white),
+                ),
               ),
             );
           }
@@ -94,7 +97,10 @@ class _TicketsScreenState extends State<TicketsScreen> {
             _events.map(
               (event) => DropdownMenuItem<int>(
                 value: event.eventId,
-                child: Text(event.eventName ?? "--",style: TextStyle(color: white),),
+                child: Text(
+                  event.eventName ?? "--",
+                  style: TextStyle(color: white),
+                ),
               ),
             ),
           );

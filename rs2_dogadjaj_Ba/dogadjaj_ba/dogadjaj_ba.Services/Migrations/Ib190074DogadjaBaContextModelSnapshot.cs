@@ -254,6 +254,30 @@ namespace dogadjaj_ba.Services.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.UserTicket", b =>
+                {
+                    b.Property<int>("UserTicketID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserTicketID"));
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserTicketID")
+                        .HasName("PK__UserTick__5B0E19B06A29E69D");
+
+                    b.HasIndex("TicketId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTicket");
+                });
+
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Event", b =>
                 {
                     b.HasOne("dogadjaj_ba.Services.Database.Lokacija", "Lokacija")
@@ -318,6 +342,27 @@ namespace dogadjaj_ba.Services.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.UserTicket", b =>
+                {
+                    b.HasOne("dogadjaj_ba.Services.Database.Ticket", "Ticket")
+                        .WithMany("UserTicket")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK__UserTicket__TicketId__87654321");
+
+                    b.HasOne("dogadjaj_ba.Services.Database.User", "User")
+                        .WithMany("UserTicket")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK__UserTicket__UserId__12345678");
+
+                    b.Navigation("Ticket");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Event", b =>
                 {
                     b.Navigation("ReportData");
@@ -335,6 +380,11 @@ namespace dogadjaj_ba.Services.Migrations
                     b.Navigation("Events");
                 });
 
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.Ticket", b =>
+                {
+                    b.Navigation("UserTicket");
+                });
+
             modelBuilder.Entity("dogadjaj_ba.Services.Database.User", b =>
                 {
                     b.Navigation("ReportData");
@@ -342,6 +392,8 @@ namespace dogadjaj_ba.Services.Migrations
                     b.Navigation("Reservations");
 
                     b.Navigation("Tickets");
+
+                    b.Navigation("UserTicket");
                 });
 #pragma warning restore 612, 618
         }

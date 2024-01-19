@@ -1,7 +1,8 @@
 import 'dart:ui';
 
-import 'package:desktop_app/models/user_model.dart';
+import 'package:dogadjaj_ba/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:dogadjaj_ba/providers/user_provider.dart';
 
 class PregledKorisnikaScreen extends StatefulWidget {
   const PregledKorisnikaScreen({Key? key}) : super(key: key);
@@ -26,40 +27,58 @@ class _PregledKorisnikaScreenState extends State<PregledKorisnikaScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            "Pregled korisnika",
+            style: TextStyle(fontSize: 30),
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Expanded(
             child: Scrollbar(
               controller: controller,
               child: ScrollConfiguration(
                 behavior: ScrollConfiguration.of(context)
                     .copyWith(dragDevices: {PointerDeviceKind.mouse}),
-                child: SingleChildScrollView(
-                  controller: controller,
-                  child: DataTable(
-                    border: const TableBorder(
-                      right: BorderSide(),
-                      left: BorderSide(),
-                      top: BorderSide(),
-                      bottom: BorderSide(),
-                      verticalInside: BorderSide(),
-                      horizontalInside: BorderSide(),
-                    ),
-                    columns: const [
-                      DataColumn(label: Text('Username')),
-                      DataColumn(label: Text('Email')),
-                      // DataColumn(label: Text('Role')),
-                    ],
-                    rows: mockUsers
-                        .map(
-                          (user) => DataRow(
-                            cells: [
-                              DataCell(Text(user.username)),
-                              DataCell(Text(user.email)),
-                              DataCell(Text(user.role)),
-                            ],
-                          ),
-                        )
-                        .toList(),
-                  ),
+                child: FutureBuilder<List<User>>(
+                  future:
+                      UserProvider().getAll(), // Assuming getAll fetches users
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else {
+                      List<User> users = snapshot.data ?? [];
+
+                      return DataTable(
+                        border: const TableBorder(
+                          right: BorderSide(),
+                          left: BorderSide(),
+                          top: BorderSide(),
+                          bottom: BorderSide(),
+                          verticalInside: BorderSide(),
+                          horizontalInside: BorderSide(),
+                        ),
+                        columns: const [
+                          DataColumn(label: Text('Username')),
+                          DataColumn(label: Text('Korisnicko ime')),
+                          DataColumn(label: Text('Email')),
+                        ],
+                        rows: users
+                            .map(
+                              (user) => DataRow(
+                                cells: [
+                                  DataCell(Text(user.imePrezime)),
+                                  DataCell(Text(user.korisnickoIme)),
+                                  DataCell(Text(user.email)),
+                                ],
+                              ),
+                            )
+                            .toList(),
+                      );
+                    }
+                  },
                 ),
               ),
             ),

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dogadjaj_ba.Model.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,11 @@ namespace dogadjaj_ba.Model
         public int? LokacijaId { get; set; }
 
         public DateTime EventDate { get; set; }
-
+        public TypeEvent eventType { get; set; }
+        public SubtypeOfEventType subType { get; set; }
         public string? Opis { get; set; }
 
         public string? StateMachine { get; set; }
-        public byte[]? EventImage { get; set; }
+        public byte[]? EventImage { get; set; } = null;
     }
 }

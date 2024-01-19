@@ -17,7 +17,7 @@ public partial class Event
     public string? Opis { get; set; }
 
 
-    public byte[]? EventImage { get; set; }
+    public byte[]? EventImage { get; set; } = null;
     public string? StateMachine { get; set; }
 
     public TypeEvent eventType { get; set; }
@@ -28,4 +28,5 @@ public partial class Event
     public virtual ICollection<ReportDatum> ReportData { get; set; } = new List<ReportDatum>();
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+    
 }

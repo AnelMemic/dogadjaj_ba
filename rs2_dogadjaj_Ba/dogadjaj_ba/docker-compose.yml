@@ -1,0 +1,34 @@
+version: '3'
+services:
+  # SQL Server Docker Container
+  sql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Dogadjaj123
+      - MSSQL_PID=Developer
+    ports:
+      - 1435:1433
+    networks:
+      - dogadjajnetwork
+
+  # ASP.NET Core Application Docker Container
+  api:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: dogadjaj_ba\Dockerfile
+    environment:
+      - ConnectionStrings:Main=Server=sql,1433;Database=dogadjaj_ba;User=sa;Password=Dogadjaj123;TrustServerCertificate=True;ConnectRetryCount=0
+    ports:
+      - 8080:80
+    networks:
+      - dogadjajnetwork
+    links:
+      - sql
+    depends_on:
+      - sql
+networks:
+  dogadjajnetwork:
+    driver: bridge
