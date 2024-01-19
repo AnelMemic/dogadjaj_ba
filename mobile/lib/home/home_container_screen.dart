@@ -1,12 +1,14 @@
-import 'package:dogadjaj_ba/cart_screen.dart';
-import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/helpers/app_decoration.dart';
-import 'package:dogadjaj_ba/helpers/bottom_bar.dart';
-import 'package:dogadjaj_ba/home_screen/_home_screen.dart';
-import 'package:dogadjaj_ba/home_screen/profile_screen.dart';
-import 'package:dogadjaj_ba/lists/events_list.dart';
-import 'package:dogadjaj_ba/route/rutes.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/cart_screen.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/helpers/app_decoration.dart';
+import 'package:mobile/helpers/bottom_bar.dart';
+import 'package:mobile/home_screen/_home_screen.dart';
+import 'package:mobile/home_screen/profile_screen.dart';
+import 'package:mobile/lists/events_list.dart';
+import 'package:mobile/route/rutes.dart';
+import 'package:mobile/user/user_profile.dart';
+import 'package:mobile/user/user_tickets_screen.dart';
 
 class HomeContainerScreen extends StatefulWidget {
   const HomeContainerScreen({Key? key}) : super(key: key);
@@ -86,10 +88,10 @@ class _HomeContainerScreenState extends State<HomeContainerScreen> {
         return EventsList();
       case AppRoutes.userProfileScreen:
         return ProfileScreen();
-      // case AppRoutes.membershipScreen:
-      //   return MembershipScreen();
-      // case AppRoutes.changePassword:
-      //   return ChangePasswordScreen();
+      case AppRoutes.userProfileDetailsScreen:
+        return UserProfileScreen();
+      case AppRoutes.userTickets:
+        return UserTicketsScreen();
 
       default:
         return DefaultWidget();
@@ -107,7 +109,7 @@ class DefaultWidget extends StatelessWidget {
         children: [
           Text(
             "Desila se greška",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color:  white),
           ),
           SizedBox(height: 20),
           ElevatedButton(

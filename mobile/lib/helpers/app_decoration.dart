@@ -1,5 +1,5 @@
-import 'package:dogadjaj_ba/helpers/theme_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/helpers/theme_helper.dart';
 
 class AppDecoration {
   // Fill decorations

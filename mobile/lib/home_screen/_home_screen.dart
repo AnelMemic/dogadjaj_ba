@@ -1,6 +1,6 @@
-import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/custom%20widgets/logo_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/custom%20widgets/logo_widget.dart';
 import '../lists/event_types_list.dart';
 import '../models/test_models.dart';
 

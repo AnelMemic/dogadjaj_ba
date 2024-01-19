@@ -1,5 +1,5 @@
-import 'package:dogadjaj_ba/single_event_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/single_event_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'constants.dart';
 import 'models/test_models.dart';

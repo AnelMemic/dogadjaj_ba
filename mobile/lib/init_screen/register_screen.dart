@@ -1,12 +1,11 @@
-import 'package:dogadjaj_ba/helpers/app_decoration.dart';
-import 'package:dogadjaj_ba/helpers/costum_text_field.dart';
-import 'package:dogadjaj_ba/helpers/custom_text_style.dart';
-import 'package:dogadjaj_ba/helpers/error_dialog.dart';
-import 'package:dogadjaj_ba/models/register.dart';
-import 'package:dogadjaj_ba/models/user.dart';
-import 'package:dogadjaj_ba/providers/user_provider.dart';
-import 'package:dogadjaj_ba/route/rutes.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/helpers/app_decoration.dart';
+import 'package:mobile/helpers/costum_text_field.dart';
+import 'package:mobile/helpers/custom_text_style.dart';
+import 'package:mobile/helpers/error_dialog.dart';
+import 'package:mobile/models/register.dart';
+import 'package:mobile/providers/user_provider.dart';
+import 'package:mobile/route/rutes.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';

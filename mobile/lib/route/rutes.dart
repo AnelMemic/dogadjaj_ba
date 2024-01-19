@@ -1,9 +1,11 @@
-import 'package:dogadjaj_ba/cart_screen.dart';
-import 'package:dogadjaj_ba/home/home_container_screen.dart';
-import 'package:dogadjaj_ba/init_screen/init_screen.dart';
-import 'package:dogadjaj_ba/init_screen/login_screen.dart';
-import 'package:dogadjaj_ba/init_screen/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/cart_screen.dart';
+import 'package:mobile/home/home_container_screen.dart';
+import 'package:mobile/init_screen/init_screen.dart';
+import 'package:mobile/init_screen/login_screen.dart';
+import 'package:mobile/init_screen/register_screen.dart';
+import 'package:mobile/user/user_profile.dart';
+import 'package:mobile/user/user_tickets_screen.dart';
 
 
 class AppRoutes {
@@ -23,10 +25,12 @@ class AppRoutes {
 
   static const String userProfileScreen = '/user_profile_screen';
 
+  static const String userProfileDetailsScreen = '/user_profile_details_screen';
+
 
   static const String membershipScreen = '/membership_screen';
 
-  static const String changePassword = '/changePassword';
+  static const String userTickets = '/userTickets';
 
 
   static Map<String, WidgetBuilder> routes = {
@@ -36,6 +40,8 @@ class AppRoutes {
     registrationScreen: (context) => RegisterScreen(),
     homeContainerScreen: (context) => HomeContainerScreen(),
     payment: (context) => TicketsScreen(),
+    userProfileDetailsScreen:(context) => UserProfileScreen(),
+    userTickets :(context) => UserTicketsScreen()
     // trainersScreen: (context) => TrainersScreen(),
     // reservationsScreen: (context) => ReservationsScreen(),
     // userProfileScreen: (context) => UserProfileScreen(),

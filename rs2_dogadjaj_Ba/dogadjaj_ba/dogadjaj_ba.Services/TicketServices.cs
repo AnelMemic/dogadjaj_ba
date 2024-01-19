@@ -30,6 +30,15 @@ namespace dogadjaj_ba.Services
             return await query.ToListAsync(cancellationToken);
         }
 
+        public async Task<List<Ticket>> GetTicketsByEventId(int id , CancellationToken cancellationToken)
+        {
+            var query = _context.Tickets
+                .Where(u => (id ==null || u.EventId == id)).ToListAsync(cancellationToken);
+
+
+            return  await query;
+        }
+
         //Task<List<Model.Ticket>> ITicketService.GetTicketsPagedAsync(TicketSearchObject searchObject, CancellationToken cancellationToken)
         //{
         //    throw new NotImplementedException();

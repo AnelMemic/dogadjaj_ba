@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
+using ServiceStack;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace dogadjaj_ba.Services
@@ -69,6 +70,14 @@ namespace dogadjaj_ba.Services
             return await state.AllowedActions();
 
         }
+      
+        //public override async IQueryable<Model.Event> AddFilter(IQueryable<Model.Event> query, EventiSearchObject ? search)
+        //{
+        //    var filteredQuery = await base.GetById(search.id);
+              
+        //    return filteredQuery;
+        //}
+
         public override Task<List<Model.Event>> Get(EventiSearchObject? search = null)
         {
             return base.Get(search);

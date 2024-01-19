@@ -1,28 +1,34 @@
 import 'dart:convert';
-import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/helpers/error_dialog.dart';
-import 'package:dogadjaj_ba/helpers/theme_helper.dart';
-import 'package:dogadjaj_ba/models/ticket.dart';
-import 'package:dogadjaj_ba/providers/ticket_provider.dart';
-import 'package:dogadjaj_ba/providers/user_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:intl/intl.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/helpers/error_dialog.dart';
+import 'package:mobile/models/SearchObjects/ticket_search_object.dart';
+import 'package:mobile/models/ticket.dart';
+import 'package:mobile/providers/ticket_provider.dart';
+import 'package:mobile/providers/user_ticket_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-class TicketPaymentForm extends StatefulWidget {
+
+import 'package:intl/intl.dart';
+
+class KupiKartuDialog extends StatefulWidget {
+  final int? eventId;
+
+  KupiKartuDialog({Key? key, required this.eventId}) : super(key: key);
+
   @override
-  _TicketPaymentFormState createState() => _TicketPaymentFormState();
+  _KupiKartuDialogState createState() => _KupiKartuDialogState();
 }
 
-class _TicketPaymentFormState extends State<TicketPaymentForm> {
-  List<Ticket> tickets = <Ticket>[];
-  // late UserPackageProvider _userPackageProvider;
+class _KupiKartuDialogState extends State<KupiKartuDialog> {
+  List<Ticket> packages = <Ticket>[];
   late TicketProvider _ticketProvider;
-  late UserProvider _userProvider;
+  late UserTicketProvider _userTicketProvider;
   Ticket? _selectedTicket;
-  int? _selectedTickets;
+  int? _numberOfTickets;
   int currentPage = 1;
   int pageSize = 1000;
   int? _userId;
@@ -32,64 +38,76 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
   void initState() {
     super.initState();
     _ticketProvider = context.read<TicketProvider>();
-    _userProvider = context.read<UserProvider>();
+    _userTicketProvider = context.read<UserTicketProvider>();
     loadTickets();
   }
 
-  // void loadUser() async {
-  //   var id = _userProvider.getUserId();
-  //   _userId = id;
-  // }
-
   void loadTickets() async {
     try {
-      var response = await _ticketProvider.get();
+      var response = await _ticketProvider.getPaged(
+          searchObject: TicketSearchObject(
+              PageNumber: currentPage, PageSize: pageSize));
 
       setState(() {
-        tickets = response;
+        packages = response;
       });
     } on Exception catch (e) {
       showErrorDialog(context, e.toString().substring(11));
     }
   }
+ double calculateTotalPrice() {
+    if (_selectedTicket != null && _numberOfTickets  != null) {
+      double basePrice = _selectedTicket!.cijena! * _numberOfTickets!;
 
-  double calculateTotalPrice() {
-    if (_selectedTicket != null && _selectedTickets != null) {
-      double basePrice = _selectedTicket!.cijena! * _selectedTickets!;
-
-      // Popustna osnovu broja mjeseci
-      if (_selectedTickets! >= 6 && _selectedTickets! < 12) {
-        // Popust od 5% za više od 6 i manje od 12 mjeseci
-        return basePrice * 0.95;
-      } else if (_selectedTickets! == 12) {
-        // Popust od 10% za 12 mjeseci
-        return basePrice * 0.9;
-      }
-
-      // Nema popusta za manje od 6 mjeseci
       return basePrice;
     }
     return 0;
   }
 
-  showPaymentSheet() async {
-    if (_selectedTicket == null || _selectedTickets == null) {
+ void InsertUserPackage() async {
+    try {
+      // loadUser();
+
+      var newPackage = {
+        "userId": _userId,
+        "ticketId": _selectedTicket!.ticketId
+      };
+
+      var userPackage = await _userTicketProvider.insert(newPackage);
+
+      if (userPackage == "OK") {
+        currentPage == 1;
+         ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(
+              backgroundColor: Color(0XFF12B422),
+              content: Text('Uspjesna kupljeno ulaznica: $_numberOfTickets.',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ))),
+        );
+      }
+    } on Exception catch (e) {
+      showErrorDialog(context, e.toString().substring(11));
+    }
+  }
+
+
+ showPaymentSheet() async {
+    if (_selectedTicket == null || _numberOfTickets == null || _numberOfTickets==0) {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          backgroundColor:  appTheme.bgSecondary,
-          content: Text("Molimo odaberite paket i broj mjeseci."),
+          backgroundColor:  black,
+          content: Text("Molimo odaberite ulaznicu i broj ulaznica.",style: TextStyle(color: white),),
           actions: [
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: teal,
-              ),
+            
               child: Text(
                 "OK",
-                style: TextStyle(color: white),
+              
               ),
             ),
           ],
@@ -104,7 +122,7 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
         .initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
             paymentIntentClientSecret: paymentIntentData!['client_secret'],
-            merchantDisplayName: 'GymFit',
+            merchantDisplayName: 'dogadjajBa',
             appearance: const PaymentSheetAppearance(
               primaryButton: PaymentSheetPrimaryButtonAppearance(
                   colors: PaymentSheetPrimaryButtonTheme(
@@ -152,23 +170,12 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
     }
   }
 
-  DateTime calculateExpirationDate(int months) {
-    DateTime currentDate = DateTime.now();
-
-    DateTime expirationDate = currentDate.add(Duration(days: 30 * months));
-
-    return expirationDate;
-  }
-
-  
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 30.0, left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
-        color: appTheme.bgSecondary.withOpacity(0.97),
+        color: kBackgroundColor.withOpacity(0.97),
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Scaffold(
@@ -186,20 +193,20 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
                   Expanded(
                     child: Container(
                       child: DropdownButton<Ticket>(
-                        dropdownColor: teal,
+                        dropdownColor: black,
                         value: _selectedTicket,
-                        items: tickets.map((Ticket ticket) {
+                        items: packages.map((Ticket ticket) {
                           return DropdownMenuItem<Ticket>(
                             value: ticket,
-                            child: Text(ticket.ticketId.toString()),
+                            child: Text('${ticket.title} -${ticket.cijena}KM ' ?? '', style: TextStyle(color: white),),
                           );
                         }).toList(),
-                        onChanged: (Ticket? selectedPackage) {
+                        onChanged: (Ticket? selectedTicket) {
                           setState(() {
-                            _selectedTicket = selectedPackage;
+                            _selectedTicket = selectedTicket;
                           });
                         },
-                        hint: Text('Izaberite kartu', style: TextStyle(color: white),),
+                        hint: Text('Izaberite ulaznicu', style: TextStyle(color: white),),
                       ),
                     ),
                   ),
@@ -213,20 +220,20 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
                   Expanded(
                     child: Container(
                       child: DropdownButton<int>(
-                        dropdownColor: teal,
-                        value: _selectedTickets,
-                        items: List.generate(12, (index) {
+                        dropdownColor: black,
+                        value: _numberOfTickets,
+                        items: List.generate(10, (index) {
                           return DropdownMenuItem<int>(
                             value: index + 1,
-                            child: Text('${index + 1} months'),
+                            child: Text('${index + 1} kom', style: TextStyle(color: white),),
                           );
                         }),
-                        onChanged: (int? ticketsNumber) {
+                        onChanged: (int? numberOfTickets) {
                           setState(() {
-                            _selectedTickets = ticketsNumber;
+                            _numberOfTickets = numberOfTickets;
                           });
                         },
-                        hint: Text('Izaberite broj mjeseci',style: TextStyle(color: white)),
+                        hint: Text('Izaberite broj ulaznica',style: TextStyle(color: white)),
                       ),
                     ),
                   ),
@@ -249,7 +256,7 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
                       NumberFormat.currency(locale: 'bs')
                           .format(calculateTotalPrice()),
                       style: const TextStyle(
-                          color: Color(0XFF12B422),
+                          color: Color.fromARGB(255, 230, 255, 3),
                           fontWeight: FontWeight.bold,
                           fontSize: 18),
                     ),
@@ -268,12 +275,10 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: teal,
-                        ),
+                      
                         child: Text(
                           "Zatvori",
-                          style: TextStyle(color: white),
+                          
                         ),
                       ),
                       SizedBox(
@@ -283,12 +288,10 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
                         onPressed: () {
                           showPaymentSheet();
                         },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: teal,
-                        ),
+                       
                         child: Text(
                           "Uplati",
-                          style: TextStyle(color: white),
+                         
                         ),
                       ),
                     ],
@@ -302,14 +305,14 @@ class _TicketPaymentFormState extends State<TicketPaymentForm> {
     );
   }
 
-  Widget _buildTitle() {
+   Widget _buildTitle() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
         child: Text(
-          "Uplata članarine",
+          "Uplata ulaznice",
           style: TextStyle(
             color: white,
             fontSize: 22.0,

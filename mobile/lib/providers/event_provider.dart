@@ -1,6 +1,7 @@
 
-import 'package:dogadjaj_ba/models/event.dart';
 
+
+import '../models/event.dart';
 import 'base_provider.dart';
 
 class EventProvider extends BaseProvider<Event> {

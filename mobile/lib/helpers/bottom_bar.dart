@@ -1,8 +1,8 @@
-import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/helpers/custom_imge.dart';
-import 'package:dogadjaj_ba/helpers/image_constant.dart';
-import 'package:dogadjaj_ba/helpers/theme_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/helpers/custom_imge.dart';
+import 'package:mobile/helpers/image_constant.dart';
+import 'package:mobile/helpers/theme_helper.dart';
 
 class CustomBottomBar extends StatefulWidget {
   CustomBottomBar({this.onChanged});

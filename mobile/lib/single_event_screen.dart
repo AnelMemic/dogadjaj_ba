@@ -1,10 +1,10 @@
-import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/custom%20widgets/logo_widget.dart';
-import 'package:dogadjaj_ba/event_info_card.dart';
-import 'package:dogadjaj_ba/home_screen/home_screen.dart';
-import 'package:dogadjaj_ba/models/test_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/custom%20widgets/logo_widget.dart';
+import 'package:mobile/event_info_card.dart';
+import 'package:mobile/models/test_models.dart';
+import 'package:mobile/route/rutes.dart';
 
 class SingleEventScreen extends ConsumerStatefulWidget {
   final Event event;
@@ -51,15 +51,9 @@ class _SingleEventScreenState extends ConsumerState<SingleEventScreen> {
             color: Colors.redAccent,
             child: InkWell(
               onTap: () {
-                ref.watch(eventSenderProvider.notifier).state = [
-                  ...?ref.read(eventSenderProvider.notifier).state,
-                  widget.event
-                ];
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Ulaznica uspjesno dodana u kosaricu'),
-                  duration: Duration(seconds: 3),
-                ));
-                // ref.watch(persistentControllerProvider).jumpToTab(1);
+                Navigator.pushNamed(context, AppRoutes.payment);
+                
+                
               },
               child: Center(
                 child: Text(

@@ -1,6 +1,6 @@
-import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/lists/events_in_categories_list.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/lists/events_in_categories_list.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import '../models/test_models.dart';
 

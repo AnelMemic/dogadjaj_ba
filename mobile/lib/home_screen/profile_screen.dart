@@ -1,9 +1,7 @@
-import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/home_screen/home_screen.dart';
-import 'package:dogadjaj_ba/route/rutes.dart';
-import 'package:dogadjaj_ba/single_event_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/route/rutes.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -38,13 +36,17 @@ class ProfileScreen extends ConsumerWidget {
                       onTap: () =>
                          Navigator.pushNamed(context, AppRoutes.homePage),
                     ),
-                    const ProfileOptionCard(
-                        title: 'Moje ulaznice', icon: Icons.widgets),
-                    const ProfileOptionCard(
-                        title: 'Moj račun', icon: Icons.person),
+                     
+                     ProfileOptionCard(
+                        title: 'Moj račun',
+                        icon: Icons.person,
+                        onTap: () {
+                        Navigator.pushNamed(context, AppRoutes.userProfileDetailsScreen);
+                      },
+                        ),
                     ProfileOptionCard(
-                      title: 'Korpa',
-                      icon: Icons.shopping_cart,
+                      title: 'Kupovina',
+                      icon: Icons.payment_outlined,
                       onTap: () {
                         Navigator.pushNamed(context, AppRoutes.payment);
                       },

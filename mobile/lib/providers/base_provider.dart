@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
-import 'package:dogadjaj_ba/utils/authorization.dart';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile/utils/authorization.dart';
 
 abstract class BaseProvider<T> with ChangeNotifier {
   static String? _baseUrl;
@@ -15,7 +15,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
 
   BaseProvider(String endpoint) {
     _baseUrl = const String.fromEnvironment("baseUrl",
-        defaultValue: "https://localhost:7056/");
+        defaultValue: "https://10.0.2.2:7056/");
     print("baseurl: $_baseUrl");
 
     if (_baseUrl!.endsWith("/") == false) {

@@ -1,14 +1,17 @@
-import 'package:dogadjaj_ba/constants.dart';
-import 'package:dogadjaj_ba/helpers/app_decoration.dart';
-import 'package:dogadjaj_ba/helpers/error_dialog.dart';
-import 'package:dogadjaj_ba/models/event.dart';
-import 'package:dogadjaj_ba/models/ticket.dart';
-import 'package:dogadjaj_ba/providers/event_provider.dart';
-import 'package:dogadjaj_ba/providers/ticket_provider.dart';
-import 'package:dogadjaj_ba/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile/cart_payment.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/helpers/app_decoration.dart';
+import 'package:mobile/helpers/error_dialog.dart';
+import 'package:mobile/models/SearchObjects/ticket_search_object.dart';
+import 'package:mobile/models/event.dart';
+import 'package:mobile/models/ticket.dart';
+import 'package:mobile/providers/event_provider.dart';
+import 'package:mobile/providers/ticket_provider.dart';
+import 'package:mobile/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 class TicketsScreen extends StatefulWidget {
   @override
@@ -30,6 +33,10 @@ class _TicketsScreenState extends State<TicketsScreen> {
   List<Ticket> _userTickets = <Ticket>[];
   List<Ticket> _tickets = <Ticket>[];
   List<Event> _events = <Event>[];
+  int? _selectedEventId; // Variable to store the selected event
+  List<DropdownMenuItem<int>> _eventDropdownItems =
+      []; // List of events for the dropdown
+  bool _showAllOption = true;
 
   @override
   void initState() {
@@ -47,11 +54,12 @@ class _TicketsScreenState extends State<TicketsScreen> {
     _userId = id;
   }
 
- void loadTickets() async {
+  void loadTickets() async {
     try {
-      
-      var Response =
-          await _ticketProvider.get();
+      TicketSearchObject searchObject = TicketSearchObject(
+        eventId: _eventId,
+      );
+      var Response = await _ticketProvider.getPaged(searchObject: searchObject);
       if (mounted) {
         setState(() {
           _tickets = Response;
@@ -63,24 +71,40 @@ class _TicketsScreenState extends State<TicketsScreen> {
       showErrorDialog(context, e.toString().substring(11));
     }
   }
-  
-void loadEvents() async {
+
+  void loadEvents() async {
     try {
-      
-      var Response =
-          await _eventProvider.get();
+      var Response = await _eventProvider.get();
       if (mounted) {
         setState(() {
           _events = Response;
-             print("Events");
-          print(_events);
+
+          // Add the "All" option
+          if (_showAllOption) {
+            _eventDropdownItems.add(
+              DropdownMenuItem<int>(
+                value: null,
+                child: Text('Svi',style: TextStyle(color: white),),
+              ),
+            );
+          }
+
+          // Populate the dropdown items
+          _eventDropdownItems.addAll(
+            _events.map(
+              (event) => DropdownMenuItem<int>(
+                value: event.eventId,
+                child: Text(event.eventName ?? "--",style: TextStyle(color: white),),
+              ),
+            ),
+          );
         });
       }
     } on Exception catch (e) {
       showErrorDialog(context, e.toString().substring(11));
     }
   }
-  
+
   // void loadUserTickets() async {
   //   try {
   //     loadUser();
@@ -110,16 +134,15 @@ void loadEvents() async {
         backgroundColor: kBackgroundColor,
         body: Column(
           children: [
-           
             Container(
               height: 1.0,
               color: const Color.fromARGB(255, 214, 214, 214),
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Row(
-              children: [
-              
-              ],
+              children: [],
             ),
             SingleChildScrollView(
               child: Padding(
@@ -128,7 +151,35 @@ void loadEvents() async {
                   right: 5,
                 ),
                 child: Column(
-                  children: [_buildEvensInfo(context)],
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Eventi",
+                      style: TextStyle(
+                          color: white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    DropdownButton<int>(
+                      dropdownColor: black,
+                      value: _selectedEventId,
+                      items: _eventDropdownItems,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedEventId = value;
+                          _eventId =
+                              value; // Set _eventId based on the selected event
+                          loadTickets(); // Reload tickets based on the selected event
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _buildEvensInfo(context)
+                  ],
                 ),
               ),
             ),
@@ -179,21 +230,18 @@ void loadEvents() async {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // if (_events[index].lokacijaId != null) ...[
-                      //   Text(
-                      //     'Paket: ${_events[index].package!.name} ',
-                      //     style: const TextStyle(
-                      //       fontWeight: FontWeight.bold,
-                      //       color: Colors.white,
-                      //     ),
-                      //   ),
-                      // ],
-                      _buildEventsData("Naziv eventa: ", _events[index].eventName?? "--"),
-                      _buildEventsData("Opis: ", _events[index].opis?? "--"),
-                       _buildEventsData('Datum održavnja: ',
+                      _buildEventsData(
+                          "Naziv eventa: ", _events[index].eventName ?? "--"),
+                      _buildEventsData("Opis: ", _events[index].opis ?? "--"),
+                      _buildEventsData('Datum održavnja: ',
                           '${_formatDate(_events[index].eventDate)}'),
-                      
-                      Divider()
+                      Divider(),
+                      ElevatedButton(
+                        onPressed: () {
+                          _openKupiKartuDialog(_events[index].eventId);
+                        },
+                        child: Text('Kupi kartu'),
+                      ),
                     ],
                   ),
                 ),
@@ -214,15 +262,11 @@ void loadEvents() async {
             Text(
               label,
               style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: white
-              ),
+                  fontSize: 14, fontWeight: FontWeight.normal, color: white),
             ),
             Text(
               value,
-              style: TextStyle(fontSize: 14,color: white),
-              
+              style: TextStyle(fontSize: 14, color: white),
             ),
           ],
         ),
@@ -238,4 +282,12 @@ void loadEvents() async {
     return DateFormat('dd.MM.yyyy').format(date);
   }
 
+  void _openKupiKartuDialog(int? eventId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return KupiKartuDialog(eventId: eventId);
+      },
+    );
+  }
 }

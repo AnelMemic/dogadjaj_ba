@@ -1,15 +1,20 @@
 import 'dart:io';
-import 'package:dogadjaj_ba/helpers/my_overrides.dart';
-import 'package:dogadjaj_ba/providers/event_provider.dart';
-import 'package:dogadjaj_ba/providers/ticket_provider.dart';
-import 'package:dogadjaj_ba/providers/user_provider.dart';
-import 'package:dogadjaj_ba/route/rutes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:mobile/constants.dart';
+import 'package:mobile/helpers/my_overrides.dart';
+import 'package:mobile/helpers/theme_helper.dart';
+import 'package:mobile/providers/event_provider.dart';
+import 'package:mobile/providers/ticket_provider.dart';
+import 'package:mobile/providers/user_provider.dart';
+import 'package:mobile/providers/user_ticket_provider.dart';
+import 'package:mobile/route/rutes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
+  Stripe.publishableKey = stripePublishKey;
  
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +23,7 @@ void main() {
   ]);
 
   ///Please update theme as per your need if required.
- 
+ ThemeHelper().changeTheme('primary');
   runApp(MyApp());
 }
 
@@ -31,6 +36,7 @@ class MyApp extends StatelessWidget {
          ChangeNotifierProvider(create: (_) => UserProvider()),
          ChangeNotifierProvider(create: (_) => TicketProvider()),
          ChangeNotifierProvider(create: (_) => EventProvider()),
+         ChangeNotifierProvider(create: (_) => UserTicketProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData.light(),

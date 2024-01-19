@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:dogadjaj_ba/models/user.dart';
-import 'package:dogadjaj_ba/providers/base_provider.dart';
+import 'package:mobile/models/user.dart';
+import 'package:mobile/providers/base_provider.dart';
 
 class UserProvider extends BaseProvider<User> {
   UserProvider() : super('User');
@@ -23,7 +23,7 @@ class UserProvider extends BaseProvider<User> {
 //   }
 
  Future<User> loginAsync(String username, String password) async {
-  var url = 'https://localhost:7056/User/login';
+  var url = 'https://10.0.2.2:7056/User/login';
   var uri = Uri.parse(url);
   print(url);
   print(uri);

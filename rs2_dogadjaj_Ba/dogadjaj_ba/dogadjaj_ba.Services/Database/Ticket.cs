@@ -13,9 +13,9 @@ public partial class Ticket
 
     public int? UserId { get; set; }
 
-    public int Available { get; set; }
-
     public string? ticketNumber { get; set; }
+
+    public int Available { get; set; }
 
     public int? EventId { get; set; }
 

@@ -22,5 +22,12 @@ namespace dogadjaj_ba.Controllers
             var dto = await (_service as ITicketService).GetTicketsPagedAsync(searchObject, cancellationToken);
             return Ok(dto);
         }
+        [HttpGet("getByEventId")]
+        public async Task<IActionResult> getByEventId( int id, CancellationToken cancellationToken)
+        {
+
+            var dto = await (_service as ITicketService).GetTicketsByEventId(id, cancellationToken);
+            return Ok(dto);
+        }
     }
 }

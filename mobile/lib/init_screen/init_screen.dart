@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:dogadjaj_ba/route/app_router.gr.dart';
-import 'package:dogadjaj_ba/route/rutes.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/route/rutes.dart';
 import '../buttons/custom_icon_button.dart';
 
 class InitScreen extends StatelessWidget {
