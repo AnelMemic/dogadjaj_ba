@@ -44,6 +44,12 @@ class ProfileScreen extends ConsumerWidget {
                         Navigator.pushNamed(context, AppRoutes.userProfileDetailsScreen);
                       },
                         ),
+                    //     ProfileOptionCard(
+                    //   title: 'Moje ulaznice',
+                    //   icon: Icons.home,
+                    //   onTap: () =>
+                    //      Navigator.pushNamed(context, AppRoutes.userTickets),
+                    // ),
                     ProfileOptionCard(
                       title: 'Kupovina',
                       icon: Icons.payment_outlined,

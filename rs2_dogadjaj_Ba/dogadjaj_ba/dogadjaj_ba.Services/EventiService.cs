@@ -70,11 +70,21 @@ namespace dogadjaj_ba.Services
             return await state.AllowedActions();
 
         }
-      
+
+        public async Task<List<Model.Event>> GetFiltered(EventiSearchObject? search = null)
+        {
+            var events = await _context.Events
+                .Where(e => (search.kategorija == null || search.kategorija == 0 || e.eventType == search.kategorija)
+                         && (search.PodKategorija == null || search.PodKategorija == 0 || e.subType == search.PodKategorija))
+                .ToListAsync();
+
+            return _mapper.Map<List<Model.Event>>(events);
+        }
+
         //public override async IQueryable<Model.Event> AddFilter(IQueryable<Model.Event> query, EventiSearchObject ? search)
         //{
         //    var filteredQuery = await base.GetById(search.id);
-              
+
         //    return filteredQuery;
         //}
 

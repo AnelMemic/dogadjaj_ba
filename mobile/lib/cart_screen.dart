@@ -63,8 +63,6 @@ class _TicketsScreenState extends State<TicketsScreen> {
       if (mounted) {
         setState(() {
           _tickets = Response;
-          print("Tickets");
-          print(_tickets[0].cijena);
         });
       }
     } on Exception catch (e) {

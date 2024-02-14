@@ -30,8 +30,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   final TextEditingController _passwordController = TextEditingController();
   ValueNotifier<File?> _pickedFileNotifier = ValueNotifier(null);
 
-
-
   final int userId = 0;
   User? user;
   DateTime selectedDate = DateTime.now();
@@ -42,7 +40,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   bool _isActive = false;
   bool _isVerified = false;
   File? _pickedFile;
-
 
   @override
   void didChangeDependencies() {
@@ -55,13 +52,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     super.initState();
 
     _userProvider = context.read<UserProvider>();
+    loadUser();
   }
 
-  
-
-
-
-  
+  void loadUser() async {
+    var id = _userProvider.getUserId();
+    print(id);
+    try {
+      var usersResponse = await _userProvider.getUserById(id!);
+      setState(() {
+        user = usersResponse;
+      });
+    } on Exception catch (e) {
+      showErrorDialog(context, e.toString().substring(11));
+    }
+  }
 
   void DeleteUser(int id) async {
     try {
@@ -72,8 +77,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
@@ -83,23 +86,27 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
     return SafeArea(
       child: Scaffold(
+         backgroundColor: kBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: kBackgroundColor,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white, // Postavite boju strelice za nazad ovdje
+            ),
+            onPressed: () {
+             Navigator.of(context).pop();
+            },
+          ),
+        ),
         body: SizedBox(
           width: mediaQueryData.size.width,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  width: double.maxFinite,
-                  decoration: AppDecoration.fillBlack,
-                  child: Text(
-                    "Korisnički profil",
-                    style: TextStyle(fontSize: 14, color: white),
-                  ),
-                ),
-                _buildUserProfile(),
                 
+                _buildUserProfile(),
               ],
             ),
           ),
@@ -131,67 +138,39 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-  Widget _buildUserProfile() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: 8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Container(
-                    width: 90,
-                    height: 120,
-                    color: primary,
-                    // child: FutureBuilder<String>(
-                    //   future: user?.photo?.guidId != null
-                    //       ? loadPhoto(user!.photo!.guidId!)
-                    //       : null, // Check if user?.photo is not null before calling loadPhoto
-                    //   builder: (BuildContext context,
-                    //       AsyncSnapshot<String> snapshot) {
-                    //     final imageUrl = snapshot.data;
-
-                    //     return FadeInImage(
-                    //       image: imageUrl != null && imageUrl.isNotEmpty
-                    //           ? NetworkImage(
-                    //               imageUrl,
-                    //               headers: Authorization.createHeaders(),
-                    //             )
-                    //           : AssetImage('assets/images/notFound.png')
-                    //               as ImageProvider<Object>,
-                    //       placeholder: MemoryImage(kTransparentImage),
-                    //       fadeInDuration: const Duration(milliseconds: 100),
-                    //       fit: BoxFit.cover,
-                    //     );
-                    //   },
-                    // ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildUserData("", user?.korisnickoIme ?? "--"),
-                  _buildUserData("", user?.imePrezime ?? "--"),
-                  _buildUserData("Email: ", user?.email ?? "--"),
-                ],
-              ),
-            ],
+Widget _buildUserProfile() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Korisnički podaci',
+          style: TextStyle(
+            fontSize: 18,  // Adjust the font size as needed
+            fontWeight: FontWeight.bold,color: white
           ),
-          const SizedBox(height: 16),
-          
-          _buildEditUserButton(),
-        
-        ],
-      ),
-    );
-  }
-
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            SizedBox(width: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildUserData("IME: ", user?.korisnickoIme ?? "--"),
+                _buildUserData("PREZIME: ", user?.imePrezime ?? "--"),
+                _buildUserData("EMAIL: ", user?.email ?? "--"),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        //_buildEditUserButton(),
+      ],
+    ),
+  );
+}
   Widget _buildUserData(String label, String value) {
     return Column(
       children: [
@@ -202,12 +181,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               label,
               style: TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.normal,color: white
               ),
             ),
             Text(
               value,
-              style: TextStyle(fontSize: 14),
+              style: TextStyle(fontSize: 14, color: white),
             ),
           ],
         ),
@@ -277,6 +256,4 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       ),
     );
   }
-
-  
 }

@@ -15,5 +15,7 @@ namespace dogadjaj_ba.Services
         Task<Event> Hide(int id);
 
         Task<List<string>> AllowedActions(int id);
+
+        Task<List<Model.Event>> GetFiltered(EventiSearchObject? search = null);
     }
 }

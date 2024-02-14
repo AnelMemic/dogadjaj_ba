@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mobile/constants.dart';
 import 'package:mobile/models/user.dart';
 import 'package:mobile/providers/base_provider.dart';
 
@@ -22,60 +23,69 @@ class UserProvider extends BaseProvider<User> {
 //     }
 //   }
 
- Future<User> loginAsync(String username, String password) async {
-  var url = 'https://10.0.2.2:7056/User/login';
-  var uri = Uri.parse(url);
-  print(url);
-  print(uri);
-  print(username);
-  print(password);
+  Future<User> loginAsync(String username, String password) async {
+    var url = '$apiUrl/User/login';
+    var uri = Uri.parse(url);
 
-  Map<String, String> headers = createHeaders();
-  headers['Content-Type'] = 'application/json';
+    Map<String, String> headers = createHeaders();
+    headers['Content-Type'] = 'application/json';
 
-  var request = <String, String>{
-    'username': username,
-    'password': password,
-  };
-  var jsonRequest = jsonEncode(request);
+    var request = <String, String>{
+      'username': username,
+      'password': password,
+    };
+    var jsonRequest = jsonEncode(request);
 
-  var response = await http!.post(uri, headers: headers, body: jsonRequest);
-  print(response.body);
-
-  if (response.statusCode == 200) {
+    var response = await http!.post(uri, headers: headers, body: jsonRequest);
     print(response.body);
-    var data = jsonDecode(response.body);
 
-       user = User.fromJson(data);
-    notifyListeners();
-    return user!;
-  } else {
-    throw Exception(response.body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+
+      user = User.fromJson(data);
+      notifyListeners();
+      return user!;
+    } else {
+      throw Exception(response.body);
+    }
   }
-}
+
+  Future<User> getUserById(int id, [dynamic additionalData]) async {
+    var url = '$apiUrl/User/$id';
+    var uri = Uri.parse(url);
+
+    Map<String, String> headers = createHeaders();
+    headers['Content-Type'] = 'application/json';
+
+    var request = <String, String>{
+      'id': id.toString(),
+    };
+    var jsonRequest = jsonEncode(request);
+
+    var response = await http!.get(uri, headers: headers);
+    print(response.body);
+
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+
+      user = User.fromJson(data);
+      notifyListeners();
+      return user!;
+    } else {
+      throw Exception(response.body);
+    }
+  }
 
   int? getUserId() {
     if (user != null) {
       return user!.id;
     }
-    return null; 
+    return null;
   }
 
   @override
   User fromJson(data) {
     return User.fromJson(data);
   }
-
-  // Future<dynamic> insertUser(dynamic resource) async {
-  //   // Convert the User object to JSON
-  //     var uri = Uri.parse('$apiUrl/User');
-  //    var jsonRequest = jsonEncode(resource);
-  //      var response = await http!.post(uri, body: jsonRequest);
-
-  //      if (response.statusCode == 200) {
-  //     var data = jsonDecode(response.body);
-  //     }
-  //   // Call the insert method from the base class
-  //   // return await insert(jsonRequest);
-  // }
 }

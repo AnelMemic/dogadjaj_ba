@@ -42,11 +42,5 @@ class AppRoutes {
     payment: (context) => TicketsScreen(),
     userProfileDetailsScreen:(context) => UserProfileScreen(),
     userTickets :(context) => UserTicketsScreen()
-    // trainersScreen: (context) => TrainersScreen(),
-    // reservationsScreen: (context) => ReservationsScreen(),
-    // userProfileScreen: (context) => UserProfileScreen(),
-    // myReservationsScreen: (context) => MyReservationsScreen(),
-    // membershipScreen: (context) => MembershipScreen(),
-    // changePassword: (context) => ChangePasswordScreen(),
   };
 }

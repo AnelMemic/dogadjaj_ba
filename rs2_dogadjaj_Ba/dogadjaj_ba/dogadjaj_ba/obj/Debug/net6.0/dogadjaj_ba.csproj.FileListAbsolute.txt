@@ -390,3 +390,4 @@ C:\Users\HOME\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_
 C:\Users\HOME\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba\obj\Debug\net6.0\dogadjaj_ba.pdb
 C:\Users\HOME\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba\obj\Debug\net6.0\dogadjaj_ba.genruntimeconfig.cache
 C:\Users\HOME\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba\obj\Debug\net6.0\ref\dogadjaj_ba.dll
+C:\Users\User\Desktop\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba\obj\Debug\net6.0\dogadjaj_ba.MvcApplicationPartsAssemblyInfo.cs

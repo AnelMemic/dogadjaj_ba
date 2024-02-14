@@ -32,5 +32,12 @@ namespace dogadjaj_ba.Controllers
             return await (_service as IEventiService).AllowedActions(id);
         }
 
+        [HttpGet("getEvents")]
+        public  async Task<List<Event>> GetEvents([FromQuery] EventiSearchObject search)
+        {
+            return await (_service as IEventiService).GetFiltered(search);
+        }
+
+
     }
 }
