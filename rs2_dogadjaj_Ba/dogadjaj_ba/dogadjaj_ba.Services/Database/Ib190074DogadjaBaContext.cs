@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using Microsoft.EntityFrameworkCore;
-
+using dogadjaj_ba.Services;
 namespace dogadjaj_ba.Services.Database;
 
 public partial class Ib190074DogadjaBaContext : DbContext
@@ -38,7 +38,179 @@ public partial class Ib190074DogadjaBaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source =.; Initial Catalog = IB190074_dogadjaj.ba; TrustServerCertificate=True;Trusted_Connection=True;");
+        => optionsBuilder.UseSqlServer("Data Source =DESKTOP-H93N0OC\\MSSQLSERVER_OLAP; Initial Catalog = IB190074_dogadjajjTest.ba; TrustServerCertificate=True;Trusted_Connection=True;");
+
+
+    private readonly DateTime _dateTime = new(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local);
+
+    public void SeedData(ModelBuilder modelBuilder)
+    {
+        SeedCities(modelBuilder);
+        SeedLocation(modelBuilder);
+        SeedEvents(modelBuilder);
+        SeedUsers(modelBuilder);
+        SeedTicket(modelBuilder);
+        
+
+
+        //LokacijaId
+
+    }
+    private void SeedTicket(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Ticket>().HasData(
+           new()
+           {
+               TicketId = 1,
+               title= "Title",
+               description= "Opis",
+               UserId= 1,
+               ticketNumber = "2",
+               Available=1,
+               EventId= 1,
+               Cijena = 100
+           },
+           new()
+           {
+               TicketId = 2,
+               title = "Title2",
+               description = "Opis2",
+               UserId = 2,
+               ticketNumber = "2",
+               Available = 1,
+               EventId = 3,
+               Cijena = 100
+           },
+           new()
+           {
+               TicketId = 3,
+               title = "Title3",
+               description = "Opis3",
+               UserId = 1,
+               ticketNumber = "2",
+               Available = 1,
+               EventId = 2,
+               Cijena = 100
+           });
+    }
+    private void SeedUsers(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>().HasData(
+           new()
+           {
+               UserId = 1,
+               KorisnickoIme = "dogadjaj1",
+               ImePrezime = "t1",
+               Sifra ="test",
+               Email= "test@test",
+               
+
+           },
+           new()
+           {
+               UserId = 2,
+               KorisnickoIme = "dogadjaj2",
+               ImePrezime = "t2",
+               Sifra = "test",
+               Email = "test@test",
+
+           },
+           new()
+           {
+               UserId = 3,
+               KorisnickoIme = "dogadjaj3",
+               ImePrezime = "t3",
+               Sifra = "test",
+               Email = "test@test",
+
+           });
+    }
+    private void SeedLocation(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Lokacija>().HasData(
+           new()
+           {
+               LokacijaId = 1,
+               GradId = 2,
+
+
+           },
+           new()
+           {
+               LokacijaId = 2,
+               GradId = 1,
+
+           },
+           new()
+           {
+               LokacijaId = 3,
+               GradId = 1,
+
+           });
+    }
+
+
+    private void SeedEvents(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Event>().HasData(
+           new()
+           {
+               EventId = 1,
+               EventName = "Test1",
+               LokacijaId = 1,
+               EventDate = _dateTime,
+               Opis = "Test",
+               eventType = dogadjaj_ba.Model.Enums.TypeEvent.Konferencija,
+               subType = dogadjaj_ba.Model.Enums.SubtypeOfEventType.Gradjevinarstvo
+               
+
+           },
+           new()
+           {
+               EventId = 2,
+               EventName = "Test2",
+               LokacijaId = 1,
+               EventDate = _dateTime,
+               Opis = "Test",
+               eventType = dogadjaj_ba.Model.Enums.TypeEvent.Konferencija,
+               subType = dogadjaj_ba.Model.Enums.SubtypeOfEventType.Gradjevinarstvo
+           },
+           new()
+           {
+               EventId = 3,
+               EventName = "Test3",
+               LokacijaId = 1,
+               EventDate = _dateTime,
+               Opis = "Test",
+               eventType = dogadjaj_ba.Model.Enums.TypeEvent.Konferencija,
+               subType = dogadjaj_ba.Model.Enums.SubtypeOfEventType.Gradjevinarstvo
+           });
+    }
+
+    private void SeedCities(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Grad>().HasData(
+           new()
+           {
+               GradId = 1,
+               ImeGrada = "Mostar",
+               Drzava = "BIH",
+
+           },
+           new()
+           {
+               GradId = 2,
+               ImeGrada = "Sarajevo",
+               Drzava = "BIH",
+           },
+           new()
+           {
+               GradId = 3,
+               ImeGrada = "Banja Luka",
+               Drzava = "BIH",
+           });
+    }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -56,8 +228,8 @@ public partial class Ib190074DogadjaBaContext : DbContext
                 .HasForeignKey(d => d.LokacijaId)
                 .HasConstraintName("FK__Events__Lokacija__48CFD27E");
         });
+        
 
-       
 
         modelBuilder.Entity<Grad>(entity =>
         {
@@ -178,7 +350,9 @@ public partial class Ib190074DogadjaBaContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+        SeedData(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    
 }

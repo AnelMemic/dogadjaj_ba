@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dogadjaj_ba.Services.Database;
 
@@ -11,9 +12,11 @@ using dogadjaj_ba.Services.Database;
 namespace dogadjaj_ba.Services.Migrations
 {
     [DbContext(typeof(Ib190074DogadjaBaContext))]
-    partial class Ib190074DogadjaBaContextModelSnapshot : ModelSnapshot
+    [Migration("20240214224901_testprovjera")]
+    partial class testprovjera
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,38 +66,6 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasIndex("LokacijaId");
 
                     b.ToTable("Events");
-
-                    b.HasData(
-                        new
-                        {
-                            EventId = 1,
-                            EventDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            EventName = "Test1",
-                            LokacijaId = 1,
-                            Opis = "Test",
-                            eventType = 1,
-                            subType = 1
-                        },
-                        new
-                        {
-                            EventId = 2,
-                            EventDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            EventName = "Test2",
-                            LokacijaId = 1,
-                            Opis = "Test",
-                            eventType = 1,
-                            subType = 1
-                        },
-                        new
-                        {
-                            EventId = 3,
-                            EventDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            EventName = "Test3",
-                            LokacijaId = 1,
-                            Opis = "Test",
-                            eventType = 1,
-                            subType = 1
-                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Grad", b =>
@@ -156,23 +127,6 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasIndex("GradId");
 
                     b.ToTable("Lokacija", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            LokacijaId = 1,
-                            GradId = 2
-                        },
-                        new
-                        {
-                            LokacijaId = 2,
-                            GradId = 1
-                        },
-                        new
-                        {
-                            LokacijaId = 3,
-                            GradId = 1
-                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Payment", b =>
@@ -288,41 +242,6 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
-
-                    b.HasData(
-                        new
-                        {
-                            TicketId = 1,
-                            Available = 1,
-                            Cijena = 100m,
-                            EventId = 1,
-                            UserId = 1,
-                            description = "Opis",
-                            ticketNumber = "2",
-                            title = "Title"
-                        },
-                        new
-                        {
-                            TicketId = 2,
-                            Available = 1,
-                            Cijena = 100m,
-                            EventId = 3,
-                            UserId = 2,
-                            description = "Opis2",
-                            ticketNumber = "2",
-                            title = "Title2"
-                        },
-                        new
-                        {
-                            TicketId = 3,
-                            Available = 1,
-                            Cijena = 100m,
-                            EventId = 2,
-                            UserId = 1,
-                            description = "Opis3",
-                            ticketNumber = "2",
-                            title = "Title3"
-                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.User", b =>
@@ -356,32 +275,6 @@ namespace dogadjaj_ba.Services.Migrations
                         .HasName("PK__Users__1788CC4C6285AE3B");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            Email = "test@test",
-                            ImePrezime = "t1",
-                            KorisnickoIme = "dogadjaj1",
-                            Sifra = "test"
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            Email = "test@test",
-                            ImePrezime = "t2",
-                            KorisnickoIme = "dogadjaj2",
-                            Sifra = "test"
-                        },
-                        new
-                        {
-                            UserId = 3,
-                            Email = "test@test",
-                            ImePrezime = "t3",
-                            KorisnickoIme = "dogadjaj3",
-                            Sifra = "test"
-                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.UserTicket", b =>

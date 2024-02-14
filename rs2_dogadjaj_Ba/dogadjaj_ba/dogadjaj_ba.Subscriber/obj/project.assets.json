@@ -216,19 +216,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\HOME\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Subscriber\\dogadjaj_ba.Subscriber.csproj",
+      "projectUniqueName": "C:\\Users\\HOME\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Subscriber\\dogadjaj_ba.Subscriber.csproj",
       "projectName": "dogadjaj_ba.Subscriber",
-      "projectPath": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Subscriber\\dogadjaj_ba.Subscriber.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Subscriber\\obj\\",
+      "projectPath": "C:\\Users\\HOME\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Subscriber\\dogadjaj_ba.Subscriber.csproj",
+      "packagesPath": "C:\\Users\\HOME\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\HOME\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Subscriber\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HOME\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -242,8 +247,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj": {
-              "projectPath": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj"
+            "C:\\Users\\HOME\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj": {
+              "projectPath": "C:\\Users\\HOME\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj"
             }
           }
         }
@@ -287,7 +292,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
