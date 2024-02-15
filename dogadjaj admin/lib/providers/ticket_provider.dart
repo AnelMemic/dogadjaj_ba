@@ -16,7 +16,7 @@ class TicketProvider extends BaseProvider<Ticket> {
   }
 
   Future<List<Ticket>> getAll() async {
-    var url = 'https://localhost:7056/User'; // Replace with your API endpoint
+    var url = 'http://localhost:8080/User'; // Replace with your API endpoint
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();

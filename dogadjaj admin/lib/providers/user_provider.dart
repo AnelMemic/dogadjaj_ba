@@ -23,7 +23,7 @@ class UserProvider extends BaseProvider<User> {
 //   }
 
   Future<List<User>> getAll() async {
-    var url = 'https://localhost:7056/User'; // Replace with your API endpoint
+    var url = 'http://localhost:8080/User'; // Replace with your API endpoint
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
@@ -48,7 +48,7 @@ class UserProvider extends BaseProvider<User> {
   }
 
   Future<User> loginAsync(String username, String password) async {
-    var url = 'https://localhost:7056/User/login';
+    var url = 'http://localhost:8080/User/login';
     var uri = Uri.parse(url);
     print(url);
     print(uri);

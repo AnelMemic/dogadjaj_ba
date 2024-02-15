@@ -2,11 +2,11 @@ version: '3'
 services:
   # SQL Server Docker Container
   sql:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=Dogadjaj123
+      - SA_PASSWORD=Dogadjaj123!
       - MSSQL_PID=Developer
     ports:
       - 1435:1433
@@ -20,7 +20,8 @@ services:
       context: .
       dockerfile: dogadjaj_ba\Dockerfile
     environment:
-      - ConnectionStrings:Main=Server=sql,1433;Database=dogadjaj_ba;User=sa;Password=Dogadjaj123;TrustServerCertificate=True;ConnectRetryCount=0
+      - ConnectionStrings:DefaultConnection=Server=sql,1433;Database=dogadjajba;User=sa;Password=Dogadjaj123!;ConnectRetryCount=0; TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - 8080:80
     networks:
@@ -32,3 +33,6 @@ services:
 networks:
   dogadjajnetwork:
     driver: bridge
+
+
+

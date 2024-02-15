@@ -8,9 +8,10 @@ COPY . .
 
 
 FROM build AS publish
-RUN dotnet publish "rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.csproj" -c Release -o /app
+RUN dotnet publish "dogadjaj_ba\dogadjaj_ba.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "dogadjaj_ba.dll"]
+

@@ -8,13 +8,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ServiceStack;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddTransient<IEventiService, EventiService>();
- builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<BaseState>();
 builder.Services.AddTransient<InitialEventState>();
 builder.Services.AddTransient<ActiveEventState>();
@@ -25,7 +26,6 @@ builder.Services.AddTransient<IPaymentService, PaymentService>();
 builder.Services.AddTransient<IReportDatumServices, ReportDatumServices>();
 builder.Services.AddTransient<IReservationService, ReservationService>();
 builder.Services.AddTransient<ITicketService, TicketServices>();
-
 
 
 
@@ -58,16 +58,23 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 
-builder.Services.AddAuthentication("QueryStringAuthentication")
-        .AddScheme<AuthenticationSchemeOptions, QueryStringAuthenticationHandler>("QueryStringAuthentication", null);
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<Ib190074DogadjaBaContext>(options =>
     options.UseSqlServer(connectionString));
 
+
 builder.Services.AddAutoMapper(typeof(IUserService));
-//builder.Services.AddAuthentication("BasicAuthentication")
-//    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+
+builder.Services.AddAuthentication("QueryStringAuthentication")
+        .AddScheme<AuthenticationSchemeOptions, QueryStringAuthenticationHandler>("QueryStringAuthentication", null);
+
+//builder.Services.AddAuthentication("QueryStringAuthentication")
+//        .AddScheme<AuthenticationSchemeOptions, QueryStringAuthenticationHandler>("QueryStringAuthentication", null);
+
+
+//builder.Services.AddDbContext<Ib190074DogadjaBaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
@@ -75,9 +82,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI( 
-        );
+    app.UseSwaggerUI(); 
 }
+
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -85,5 +95,21 @@ app.UseAuthorization();
 app.UseAuthentication();
 
 app.MapControllers();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<Ib190074DogadjaBaContext>();
+  
+
+    var conn = dataContext.Database.GetConnectionString();
+
+     await dataContext.Database.MigrateAsync();
+
+    dataContext.Database.EnsureCreated();
+
+
+}
+
 
 app.Run();
