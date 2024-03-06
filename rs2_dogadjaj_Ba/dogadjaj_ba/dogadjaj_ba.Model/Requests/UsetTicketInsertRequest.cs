@@ -10,5 +10,7 @@ namespace dogadjaj_ba.Model.Requests
     {
         public int UserId { get; set; }
         public int TicketId { get; set; }
+
+        public int Kolicina { get; set; }
     }
 }

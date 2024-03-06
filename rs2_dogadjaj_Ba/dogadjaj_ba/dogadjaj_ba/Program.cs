@@ -7,8 +7,13 @@ using dogadjaj_ba.Services.EventiStateMachine;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
 using ServiceStack;
 using System;
+using System.Text;
+using dogadjaj_ba.Model.Requests;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +31,9 @@ builder.Services.AddTransient<IPaymentService, PaymentService>();
 builder.Services.AddTransient<IReportDatumServices, ReportDatumServices>();
 builder.Services.AddTransient<IReservationService, ReservationService>();
 builder.Services.AddTransient<ITicketService, TicketServices>();
+builder.Services.AddTransient<IUserTicketService, UserTicketService>();
+builder.Services.AddTransient<INotificationService, NotificationService>();
+
 
 
 
@@ -57,6 +65,9 @@ builder.Services.AddSwaggerGen(c => {
         }
     });
 });
+
+builder.Services.AddScoped<IMessageProducer, MessageProducer>();
+
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<Ib190074DogadjaBaContext>(options =>
@@ -111,5 +122,58 @@ using (var scope = app.Services.CreateScope())
 
 }
 
+string hostname = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "";
+string username = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest";
+string password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest";
+string virtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VIRTUALHOST") ?? "/";
+
+var factory = new ConnectionFactory
+{
+    HostName = hostname,
+    UserName = username,
+    Password = password,
+    VirtualHost = virtualHost,
+};
+using var connection = factory.CreateConnection();
+using var channel = connection.CreateModel();
+
+
+channel.QueueDeclare(queue: "notification",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: true,
+                     arguments: null);
+
+Console.WriteLine(" [*] Waiting for messages.");
+
+var consumer = new EventingBasicConsumer(channel);
+consumer.Received += async (model, ea) =>
+{
+    var body = ea.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+    Console.WriteLine(message.ToString());
+    var notification = JsonSerializer.Deserialize<NotificationInsertRequest>(message);
+    using (var scope = app.Services.CreateScope())
+    {
+        var notificationsService = scope.ServiceProvider.GetRequiredService<INotificationService>();
+
+        if (notification != null)
+        {
+            try
+            {
+
+                await notificationsService.Insert(notification);
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+    }
+    Console.WriteLine(Environment.GetEnvironmentVariable("Some"));
+};
+channel.BasicConsume(queue: "notification",
+                     autoAck: true,
+                     consumer: consumer);
 
 app.Run();

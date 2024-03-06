@@ -1,0 +1,148 @@
+import 'dart:convert';
+
+import 'package:mobile/constants.dart';
+import 'package:mobile/models/SearchObjects/notification_search_object.dart';
+import 'package:mobile/models/notification.dart';
+import 'base_provider.dart';
+
+class NotificationsProvider extends BaseProvider<Notifications> {
+  NotificationsProvider() : super("Notification");
+
+// Map<String, String> headers = createHeaders();
+//     headers['Content-Type'] = 'application/json';
+
+//     var request = <String, String>{
+//       'username': username,
+//       'password': password,
+//     };
+//     var jsonRequest = jsonEncode(request);
+
+//     var response = await http!.post(uri, headers: headers, body: jsonRequest);
+//     print(response.body);
+
+//     if (response.statusCode == 200) {
+//       var data = jsonDecode(response.body);
+
+//       user = User.fromJson(data);
+//       notifyListeners();
+//       return user!;
+//     } else {
+//       throw Exception(response.body);
+//     }
+//   }
+
+
+ Future<List<Notifications>> getPaged(
+      {NotificationsSearchObject? searchObject}) async {
+    var uri = Uri.parse('$apiUrl/Notification/GetAllNotifications');
+    Map<String, String> headers = createHeaders();
+    headers['Content-Type'] = 'application/json';
+    final Map<String, String> queryParameters = {};
+    if (searchObject != null) {
+      if (searchObject.content != null) {
+        queryParameters['content'] = searchObject.content!;
+      }
+
+      if (searchObject.userId != null) {
+        queryParameters['userId'] = searchObject.userId.toString();
+      }
+
+      if (searchObject.seen != null) {
+        queryParameters['seen'] = searchObject.seen.toString();
+      }
+      if (searchObject.PageNumber != null) {
+        queryParameters['PageNumber'] = searchObject.PageNumber.toString();
+      }
+      if (searchObject.PageSize != null) {
+        queryParameters['PageSize'] = searchObject.PageSize.toString();
+      }
+    }
+    uri = uri.replace(queryParameters: queryParameters);
+    final response = await http!.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data.map((d) => fromJson(d)).cast<Notifications>().toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+Future<List<Notifications>> getAll(
+      {NotificationsSearchObject? searchObject}) async {
+    var uri = Uri.parse('$apiUrl/Notification/GetAllNotifications');
+    Map<String, String> headers = createHeaders();
+    headers['Content-Type'] = 'application/json';
+    final Map<String, String> queryParameters = {};
+    if (searchObject != null) {
+      if (searchObject.content != null) {
+        queryParameters['content'] = searchObject.content!;
+      }
+
+      if (searchObject.userId != null) {
+        queryParameters['userId'] = searchObject.userId.toString();
+      }
+
+      if (searchObject.seen != null) {
+        queryParameters['seen'] = searchObject.seen.toString();
+      }
+      if (searchObject.PageNumber != null) {
+        queryParameters['PageNumber'] = searchObject.PageNumber.toString();
+      }
+      if (searchObject.PageSize != null) {
+        queryParameters['PageSize'] = searchObject.PageSize.toString();
+      }
+    }
+    uri = uri.replace(queryParameters: queryParameters);
+    final response = await http!.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      // var items = data['items'];
+      return data.map((d) => fromJson(d)).cast<Notifications>().toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+Future<dynamic> setAsSeen(int id) async {
+    var uri = Uri.parse('$apiUrl/Notification/SetNotificationsAsSeen');
+
+    Map<String, String> headers = createHeaders();
+    headers['Content-Type'] = 'application/json';
+
+    final Map<String, String> queryParameters = {};
+     queryParameters['id'] = id.toString();
+    uri = uri.replace(queryParameters: queryParameters);
+    
+    var response = await http!.put(uri, headers: headers);
+
+    if (response.statusCode == 200) {
+      return "OK";
+    } else {
+      throw Exception('Greška prilikom unosa');
+    }
+  }
+
+  Future<dynamic> setAsDeleted(int id) async {
+    var uri = Uri.parse('$apiUrl/Notification/SetNotificationAsDeleted');
+
+    Map<String, String> headers = createHeaders();
+    headers['Content-Type'] = 'application/json';
+
+    final Map<String, String> queryParameters = {};
+    queryParameters['id'] = id.toString();
+    uri = uri.replace(queryParameters: queryParameters);
+
+    var response = await http!.put(uri, headers: headers);
+
+    if (response.statusCode == 200) {
+      return "OK";
+    } else {
+      throw Exception('Greška prilikom unosa');
+    }
+  }
+
+  @override
+  Notifications fromJson(data) {
+    return Notifications.fromJson(data);
+  }
+}

@@ -1,6 +1,3 @@
-
-
-
 import 'dart:convert';
 
 import 'package:mobile/constants.dart';
@@ -12,17 +9,17 @@ import 'base_provider.dart';
 class EventProvider extends BaseProvider<Event> {
   EventProvider() : super("Eventi");
 
-Future<List<Event>> getPaged(
-      {EventSearchObject? searchObject}) async {
-     var url = '$apiUrl/Eventi/getEvents';
-  var uri = Uri.parse(url);
+  Future<List<Event>> getPaged({EventSearchObject? searchObject}) async {
+    var url = '$apiUrl/Eventi/getEvents';
+    var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
-  headers['Content-Type'] = 'application/json';
+    headers['Content-Type'] = 'application/json';
     final Map<String, String> queryParameters = {};
     if (searchObject != null) {
       if (searchObject.PodKategorija != null) {
-        queryParameters['PodKategorija'] = searchObject.PodKategorija.toString();
+        queryParameters['PodKategorija'] =
+            searchObject.PodKategorija.toString();
       }
       if (searchObject.kategorija != null) {
         queryParameters['kategorija'] = searchObject.kategorija.toString();
@@ -43,8 +40,6 @@ Future<List<Event>> getPaged(
       throw Exception('Failed to load data');
     }
   }
-
-
 
   @override
   Event fromJson(data) {

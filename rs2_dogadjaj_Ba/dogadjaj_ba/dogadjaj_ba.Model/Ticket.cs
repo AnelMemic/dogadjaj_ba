@@ -17,5 +17,7 @@ namespace dogadjaj_ba.Model
         public int Available { get; set; }
 
         public decimal? Cijena { get; set; }
+
+        public Event Event { get; set; }
     }
 }

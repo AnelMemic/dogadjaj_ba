@@ -15,7 +15,7 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
   TextEditingController searchController = TextEditingController(text: '');
   final ScrollController controller = ScrollController();
   final EventProvider eventProvider = EventProvider();
-  String searchEventName = ''; // Default value for eventName filtering
+  String searchEventName = ''; 
 
   @override
   void dispose() {

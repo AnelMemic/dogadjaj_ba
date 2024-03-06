@@ -21,6 +21,12 @@ namespace dogadjaj_ba.Controllers
         {
 
         }
+        [HttpGet("getByUserId")]
+        public async Task<IActionResult> getUserTicketsById([FromQuery] UserTicketSearchObject searchObject , CancellationToken cancellationToken)
+        {
 
+            var dto = await (_service as IUserTicketService).GetByUserId(searchObject, cancellationToken);
+            return Ok(dto);
+        }
     }
 }

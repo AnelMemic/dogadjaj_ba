@@ -4,11 +4,14 @@ import 'package:mobile/constants.dart';
 import 'package:mobile/helpers/app_decoration.dart';
 import 'package:mobile/helpers/error_dialog.dart';
 import 'package:mobile/models/SearchObjects/ticket_search_object.dart';
+import 'package:mobile/models/SearchObjects/user_ticket_search_object.dart';
 import 'package:mobile/models/event.dart';
 import 'package:mobile/models/ticket.dart';
+import 'package:mobile/models/user_ticket.dart';
 import 'package:mobile/providers/event_provider.dart';
 import 'package:mobile/providers/ticket_provider.dart';
 import 'package:mobile/providers/user_provider.dart';
+import 'package:mobile/providers/user_ticket_provider.dart';
 import 'package:provider/provider.dart';
 
 class UserTicketsScreen extends StatefulWidget {
@@ -21,6 +24,7 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
 
   late UserProvider _loginProvider;
   late TicketProvider _ticketProvider;
+  late UserTicketProvider _userTicketProvider;
   late EventProvider _eventProvider;
   int currentPage = 1;
   int pageSize = 1000000;
@@ -28,7 +32,7 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
   int? _eventId;
   bool? _expired = false;
   int _status = 1;
-  List<Ticket> _userTickets = <Ticket>[];
+  List<UserTicket> _userTickets = <UserTicket>[];
   List<Ticket> _tickets = <Ticket>[];
   List<Event> _events = <Event>[];
 
@@ -38,9 +42,8 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
     _loginProvider = context.read<UserProvider>();
     _ticketProvider = context.read<TicketProvider>();
     _eventProvider = context.read<EventProvider>();
+    _userTicketProvider = context.read<UserTicketProvider>();
     loadUser();
-    loadTickets();
-    loadEvents();
     loadUserTickets();
   }
 
@@ -49,47 +52,13 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
     _userId = id;
   }
 
- void loadTickets() async {
-    try {
-      
-      var Response =
-          await _ticketProvider.get();
-      if (mounted) {
-        setState(() {
-          _tickets = Response;
-          print("Tickets");
-          print(_tickets[0].cijena);
-        });
-      }
-    } on Exception catch (e) {
-      showErrorDialog(context, e.toString().substring(11));
-    }
-  }
-  
-void loadEvents() async {
-    try {
-      
-      var Response =
-          await _eventProvider.get();
-      if (mounted) {
-        setState(() {
-          _events = Response;
-             print("Events");
-          print(_events);
-        });
-      }
-    } on Exception catch (e) {
-      showErrorDialog(context, e.toString().substring(11));
-    }
-  }
-  
   void loadUserTickets() async {
     try {
       loadUser();
-    TicketSearchObject searchObject = TicketSearchObject(
-          userId: _userId);
-      var Response =
-          await _ticketProvider.getPaged(searchObject: searchObject);
+      UserTicketSearchObject searchObject =
+          UserTicketSearchObject(userId: _userId);
+
+      var Response = await _userTicketProvider.getUserById(searchObject);
       if (mounted) {
         setState(() {
           _userTickets = Response;
@@ -109,16 +78,15 @@ void loadEvents() async {
         backgroundColor: kBackgroundColor,
         body: Column(
           children: [
-           
             Container(
               height: 1.0,
               color: const Color.fromARGB(255, 214, 214, 214),
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Row(
-              children: [
-              
-              ],
+              children: [],
             ),
             SingleChildScrollView(
               child: Padding(
@@ -128,8 +96,15 @@ void loadEvents() async {
                 ),
                 child: Column(
                   children: [
-                      Text("Moje karte",style: TextStyle(color: white,fontSize: 30,fontWeight: FontWeight.bold),),
-                    _buildEvensInfo(context)],
+                    Text(
+                      "Moje karte",
+                      style: TextStyle(
+                          color: white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    _buildUserTicketsInfo(context)
+                  ],
                 ),
               ),
             ),
@@ -159,7 +134,7 @@ void loadEvents() async {
     );
   }
 
-  Widget _buildEvensInfo(BuildContext context) {
+  Widget _buildUserTicketsInfo(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(10),
@@ -169,7 +144,7 @@ void loadEvents() async {
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: _events.length,
+        itemCount: _userTickets.length,
         itemBuilder: (context, index) {
           return Container(
             padding: EdgeInsets.all(5),
@@ -189,11 +164,37 @@ void loadEvents() async {
                       //     ),
                       //   ),
                       // ],
-                      _buildEventsData("Naziv eventa: ", _events[index].eventName?? "--"),
-                      _buildEventsData("Opis: ", _events[index].opis?? "--"),
-                       _buildEventsData('Datum održavnja: ',
-                          '${_formatDate(_events[index].eventDate)}'),
+                      // Image container
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            child: Image.asset(
+                              "assets/images/fllogo.jpg", // Replace with the actual property name
+                              height: 80,
+                              width: 80,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                            
+                              _buildEventsData("Karta za event: ", _userTickets[index].ticket!.event!.eventName.toString()),
+                          _buildEventsData("Datum: ", DateFormat('dd/MM/yyyy').format(_userTickets[index].ticket!.event!.eventDate!).toString()),
+
+                            ],
+                          ),
+                        ],
+                      ),
                       
+                      _buildEventsData(
+                          "Cijena: karte:",
+                          _userTickets[index]!.ticket!.cijena.toString() +
+                              " KM"),
+                      _buildEventsData("Broj karata: ",
+                          _userTickets[index].kolicina.toString()),
+
                       Divider()
                     ],
                   ),
@@ -215,15 +216,11 @@ void loadEvents() async {
             Text(
               label,
               style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: white
-              ),
+                  fontSize: 14, fontWeight: FontWeight.normal, color: white),
             ),
             Text(
               value,
-              style: TextStyle(fontSize: 14,color: white),
-              
+              style: TextStyle(fontSize: 14, color: white),
             ),
           ],
         ),
@@ -238,5 +235,4 @@ void loadEvents() async {
     }
     return DateFormat('dd.MM.yyyy').format(date);
   }
-
 }

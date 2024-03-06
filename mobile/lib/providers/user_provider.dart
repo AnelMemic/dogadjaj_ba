@@ -7,21 +7,6 @@ class UserProvider extends BaseProvider<User> {
   UserProvider() : super('User');
   User? user;
 
-//  Future<T> insert(dynamic request) async {
-//     var url = "$_baseUrl$_endpoint";
-//     var uri = Uri.parse(url);
-//     var headers = createHeaders();
-
-//     var jsonRequest = jsonEncode(request);
-//     var response = await http.post(uri, headers: headers, body: jsonRequest);
-
-//     if (isValidResponse(response)) {
-//       var data = jsonDecode(response.body);
-//       return fromJson(data);
-//     } else {
-//       throw new Exception("Unknown error");
-//     }
-//   }
 
   Future<User> loginAsync(String username, String password) async {
     var url = '$apiUrl/User/login';
@@ -82,6 +67,11 @@ class UserProvider extends BaseProvider<User> {
       return user!.id;
     }
     return null;
+  }
+
+   void logout() {
+    user = null;
+    notifyListeners();
   }
 
   @override

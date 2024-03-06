@@ -147,8 +147,16 @@ namespace dogadjaj_ba.Services.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LokacijaId"));
 
+                    b.Property<string>("Adresa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("GradId")
                         .HasColumnType("int");
+
+                    b.Property<string>("NazivObjekta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LokacijaId")
                         .HasName("PK__Lokacija__49DE2CCAF13201B9");
@@ -161,17 +169,86 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             LokacijaId = 1,
-                            GradId = 2
+                            Adresa = "Mostar 88000",
+                            GradId = 2,
+                            NazivObjekta = "Plaza Mostar"
                         },
                         new
                         {
                             LokacijaId = 2,
-                            GradId = 1
+                            Adresa = "Mostar 88000",
+                            GradId = 1,
+                            NazivObjekta = "Plaza Mostar"
                         },
                         new
                         {
                             LokacijaId = 3,
-                            GradId = 1
+                            Adresa = "Mostar 88000",
+                            GradId = 1,
+                            NazivObjekta = "Plaza Mostar"
+                        });
+                });
+
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.Notiffication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateRead")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Read")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("SendOnDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notiffications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
+                            Deleted = false,
+                            Read = false,
+                            SendOnDate = new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8739),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
+                            Deleted = false,
+                            Read = false,
+                            SendOnDate = new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8768),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
+                            Deleted = false,
+                            Read = false,
+                            SendOnDate = new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8770),
+                            UserId = 3
                         });
                 });
 
@@ -392,6 +469,9 @@ namespace dogadjaj_ba.Services.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserTicketID"));
 
+                    b.Property<int>("Kolicina")
+                        .HasColumnType("int");
+
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
 
@@ -426,6 +506,17 @@ namespace dogadjaj_ba.Services.Migrations
                         .HasConstraintName("FK__Lokacija__GradId__45F365D3");
 
                     b.Navigation("Grad");
+                });
+
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.Notiffication", b =>
+                {
+                    b.HasOne("dogadjaj_ba.Services.Database.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.ReportDatum", b =>

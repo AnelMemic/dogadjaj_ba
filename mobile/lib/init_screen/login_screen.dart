@@ -72,9 +72,8 @@ void login() async {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            gapH20,
             const LogoWidget(),
-            gapH64,
+            gapH20,
             Center(
               child: Text(
                 'Prijava'.toUpperCase(),
@@ -96,12 +95,9 @@ void login() async {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                    Text(
-                      "Prijava",
-                      style: theme.textTheme.displaySmall,
-                    ),
+                   
                     SizedBox(height: 20),
-                    _buildEmailField(context),
+                    _buildUserNameField(context),
                     SizedBox(height: 20),
                     _buildPasswordField(context),
                     SizedBox(height: 20,),
@@ -129,7 +125,7 @@ void login() async {
     );
   }
 
-  Widget _buildEmailField(BuildContext context) {
+  Widget _buildUserNameField(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 1),
       padding: EdgeInsets.symmetric(
@@ -146,11 +142,11 @@ void login() async {
           Padding(
             padding: EdgeInsets.only(left: 2),
             child: Text(
-              "Email",
+              "Korisnicko ime",
               style: CustomTextStyles.titleLargeGray90001,
             ),
           ),
-          SizedBox(height: 14),
+          SizedBox(height: 10),
           Stack(
             alignment: Alignment.centerRight,
             children: [
@@ -198,7 +194,7 @@ void login() async {
               style: CustomTextStyles.titleLargeGray90001,
             ),
           ),
-          SizedBox(height: 14),
+          SizedBox(height: 10),
           Stack(
             alignment: Alignment.centerRight,
             children: [

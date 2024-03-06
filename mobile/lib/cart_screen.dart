@@ -55,20 +55,20 @@ class _TicketsScreenState extends State<TicketsScreen> {
   }
 
   void loadTickets() async {
-    try {
-      TicketSearchObject searchObject = TicketSearchObject(
-        eventId: _eventId,
-      );
-      var Response = await _ticketProvider.getPaged(searchObject: searchObject);
-      if (mounted) {
-        setState(() {
-          _tickets = Response;
-        });
-      }
-    } on Exception catch (e) {
-      showErrorDialog(context, e.toString().substring(11));
+  try {
+    TicketSearchObject searchObject = TicketSearchObject(
+      eventId: _selectedEventId,
+    );
+    var Response = await _ticketProvider.getPaged(searchObject: searchObject);
+    if (mounted) {
+      setState(() {
+        _tickets = Response;
+      });
     }
+  } on Exception catch (e) {
+    showErrorDialog(context, e.toString().substring(11));
   }
+}
 
   void loadEvents() async {
     try {
@@ -77,7 +77,6 @@ class _TicketsScreenState extends State<TicketsScreen> {
         setState(() {
           _events = Response;
 
-          // Add the "All" option
           if (_showAllOption) {
             _eventDropdownItems.add(
               DropdownMenuItem<int>(
@@ -90,7 +89,6 @@ class _TicketsScreenState extends State<TicketsScreen> {
             );
           }
 
-          // Populate the dropdown items
           _eventDropdownItems.addAll(
             _events.map(
               (event) => DropdownMenuItem<int>(
@@ -108,26 +106,6 @@ class _TicketsScreenState extends State<TicketsScreen> {
       showErrorDialog(context, e.toString().substring(11));
     }
   }
-
-  // void loadUserTickets() async {
-  //   try {
-  //     loadUser();
-  //   TicketSearchObject searchObject = TicketSearchObject(
-  //         eventId: _eventId,
-  //         PageNumber: currentPage,
-  //         PageSize: pageSize,
-  //         userId: _userId);
-  //     var Response =
-  //         await _ticketProvider.getPaged(searchObject: searchObject);
-  //     if (mounted) {
-  //       setState(() {
-  //         _userTickets = Response;
-  //       });
-  //     }
-  //   } on Exception catch (e) {
-  //     showErrorDialog(context, e.toString().substring(11));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

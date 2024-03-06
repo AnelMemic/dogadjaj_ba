@@ -11,6 +11,8 @@ namespace dogadjaj_ba.Model
         public int LokacijaId { get; set; }
 
         public int? GradId { get; set; }
+        public string Adresa { get; set; }
+        public string NazivObjekta { get; set; }
 
         //public virtual ICollection<Event> Events { get; set; } = new List<Event>();
         //public virtual Grad? Grad { get; set; }

@@ -7,10 +7,10 @@ import 'package:mobile/helpers/error_dialog.dart';
 import 'package:mobile/models/SearchObjects/ticket_search_object.dart';
 import 'package:mobile/models/ticket.dart';
 import 'package:mobile/providers/ticket_provider.dart';
+import 'package:mobile/providers/user_provider.dart';
 import 'package:mobile/providers/user_ticket_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-
 
 import 'package:intl/intl.dart';
 
@@ -27,6 +27,7 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
   List<Ticket> packages = <Ticket>[];
   late TicketProvider _ticketProvider;
   late UserTicketProvider _userTicketProvider;
+  late UserProvider _userProvider;
   Ticket? _selectedTicket;
   int? _numberOfTickets;
   int currentPage = 1;
@@ -38,6 +39,7 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
   void initState() {
     super.initState();
     _ticketProvider = context.read<TicketProvider>();
+    _userProvider = context.read<UserProvider>();
     _userTicketProvider = context.read<UserTicketProvider>();
     loadTickets();
   }
@@ -45,8 +47,8 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
   void loadTickets() async {
     try {
       var response = await _ticketProvider.getPaged(
-          searchObject: TicketSearchObject(
-              PageNumber: currentPage, PageSize: pageSize));
+          searchObject:
+              TicketSearchObject(PageNumber: currentPage, PageSize: pageSize));
 
       setState(() {
         packages = response;
@@ -55,32 +57,38 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
       showErrorDialog(context, e.toString().substring(11));
     }
   }
- double calculateTotalPrice() {
-    if (_selectedTicket != null && _numberOfTickets  != null) {
+
+  double calculateTotalPrice() {
+    if (_selectedTicket != null && _numberOfTickets != null) {
       double basePrice = _selectedTicket!.cijena! * _numberOfTickets!;
 
       return basePrice;
     }
     return 0;
   }
+   void loadUser() async {
+    var id = _userProvider.getUserId();
+    _userId = id;
+  }
 
- void InsertUserPackage() async {
+  void InsertUserPackage() async {
     try {
-      // loadUser();
+      loadUser();
 
-      var newPackage = {
+      var newUserTicket = {
         "userId": _userId,
-        "ticketId": _selectedTicket!.ticketId
+        "ticketId": _selectedTicket!.ticketId,
+        "kolicina": _numberOfTickets
       };
 
-      var userPackage = await _userTicketProvider.insert(newPackage);
+      var userPackage = await _userTicketProvider.insert(newUserTicket);
 
       if (userPackage == "OK") {
         currentPage == 1;
-         ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
               backgroundColor: Color(0XFF12B422),
-              content: Text('Uspjesna kupljeno ulaznica: $_numberOfTickets.',
+              content: Text('Uspjesno kupljeno ulaznica: $_numberOfTickets.',
                   style: TextStyle(
                     color: Colors.white,
                   ))),
@@ -91,23 +99,25 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
     }
   }
 
-
- showPaymentSheet() async {
-    if (_selectedTicket == null || _numberOfTickets == null || _numberOfTickets==0) {
+  showPaymentSheet() async {
+    if (_selectedTicket == null ||
+        _numberOfTickets == null ||
+        _numberOfTickets == 0) {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          backgroundColor:  black,
-          content: Text("Molimo odaberite ulaznicu i broj ulaznica.",style: TextStyle(color: white),),
+          backgroundColor: black,
+          content: Text(
+            "Molimo odaberite ulaznicu i broj ulaznica.",
+            style: TextStyle(color: white),
+          ),
           actions: [
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-            
               child: Text(
                 "OK",
-              
               ),
             ),
           ],
@@ -141,9 +151,9 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
     });
 
     try {
-        await Stripe.instance.presentPaymentSheet();
+      await Stripe.instance.presentPaymentSheet();
 
-      // InsertUserPackage();
+      InsertUserPackage();
     } catch (e) {
       //silent
     }
@@ -198,7 +208,10 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
                         items: packages.map((Ticket ticket) {
                           return DropdownMenuItem<Ticket>(
                             value: ticket,
-                            child: Text('${ticket.title} -${ticket.cijena}KM ' ?? '', style: TextStyle(color: white),),
+                            child: Text(
+                              '${ticket.title} -${ticket.cijena}KM ' ?? '',
+                              style: TextStyle(color: white),
+                            ),
                           );
                         }).toList(),
                         onChanged: (Ticket? selectedTicket) {
@@ -206,7 +219,10 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
                             _selectedTicket = selectedTicket;
                           });
                         },
-                        hint: Text('Izaberite ulaznicu', style: TextStyle(color: white),),
+                        hint: Text(
+                          'Izaberite ulaznicu',
+                          style: TextStyle(color: white),
+                        ),
                       ),
                     ),
                   ),
@@ -225,7 +241,10 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
                         items: List.generate(10, (index) {
                           return DropdownMenuItem<int>(
                             value: index + 1,
-                            child: Text('${index + 1} kom', style: TextStyle(color: white),),
+                            child: Text(
+                              '${index + 1} kom',
+                              style: TextStyle(color: white),
+                            ),
                           );
                         }),
                         onChanged: (int? numberOfTickets) {
@@ -233,7 +252,8 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
                             _numberOfTickets = numberOfTickets;
                           });
                         },
-                        hint: Text('Izaberite broj ulaznica',style: TextStyle(color: white)),
+                        hint: Text('Izaberite broj ulaznica',
+                            style: TextStyle(color: white)),
                       ),
                     ),
                   ),
@@ -275,10 +295,8 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                      
                         child: Text(
                           "Zatvori",
-                          
                         ),
                       ),
                       SizedBox(
@@ -288,10 +306,8 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
                         onPressed: () {
                           showPaymentSheet();
                         },
-                       
                         child: Text(
                           "Uplati",
-                         
                         ),
                       ),
                     ],
@@ -305,7 +321,7 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
     );
   }
 
-   Widget _buildTitle() {
+  Widget _buildTitle() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

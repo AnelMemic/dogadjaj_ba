@@ -15,3 +15,4 @@ namespace dogadjaj_ba.Model
         public int? EventId { get; set; }
     }
 }
+  

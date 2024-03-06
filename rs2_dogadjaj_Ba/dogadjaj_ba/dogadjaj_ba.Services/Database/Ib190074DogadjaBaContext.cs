@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using Microsoft.EntityFrameworkCore;
 using dogadjaj_ba.Services;
+using System.Numerics;
 namespace dogadjaj_ba.Services.Database;
 
 public partial class Ib190074DogadjaBaContext : DbContext
@@ -25,8 +26,9 @@ public partial class Ib190074DogadjaBaContext : DbContext
 
     public virtual DbSet<Payment> Payments { get; set; }
 
-   // public virtual DbSet<Payment1> Payments1 { get; set; }
+    // public virtual DbSet<Payment1> Payments1 { get; set; }
 
+    public virtual DbSet<Notiffication> Notiffications { get; set; }
 
     public virtual DbSet<ReportDatum> ReportData { get; set; }
 
@@ -50,7 +52,8 @@ public partial class Ib190074DogadjaBaContext : DbContext
         SeedEvents(modelBuilder);
         SeedUsers(modelBuilder);
         SeedTicket(modelBuilder);
-        
+        SeedNotifications(modelBuilder);
+
 
 
         //LokacijaId
@@ -132,6 +135,8 @@ public partial class Ib190074DogadjaBaContext : DbContext
            {
                LokacijaId = 1,
                GradId = 2,
+               Adresa= "Mostar 88000",
+               NazivObjekta= "Plaza Mostar"
 
 
            },
@@ -139,12 +144,16 @@ public partial class Ib190074DogadjaBaContext : DbContext
            {
                LokacijaId = 2,
                GradId = 1,
+               Adresa = "Mostar 88000",
+               NazivObjekta = "Plaza Mostar"
 
            },
            new()
            {
                LokacijaId = 3,
                GradId = 1,
+               Adresa = "Mostar 88000",
+               NazivObjekta = "Plaza Mostar"
 
            });
     }
@@ -211,6 +220,41 @@ public partial class Ib190074DogadjaBaContext : DbContext
            });
     }
 
+    private void SeedNotifications(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Notiffication>().HasData(
+           new()
+           {
+               Id = 1,
+               Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
+               DateRead = null,
+               SendOnDate = DateTime.Now,
+               Deleted = false,
+               Read = false,
+               UserId = 1,
+
+           },
+           new()
+           {
+               Id = 2,
+               Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
+               DateRead = null,
+               SendOnDate = DateTime.Now,
+               Deleted = false,
+               Read = false,
+               UserId = 2,
+           },
+           new()
+           {
+               Id = 3,
+               Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
+               DateRead = null,
+               SendOnDate = DateTime.Now,
+               Deleted = false,
+               Read = false,
+               UserId = 3,
+           });
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

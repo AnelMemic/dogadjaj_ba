@@ -1,13 +1,13 @@
-class TicketSearchObject {
+class UserTicketSearchObject {
   int? PageNumber;
   int? PageSize;
   int? userId;
 
 
-  TicketSearchObject(
+  UserTicketSearchObject(
       { this.PageNumber, this.PageSize, this.userId,});
 
-  TicketSearchObject.fromJson(Map<String, dynamic> json) {
+  UserTicketSearchObject.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     PageNumber = json['PageNumber'];
     PageSize = json['PageSize'];

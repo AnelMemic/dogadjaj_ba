@@ -1,9 +1,12 @@
+import 'package:mobile/models/event.dart';
+
 class Ticket {
   late int ticketId;
   late int? userId;
   late int? eventId;
   late double? cijena;
   late String? title; 
+  late Event? event; 
   late String? description; 
   late String? ticketNumber; 
   late int? available; 
@@ -12,6 +15,7 @@ class Ticket {
     required this.ticketId,
     this.userId,
     this.eventId,
+    this.event,
     this.cijena,
     this.title,
     this.description,
@@ -28,6 +32,11 @@ class Ticket {
     description = json['description'];
     ticketNumber = json['ticketNumber'];
     available = json['available'];
+     if (json['event'] != null) {
+      event = Event.fromJson(json['event']);
+    } else {
+      event = null;
+    }
   }
 
   Map<String, dynamic> toJson() {

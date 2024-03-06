@@ -1,0 +1,71 @@
+version: '3'
+services:
+  rabbitMQ:
+    image: rabbitmq:3-management
+    container_name: 'rabbitmqDogadjaj'
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - 8050:15672
+      - 5672:5672
+    expose:
+      - 5672
+    networks: 
+    - dogadjajnetwork
+  # SQL Server Docker Container
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Dogadjaj123!
+      - MSSQL_PID=Developer
+    ports:
+      - 1435:1433
+    networks:
+      - dogadjajnetwork
+
+  # ASP.NET Core Application Docker Container
+  api:
+    restart: unless-stopped
+    build:
+      context: ./dogadjaj_ba
+    environment:
+      - ConnectionStrings:DefaultConnection=Server=sql,1433;Database=dogadjajba;User=sa;Password=Dogadjaj123!;ConnectRetryCount=0; TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RABBITMQ_HOST=rabbitMQ
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_VIRTUALHOST=/
+    ports:
+      - 7056:7056
+    networks:
+      - dogadjajnetwork
+    links:
+      - sql
+    depends_on:
+      - sql
+
+  dogadjajauxiliary:
+    restart: unless-stopped
+    build:
+      context: ./dogadjajPomocno
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RABBITMQ_HOST=rabbitMQ
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_VIRTUALHOST=/
+    ports:
+      - 7144:7144
+    networks:
+      - dogadjajnetwork
+    depends_on:
+      - rabbitMQ
+networks:
+  dogadjajnetwork:
+    driver: bridge
+
+
+

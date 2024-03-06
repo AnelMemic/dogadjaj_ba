@@ -6,9 +6,11 @@ class UserTicket {
 
   late User? user;
   late int? userID;
+  late int? kolicina;
 
   late Ticket? ticket;
   late int? ticketID;
+  
 
   UserTicket({
     required this.userTicketID,
@@ -16,12 +18,14 @@ class UserTicket {
     this.userID,
     this.ticket,
     this.ticketID,
+    this.kolicina,
   });
 
   UserTicket.fromJson(Map<String, dynamic> json) {
     userTicketID = json['userTicketID'];
     userID = json['userID'];
     ticketID = json['ticketID'];
+    kolicina = json['kolicina'];
     if (json['user'] != null) {
       user = User.fromJson(json['user']);
     } else {

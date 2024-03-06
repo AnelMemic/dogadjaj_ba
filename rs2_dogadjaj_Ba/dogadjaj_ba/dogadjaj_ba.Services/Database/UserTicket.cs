@@ -12,6 +12,8 @@ namespace dogadjaj_ba.Services.Database
         public int UserId { get; set; }
         public int TicketId { get; set; }
 
+        public int Kolicina { get; set; }
+
         public User User { get; set; }
         public Ticket Ticket { get; set; }
     }

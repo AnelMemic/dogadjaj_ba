@@ -8,6 +8,6 @@ namespace dogadjaj_ba.Model.SearchObjects
 {
     public class UserTicketSearchObject : BaseSearchObject
     {
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
     }
 }

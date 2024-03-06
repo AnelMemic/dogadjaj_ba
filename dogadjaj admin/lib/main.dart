@@ -1,11 +1,13 @@
 import 'package:dogadjaj_ba/custom_container.dart';
 import 'package:dogadjaj_ba/providers/dataprovider.dart';
 import 'package:dogadjaj_ba/providers/eventprovider.dart';
+import 'package:dogadjaj_ba/providers/notification_provider.dart';
 import 'package:dogadjaj_ba/providers/ticket_provider.dart';
 import 'package:dogadjaj_ba/providers/user_provider.dart';
 import 'package:dogadjaj_ba/screens/dogadjaji_screen.dart';
 import 'package:dogadjaj_ba/screens/izvjestajscreen.dart';
 import 'package:dogadjaj_ba/screens/karte_screen.dart';
+import 'package:dogadjaj_ba/screens/notifications_screen.dart';
 import 'package:dogadjaj_ba/screens/pregled_korisnika_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +17,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => EventProvider()),
     ChangeNotifierProvider(create: (_) => TicketProvider()),
     ChangeNotifierProvider(create: (_) => UserProvider()),
+    ChangeNotifierProvider(create: (_) => NotificationProvider()),
     // ChangeNotifierProvider(create: (_) => DataProvider()),
   ], child: MyApp()));
 }
@@ -64,6 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
           return const KarteScreen();
         case 3:
           return IzvjestajWidget();
+        case 4:
+          return NotificationsScreen();
         default:
           return Container();
       }
@@ -109,6 +114,15 @@ class _MyHomePageState extends State<MyHomePage> {
               onNavItemTapped(3);
             },
             child: const Text('Izvjestaj',
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+          ),
+           TextButton(
+            onPressed: () {
+              onNavItemTapped(4);
+            },
+            child: const Text('Obavijesti',
                 style: TextStyle(
                   color: Colors.white,
                 )),

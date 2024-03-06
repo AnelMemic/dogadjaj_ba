@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // const apiUrl = String.fromEnvironment('baseUrl', defaultValue: 'https://10.0.2.2:7056');
-const apiUrl = String.fromEnvironment('baseUrl', defaultValue: 'http://10.0.2.2:8080');
+const apiUrl = String.fromEnvironment('baseUrl', defaultValue: 'http://10.0.2.2:7056');
 
 
 const stripePublishKey = String.fromEnvironment('stripePublishKey',

@@ -9,5 +9,7 @@ namespace dogadjaj_ba.Model.Requests
     public class LokacijaUpdateRequest
     {
         public int? GradId { get; set; }
+        public string Adresa { get; set; }
+        public string NazivObjekta { get; set; }
     }
 }

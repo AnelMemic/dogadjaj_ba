@@ -40,6 +40,9 @@ namespace dogadjaj_ba.Services
             CreateMap<Services.Database.UserTicket, Model.UserTicket>();
             CreateMap<Model.Requests.UserTicketUpdateRequest, Services.Database.UserTicket>();
             CreateMap<Model.Requests.UserTicketInsertRequest, Services.Database.UserTicket>();
+            CreateMap<Services.Database.Notiffication, Model.Notification>();
+            CreateMap<Model.Requests.NotificationUpdateRequest, Services.Database.Notiffication >();
+            CreateMap<Model.Requests.NotificationInsertRequest  , Services.Database.Notiffication>();
         }
     }
     //public UserProfile()
