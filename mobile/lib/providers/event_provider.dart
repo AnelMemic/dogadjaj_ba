@@ -35,6 +35,7 @@ class EventProvider extends BaseProvider<Event> {
     final response = await http!.get(uri, headers: headers);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
+      print(data);
       return data.map((d) => fromJson(d)).cast<Event>().toList();
     } else {
       throw Exception('Failed to load data');

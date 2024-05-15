@@ -14,7 +14,7 @@ class EventProvider extends BaseProvider<Event> {
   }
 
   Future<Event> saveEvent(Event event) async {
-    var url = 'http://localhost:7056/Eventi';
+    var url = 'https://localhost:7056/Eventi';
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
@@ -34,7 +34,7 @@ class EventProvider extends BaseProvider<Event> {
   }
 
   Future<List<Event>> getAll() async {
-    var url = 'http://localhost:7056/Eventi';
+    var url = 'https://localhost:7056/Eventi';
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();

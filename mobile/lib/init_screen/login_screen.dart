@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/constants.dart';
 import 'package:mobile/custom%20widgets/app_bar_widget.dart';
@@ -6,14 +5,10 @@ import 'package:mobile/helpers/app_decoration.dart';
 import 'package:mobile/helpers/costum_text_field.dart';
 import 'package:mobile/helpers/custom_text_style.dart';
 import 'package:mobile/helpers/error_dialog.dart';
-import 'package:mobile/helpers/theme_helper.dart';
 import 'package:mobile/providers/user_provider.dart';
 import 'package:mobile/route/rutes.dart';
 import 'package:provider/provider.dart';
-
-import '../custom widgets/custom_text_field_widget.dart';
 import '../custom widgets/logo_widget.dart';
-import '../route/app_router.gr.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -35,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
     userProvider = context.read<UserProvider>();
   }
 
-void login() async {
+  //TODO
+  void login() async {
     try {
       await userProvider.loginAsync(
           _usernmeController.text, _passwordController.text);
@@ -47,7 +43,6 @@ void login() async {
       print(e);
     }
   }
-
 
   String getErrorMessage(dynamic exception) {
     if (exception.toString().contains('GymFit.Core.UserNotFoundException') ||
@@ -73,7 +68,7 @@ void login() async {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const LogoWidget(),
-            gapH20,
+            gapH64,
             Center(
               child: Text(
                 'Prijava'.toUpperCase(),
@@ -83,7 +78,7 @@ void login() async {
                     fontSize: 45),
               ),
             ),
-            gapH48,
+            gapH64,
             Center(
                 child: Container(
               width: 300,
@@ -95,12 +90,11 @@ void login() async {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                   
-                    SizedBox(height: 20),
-                    _buildUserNameField(context),
-                    SizedBox(height: 20),
-                    _buildPasswordField(context),
-                    SizedBox(height: 20,),
+                  const SizedBox(height: 20),
+                  _buildUserNameField(context),
+                  const SizedBox(height: 20),
+                  _buildPasswordField(context),
+                  const SizedBox(height: 10),
                   SizedBox(
                     width: 260,
                     child: ElevatedButton(
@@ -108,13 +102,19 @@ void login() async {
                         login();
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black),
-                      child: Text('Prijava'.toUpperCase()),
+                          backgroundColor: Colors.black,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)))),
+                      child: Text(
+                        'Prijava'.toUpperCase(),
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                   const Text(
                     'Zaboravili ste šifru?',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Color.fromARGB(255, 97, 97, 97)),
                   ),
                 ],
               ),
@@ -126,116 +126,53 @@ void login() async {
   }
 
   Widget _buildUserNameField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 1),
-      padding: EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 5,
-      ),
-      decoration: AppDecoration.outlineBlack.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 2),
-            child: Text(
-              "Korisnicko ime",
-              style: CustomTextStyles.titleLargeGray90001,
-            ),
-          ),
-          SizedBox(height: 10),
-          Stack(
-            alignment: Alignment.centerRight,
-            children: [
-              CustomTextFormField(
-                prefix: Icon(
-                  Icons.verified_user_outlined,
-                  color: const Color.fromARGB(255, 53, 53, 53),
-                ),
-                controller: _usernmeController,
-                hintText: "username",
-                textInputType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Unesite vaše korisnicko ime.';
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
-          SizedBox(height: 12),
-        ],
-      ),
+    return CustomTextFormField(
+      controller: _usernmeController,
+      fillColor: const Color.fromRGBO(225, 225, 225, 100),
+      contentPadding:
+          const EdgeInsets.only(left: 18, right: 18, bottom: 14, top: 14),
+      hintText: "username",
+      textInputType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Unesite vaše korisnicko ime.';
+        }
+        return null;
+      },
     );
   }
 
   Widget _buildPasswordField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 1),
-      padding: EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 5,
-      ),
-      decoration: AppDecoration.outlineBlack.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 2),
-            child: Text(
-              "Lozinka",
-              style: CustomTextStyles.titleLargeGray90001,
-            ),
-          ),
-          SizedBox(height: 10),
-          Stack(
-            alignment: Alignment.centerRight,
-            children: [
-              CustomTextFormField(
-                prefix: const Icon(
-                  Icons.password_outlined,
-                  color: Color.fromARGB(255, 53, 53, 53),
-                ),
-                suffix: IconButton(
-                  icon: _obscurePassword
-                      ? const Icon(
-                          Icons.visibility_outlined,
-                          color: Color.fromARGB(255, 53, 53, 53),
-                        )
-                      : const Icon(
-                          Icons.visibility_off_outlined,
-                          color: Color.fromARGB(255, 53, 53, 53),
-                        ),
-                  onPressed: () {
-                    setState(() {
-                      _obscurePassword = !_obscurePassword;
-                    });
-                  },
-                ),
-                controller: _passwordController,
-                hintText: ".......",
-                obscureText: _obscurePassword,
-                textInputType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Obavezan unos polja';
-                  }
-                  return null;
-                },
+    return CustomTextFormField(
+      fillColor: const Color.fromRGBO(225, 225, 225, 100),
+      contentPadding:
+          const EdgeInsets.only(left: 18, right: 18, bottom: 14, top: 14),
+      suffix: IconButton(
+        icon: _obscurePassword
+            ? const Icon(
+                Icons.visibility_outlined,
+                color: Color.fromARGB(255, 53, 53, 53),
+              )
+            : const Icon(
+                Icons.visibility_off_outlined,
+                color: Color.fromARGB(255, 53, 53, 53),
               ),
-            ],
-          ),
-          SizedBox(height: 12),
-        ],
+        onPressed: () {
+          setState(() {
+            _obscurePassword = !_obscurePassword;
+          });
+        },
       ),
+      controller: _passwordController,
+      hintText: ".......",
+      obscureText: _obscurePassword,
+      textInputType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Obavezan unos polja';
+        }
+        return null;
+      },
     );
   }
-
 }

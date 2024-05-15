@@ -9,7 +9,7 @@ class EventTypesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: eventTypes.length,
+      itemCount: eventTypes.length < 3 ? eventTypes.length : 3,
       padding: EdgeInsets.zero,
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,

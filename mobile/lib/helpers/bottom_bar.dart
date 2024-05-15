@@ -5,7 +5,7 @@ import 'package:mobile/helpers/image_constant.dart';
 import 'package:mobile/helpers/theme_helper.dart';
 
 class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({this.onChanged});
+  const CustomBottomBar({this.onChanged});
 
   final Function(BottomBarEnum)? onChanged;
 
@@ -27,7 +27,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
       activeIcon: ImageConstant.imgBasket,
       type: BottomBarEnum.Basket,
     ),
-     BottomMenuModel(
+    BottomMenuModel(
       icon: ImageConstant.chair,
       activeIcon: ImageConstant.chair,
       type: BottomBarEnum.Seat,
@@ -37,7 +37,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
       activeIcon: ImageConstant.imgUser,
       type: BottomBarEnum.UserProfile,
     )
-   
   ];
 
   @override
@@ -61,7 +60,7 @@ class CustomBottomBarState extends State<CustomBottomBar> {
               imagePath: bottomMenuList[index].icon,
               height: 22,
               width: 22,
-              color:  kBackgroundColor,
+              color: kBackgroundColor,
             ),
             activeIcon: CustomImageView(
               imagePath: bottomMenuList[index].activeIcon,
@@ -105,12 +104,14 @@ class BottomMenuModel {
 }
 
 class DefaultWidget extends StatelessWidget {
+  const DefaultWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Center(
+      padding: const EdgeInsets.all(10),
+      child: const Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,

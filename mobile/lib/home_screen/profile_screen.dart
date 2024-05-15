@@ -34,21 +34,21 @@ class ProfileScreen extends ConsumerWidget {
                       title: 'Početna',
                       icon: Icons.home,
                       onTap: () =>
-                         Navigator.pushNamed(context, AppRoutes.homePage),
+                          Navigator.pushNamed(context, AppRoutes.homePage),
                     ),
-                     
-                     ProfileOptionCard(
-                        title: 'Moj račun',
-                        icon: Icons.person,
-                        onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.userProfileDetailsScreen);
+                    ProfileOptionCard(
+                      title: 'Moj račun',
+                      icon: Icons.person,
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, AppRoutes.userProfileDetailsScreen);
                       },
-                        ),
-                        ProfileOptionCard(
+                    ),
+                    ProfileOptionCard(
                       title: 'Moje ulaznice',
                       icon: Icons.my_library_books,
                       onTap: () =>
-                         Navigator.pushNamed(context, AppRoutes.userTickets),
+                          Navigator.pushNamed(context, AppRoutes.userTickets),
                     ),
                     ProfileOptionCard(
                       title: 'Kupovina',
@@ -107,7 +107,7 @@ class ProfileOptionCard extends StatelessWidget {
               ],
             ),
             const Divider(
-              thickness: 1.5,
+              thickness: 0.7,
               indent: 5,
             ),
           ],

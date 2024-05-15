@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/cart_screen.dart';
 import 'package:mobile/constants.dart';
+import 'package:mobile/event_details_screen.dart';
 import 'package:mobile/helpers/app_decoration.dart';
 import 'package:mobile/helpers/bottom_bar.dart';
 import 'package:mobile/helpers/error_dialog.dart';
@@ -86,7 +87,7 @@ class _HomeContainerScreenState extends State<HomeContainerScreen> {
           initialRoute: AppRoutes.homePage,
           onGenerateRoute: (routeSetting) => PageRouteBuilder(
             pageBuilder: (ctx, ani, ani1) => getCurrentPage(routeSetting.name!),
-            transitionDuration: Duration(seconds: 0),
+            transitionDuration: const Duration(seconds: 0),
           ),
         ),
         bottomNavigationBar: _buildBottomBar(),
@@ -102,7 +103,7 @@ class _HomeContainerScreenState extends State<HomeContainerScreen> {
         IconButton(
           icon: Stack(
             children: [
-              Icon(
+              const Icon(
                 Icons.notifications,
                 color: Colors.green,
               ),
@@ -111,14 +112,14 @@ class _HomeContainerScreenState extends State<HomeContainerScreen> {
                   top: -5,
                   left: 0,
                   child: Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.red,
                     ),
                     child: Text(
                       unreadNotifications.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 12,
                       ),
@@ -144,7 +145,7 @@ class _HomeContainerScreenState extends State<HomeContainerScreen> {
         ),
         // Menu Icon
         IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {
             final RenderBox overlay =
                 Overlay.of(context).context.findRenderObject() as RenderBox;
@@ -163,13 +164,13 @@ class _HomeContainerScreenState extends State<HomeContainerScreen> {
               items: [
                 PopupMenuItem(
                   child: ListTile(
-                    title: Text('Logout'),
+                    title: const Text('Logout'),
                     onTap: () {
                       Navigator.pop(context);
                       _loginProvider.logout();
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => InitScreen(),
+                          builder: (context) => const InitScreen(),
                         ),
                       );
                     },
@@ -213,18 +214,17 @@ class _HomeContainerScreenState extends State<HomeContainerScreen> {
   Widget getCurrentPage(String currentRoute) {
     switch (currentRoute) {
       case AppRoutes.homePage:
-        return HomeScreen();
+        return const HomeScreen();
       case AppRoutes.payment:
         return TicketsScreen();
       case AppRoutes.seats:
-        return EventsList();
+        return const EventsList();
       case AppRoutes.userProfileScreen:
-        return ProfileScreen();
+        return const ProfileScreen();
       case AppRoutes.userProfileDetailsScreen:
-        return UserProfileScreen();
+        return const UserProfileScreen();
       case AppRoutes.userTickets:
-        return UserTicketsScreen();
-
+        return const UserTicketsScreen();
       default:
         return DefaultWidget();
     }
@@ -244,7 +244,7 @@ class DefaultWidget extends StatelessWidget {
             style: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.bold, color: white),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: teal),
             onPressed: () {

@@ -5,18 +5,15 @@ import 'package:mobile/models/SearchObjects/ticket_search_object.dart';
 import 'package:mobile/models/ticket.dart';
 import 'package:mobile/providers/base_provider.dart';
 
-
 class TicketProvider extends BaseProvider<Ticket> {
-  TicketProvider(): super("Ticket");
+  TicketProvider() : super("Ticket");
 
-
-Future<List<Ticket>> getPaged(
-      {TicketSearchObject? searchObject}) async {
-     var url = 'http://10.0.2.2:7056/Ticket/getPaged';
-  var uri = Uri.parse(url);
+  Future<List<Ticket>> getPaged({TicketSearchObject? searchObject}) async {
+    var url = 'https://10.0.2.2:7056/Ticket/getPaged';
+    var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
-  headers['Content-Type'] = 'application/json';
+    headers['Content-Type'] = 'application/json';
     final Map<String, String> queryParameters = {};
     if (searchObject != null) {
       if (searchObject.eventId != null) {
@@ -42,11 +39,10 @@ Future<List<Ticket>> getPaged(
       throw Exception('Failed to load data');
     }
   }
+
   @override
   Ticket fromJson(data) {
     // TODO: implement fromJson
     return Ticket.fromJson(data);
   }
-
-
 }

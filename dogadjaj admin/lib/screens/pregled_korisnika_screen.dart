@@ -27,7 +27,7 @@ class _PregledKorisnikaScreenState extends State<PregledKorisnikaScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Pregled korisnika",
             style: TextStyle(fontSize: 30),
           ),
@@ -61,7 +61,6 @@ class _PregledKorisnikaScreenState extends State<PregledKorisnikaScreen> {
                           horizontalInside: BorderSide(),
                         ),
                         columns: const [
-                          DataColumn(label: Text('Username')),
                           DataColumn(label: Text('Korisnicko ime')),
                           DataColumn(label: Text('Email')),
                         ],
@@ -69,7 +68,6 @@ class _PregledKorisnikaScreenState extends State<PregledKorisnikaScreen> {
                             .map(
                               (user) => DataRow(
                                 cells: [
-                                  DataCell(Text(user.imePrezime)),
                                   DataCell(Text(user.korisnickoIme)),
                                   DataCell(Text(user.email)),
                                 ],

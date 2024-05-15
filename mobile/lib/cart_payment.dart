@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:mobile/constants.dart';
 import 'package:mobile/helpers/error_dialog.dart';
+import 'package:mobile/modals/purchase_confirmation_dialog.dart';
 import 'package:mobile/models/SearchObjects/ticket_search_object.dart';
 import 'package:mobile/models/ticket.dart';
 import 'package:mobile/providers/ticket_provider.dart';
@@ -17,10 +17,10 @@ import 'package:intl/intl.dart';
 class KupiKartuDialog extends StatefulWidget {
   final int? eventId;
 
-  KupiKartuDialog({Key? key, required this.eventId}) : super(key: key);
+  const KupiKartuDialog({Key? key, required this.eventId}) : super(key: key);
 
   @override
-  _KupiKartuDialogState createState() => _KupiKartuDialogState();
+  State<KupiKartuDialog> createState() => _KupiKartuDialogState();
 }
 
 class _KupiKartuDialogState extends State<KupiKartuDialog> {
@@ -66,12 +66,13 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
     }
     return 0;
   }
-   void loadUser() async {
+
+  void loadUser() async {
     var id = _userProvider.getUserId();
     _userId = id;
   }
 
-  void InsertUserPackage() async {
+  void insertUserPackage() async {
     try {
       loadUser();
 
@@ -99,7 +100,7 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
     }
   }
 
-  showPaymentSheet() async {
+  Future<void> showPaymentSheet() async {
     if (_selectedTicket == null ||
         _numberOfTickets == null ||
         _numberOfTickets == 0) {
@@ -153,7 +154,7 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
     try {
       await Stripe.instance.presentPaymentSheet();
 
-      InsertUserPackage();
+      insertUserPackage();
     } catch (e) {
       //silent
     }
@@ -303,8 +304,9 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
                         width: 4,
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          showPaymentSheet();
+                        onPressed: () async {
+                          await showPaymentSheet()
+                              .then((value) => showCongratsModal(context));
                         },
                         child: Text(
                           "Uplati",

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:mobile/constants.dart';
 import 'package:mobile/helpers/app_decoration.dart';
 import 'package:mobile/helpers/error_dialog.dart';
-import 'package:mobile/models/SearchObjects/ticket_search_object.dart';
 import 'package:mobile/models/SearchObjects/user_ticket_search_object.dart';
 import 'package:mobile/models/event.dart';
 import 'package:mobile/models/ticket.dart';
@@ -15,8 +14,10 @@ import 'package:mobile/providers/user_ticket_provider.dart';
 import 'package:provider/provider.dart';
 
 class UserTicketsScreen extends StatefulWidget {
+  const UserTicketsScreen({super.key});
+
   @override
-  _UserTicketsScreenState createState() => _UserTicketsScreenState();
+  State<UserTicketsScreen> createState() => _UserTicketsScreenState();
 }
 
 class _UserTicketsScreenState extends State<UserTicketsScreen> {
@@ -76,21 +77,21 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: kBackgroundColor,
-        body: Column(
-          children: [
-            Container(
-              height: 1.0,
-              color: const Color.fromARGB(255, 214, 214, 214),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [],
-            ),
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.only(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 1.0,
+                color: const Color.fromARGB(255, 214, 214, 214),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              const Row(
+                children: [],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
                   left: 5,
                   right: 5,
                 ),
@@ -107,28 +108,8 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
                   ],
                 ),
               ),
-            ),
-            Spacer(),
-            // Container(
-            //   width: double.maxFinite,
-            //   padding: EdgeInsets.all(16),
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(backgroundColor: teal),
-            //     onPressed: () async {
-            //       showDialog(
-            //         context: context,
-            //         builder: (BuildContext context) {
-            //           return TicketPaymentForm();
-            //         },
-            //       );
-            //     },
-            //     child: Text(
-            //       'Uplati članarinu',
-            //       style: TextStyle(color: white),
-            //     ),
-            //   ),
-            // ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -136,18 +117,18 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
 
   Widget _buildUserTicketsInfo(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: AppDecoration.fillBlack.copyWith(
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: _userTickets.length,
         itemBuilder: (context, index) {
           return Container(
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -155,16 +136,6 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // if (_events[index].lokacijaId != null) ...[
-                      //   Text(
-                      //     'Paket: ${_events[index].package!.name} ',
-                      //     style: const TextStyle(
-                      //       fontWeight: FontWeight.bold,
-                      //       color: Colors.white,
-                      //     ),
-                      //   ),
-                      // ],
-                      // Image container
                       Row(
                         children: [
                           Container(
@@ -179,23 +150,32 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                            
-                              _buildEventsData("Karta za event: ", _userTickets[index].ticket!.event!.eventName.toString()),
-                          _buildEventsData("Datum: ", DateFormat('dd/MM/yyyy').format(_userTickets[index].ticket!.event!.eventDate!).toString()),
-
+                              _buildEventsData(
+                                  "Karta za event: ",
+                                  _userTickets[index]
+                                      .ticket!
+                                      .event!
+                                      .eventName
+                                      .toString()),
+                              _buildEventsData(
+                                  "Datum: ",
+                                  DateFormat('dd/MM/yyyy')
+                                      .format(_userTickets[index]
+                                          .ticket!
+                                          .event!
+                                          .eventDate!)
+                                      .toString()),
                             ],
                           ),
                         ],
                       ),
-                      
                       _buildEventsData(
                           "Cijena: karte:",
                           _userTickets[index]!.ticket!.cijena.toString() +
                               " KM"),
                       _buildEventsData("Broj karata: ",
                           _userTickets[index].kolicina.toString()),
-
-                      Divider()
+                      const Divider()
                     ],
                   ),
                 ),
@@ -224,7 +204,7 @@ class _UserTicketsScreenState extends State<UserTicketsScreen> {
             ),
           ],
         ),
-        SizedBox(height: 2),
+        const SizedBox(height: 2),
       ],
     );
   }

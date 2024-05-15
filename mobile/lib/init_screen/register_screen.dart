@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/helpers/app_decoration.dart';
 import 'package:mobile/helpers/costum_text_field.dart';
-import 'package:mobile/helpers/custom_text_style.dart';
 import 'package:mobile/helpers/error_dialog.dart';
 import 'package:mobile/models/register.dart';
 import 'package:mobile/providers/user_provider.dart';
 import 'package:mobile/route/rutes.dart';
 import 'package:provider/provider.dart';
-
 import '../constants.dart';
 import '../custom widgets/app_bar_widget.dart';
-import '../custom widgets/custom_text_field_widget.dart';
 import '../custom widgets/logo_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -21,16 +17,20 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
   late UserProvider _userProvider;
+
   @override
   void initState() {
     super.initState();
@@ -47,7 +47,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         sifraPotvrda: _confirmPasswordController.text,
       );
 
-      var insertedUser = await _userProvider.insert(newUser);
+      await _userProvider.insert(newUser);
+      if (!mounted) return;
       Navigator.pushNamed(context, AppRoutes.loginScreen);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -108,22 +109,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: 300,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 117, 122, 119),
+                  color: const Color.fromRGBO(117, 128, 130, 100),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     _buildNameField(context),
-                    SizedBox(height: 14),
+                    const SizedBox(height: 14),
                     _buildUsernameField(context),
-                    SizedBox(height: 14),
+                    const SizedBox(height: 14),
                     _buildEmailField(context),
-                    SizedBox(height: 14),
+                    const SizedBox(height: 14),
                     _buildPasswordField(context),
-                    SizedBox(height: 14),
+                    const SizedBox(height: 14),
                     _buildConfirmPasswordField(context),
-                    SizedBox(height: 14),
+                    const SizedBox(height: 14),
                     SizedBox(
                       width: 260,
                       child: ElevatedButton(
@@ -133,8 +134,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black),
-                        child: Text('Registruj se'.toUpperCase()),
+                            backgroundColor: Colors.black,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)))),
+                        child: Text(
+                          'Registruj se'.toUpperCase(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
@@ -149,223 +156,117 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildNameField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 7),
-      padding: EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 7,
-      ),
-      decoration: AppDecoration.outlineBlack.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 5),
-            child: Text(
-              "Ime i prezime",
-              style: CustomTextStyles.titleLargeGray90001,
-            ),
-          ),
-          CustomTextFormField(
-            controller: _nameController,
-            hintText: "Ime Prezime",
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Obavezan unos polja';
-              }
-              return null;
-            },
-          )
-        ],
-      ),
+    return CustomTextFormField(
+      contentPadding:
+          const EdgeInsets.only(left: 18, right: 18, bottom: 14, top: 14),
+      fillColor: Colors.white,
+      controller: _nameController,
+      hintText: "Ime Prezime",
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Obavezan unos polja';
+        }
+        return null;
+      },
     );
   }
 
   Widget _buildUsernameField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 7),
-      padding: EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 12,
-      ),
-      decoration: AppDecoration.outlineBlack.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 4),
-            child: Text(
-              "Korisnicko ime",
-              style: CustomTextStyles.titleLargeGray90001,
-            ),
-          ),
-          SizedBox(height: 2),
-          CustomTextFormField(
-            controller: _usernameController,
-            hintText: "Korisnicko ime",
-          )
-        ],
-      ),
+    return CustomTextFormField(
+      contentPadding:
+          const EdgeInsets.only(left: 18, right: 18, bottom: 14, top: 14),
+      fillColor: Colors.white,
+      controller: _usernameController,
+      hintText: "Korisnicko ime",
     );
   }
 
   Widget _buildEmailField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 7),
-      padding: EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 10,
+    return CustomTextFormField(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+      fillColor: Colors.white,
+      suffix: const Icon(
+        Icons.email_outlined,
+        color: Color.fromARGB(255, 53, 53, 53),
       ),
-      decoration: AppDecoration.outlineBlack.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Email",
-            style: CustomTextStyles.titleLargeGray90001,
-          ),
-          SizedBox(height: 2),
-          CustomTextFormField(
-            suffix: const Icon(
-              Icons.email_outlined,
-              color: Color.fromARGB(255, 53, 53, 53),
-            ),
-            controller: _emailController,
-            hintText: "ime.prezime@gmail.com",
-            textInputType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Unesite vaš email.';
-              }
-              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                  .hasMatch(value)) {
-                return 'Unesite validan email.';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 5),
-        ],
-      ),
+      controller: _emailController,
+      hintText: "ime.prezime@gmail.com",
+      textInputType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Unesite vaš email.';
+        }
+        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+          return 'Unesite validan email.';
+        }
+        return null;
+      },
     );
   }
 
   Widget _buildPasswordField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 7),
-      padding: EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 10,
+    return CustomTextFormField(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+      suffix: IconButton(
+        icon: _obscurePassword
+            ? const Icon(
+                Icons.visibility_outlined,
+                color: Color.fromARGB(255, 53, 53, 53),
+              )
+            : const Icon(
+                Icons.visibility_off_outlined,
+                color: Color.fromARGB(255, 53, 53, 53),
+              ),
+        onPressed: () {
+          setState(() {
+            _obscurePassword = !_obscurePassword;
+          });
+        },
       ),
-      decoration: AppDecoration.outlineBlack.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Sifra",
-            style: CustomTextStyles.titleLargeGray90001,
-          ),
-          SizedBox(height: 2),
-          CustomTextFormField(
-            suffix: IconButton(
-              icon: _obscurePassword
-                  ? const Icon(
-                      Icons.visibility_outlined,
-                      color: Color.fromARGB(255, 53, 53, 53),
-                    )
-                  : const Icon(
-                      Icons.visibility_off_outlined,
-                      color: Color.fromARGB(255, 53, 53, 53),
-                    ),
-              onPressed: () {
-                setState(() {
-                  _obscurePassword = !_obscurePassword;
-                });
-              },
-            ),
-            controller: _passwordController,
-            hintText: ".......",
-            obscureText: _obscurePassword,
-            textInputType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Obavezan unos polja';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 5),
-        ],
-      ),
+      controller: _passwordController,
+      hintText: "Password",
+      obscureText: _obscurePassword,
+      textInputType: TextInputType.emailAddress,
+      fillColor: Colors.white,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Obavezan unos polja';
+        }
+        return null;
+      },
     );
   }
 
   Widget _buildConfirmPasswordField(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 7),
-      padding: EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 10,
+    return CustomTextFormField(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+      suffix: IconButton(
+        icon: _obscureConfirmPassword
+            ? const Icon(
+                Icons.visibility_outlined,
+                color: Color.fromARGB(255, 53, 53, 53),
+              )
+            : const Icon(
+                Icons.visibility_off_outlined,
+                color: Color.fromARGB(255, 53, 53, 53),
+              ),
+        onPressed: () {
+          setState(() {
+            _obscureConfirmPassword = !_obscureConfirmPassword;
+          });
+        },
       ),
-      decoration: AppDecoration.outlineBlack.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder10,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Potvrdi sifru",
-            style: CustomTextStyles.titleLargeGray90001,
-          ),
-          SizedBox(height: 2),
-          CustomTextFormField(
-            suffix: IconButton(
-              icon: _obscureConfirmPassword
-                  ? const Icon(
-                      Icons.visibility_outlined,
-                      color: Color.fromARGB(255, 53, 53, 53),
-                    )
-                  : const Icon(
-                      Icons.visibility_off_outlined,
-                      color: Color.fromARGB(255, 53, 53, 53),
-                    ),
-              onPressed: () {
-                setState(() {
-                  _obscureConfirmPassword = !_obscureConfirmPassword;
-                });
-              },
-            ),
-            controller: _confirmPasswordController,
-            hintText: ".......",
-            obscureText: _obscureConfirmPassword,
-            textInputType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Obavezan unos polja';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 5),
-        ],
-      ),
+      controller: _confirmPasswordController,
+      hintText: "Ponovi password",
+      obscureText: _obscureConfirmPassword,
+      fillColor: Colors.white,
+      textInputType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Obavezan unos polja';
+        }
+        return null;
+      },
     );
   }
 }

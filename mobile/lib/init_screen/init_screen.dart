@@ -20,18 +20,19 @@ class InitScreen extends StatelessWidget {
             const SizedBox(height: 30.0),
             const SizedBox(height: 15.0),
             CustomIconButton(
-              text: 'Prijavi se',
-              icon: Icons.mail,
-              backgroundColor: Colors.white70,
-              textColor: Colors.black,
-              onPressed: () => Navigator.pushNamed(context, AppRoutes.loginScreen)
-            ),
+                text: 'Prijavi se',
+                icon: Icons.mail,
+                backgroundColor: Colors.white70,
+                textColor: Colors.black,
+                onPressed: () =>
+                    Navigator.pushNamed(context, AppRoutes.loginScreen)),
             CustomIconButton(
                 text: 'Registruj se',
                 icon: Icons.phone_android,
                 backgroundColor: Colors.black,
-                textColor: Colors.grey,
-                onPressed: () => Navigator.pushNamed(context, AppRoutes.registrationScreen)),
+                textColor: Colors.white,
+                onPressed: () =>
+                    Navigator.pushNamed(context, AppRoutes.registrationScreen)),
           ],
         ),
       ),

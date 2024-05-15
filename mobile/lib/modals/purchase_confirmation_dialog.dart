@@ -1,43 +1,69 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-void showCustomDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Container(
-          height: 200,
-          width: 200,
-          padding: const EdgeInsets.all(16),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.check_circle, // Add your desired icon
-                color: Colors.green,
-                size: 48,
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Cestitamo!',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+class CongratsModal extends StatefulWidget {
+  const CongratsModal({super.key});
+
+  @override
+  State<CongratsModal> createState() => _CongratsModalState();
+}
+
+class _CongratsModalState extends State<CongratsModal> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 2), () {
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black54,
+        body: Center(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.check_circle, color: Colors.green, size: 50),
+                SizedBox(height: 10),
+                Text(
+                  'Čestitamo!',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Uspjesno ste kupili svoje ulaznice',
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-            ],
+                SizedBox(height: 10),
+                Text(
+                  'Uspješno ste kupili svoje ulaznice',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
           ),
         ),
-      );
+      ),
+    );
+  }
+}
+
+void showCongratsModal(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return const CongratsModal();
     },
   );
 }

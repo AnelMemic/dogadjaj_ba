@@ -20,7 +20,7 @@ class NotificationProvider extends BaseProvider<Notifications> {
 
   Future<List<Notifications>> getAll() async {
     var url =
-        'http://localhost:7056/Notification'; // Replace with your API endpoint
+        'https://localhost:7056/Notification'; // Replace with your API endpoint
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();

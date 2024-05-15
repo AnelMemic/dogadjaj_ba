@@ -7,6 +7,7 @@ import 'package:mobile/init_screen/register_screen.dart';
 import 'package:mobile/user/user_profile.dart';
 import 'package:mobile/user/user_tickets_screen.dart';
 
+import '../event_details_screen.dart';
 
 class AppRoutes {
   static const String startScreen = '/start_screen';
@@ -27,20 +28,17 @@ class AppRoutes {
 
   static const String userProfileDetailsScreen = '/user_profile_details_screen';
 
-
   static const String membershipScreen = '/membership_screen';
 
   static const String userTickets = '/userTickets';
 
-
   static Map<String, WidgetBuilder> routes = {
-    startScreen: (context) => InitScreen(),
-    loginScreen: (context) => LoginScreen(),
-    
-    registrationScreen: (context) => RegisterScreen(),
-    homeContainerScreen: (context) => HomeContainerScreen(),
+    startScreen: (context) => const InitScreen(),
+    loginScreen: (context) => const LoginScreen(),
+    registrationScreen: (context) => const RegisterScreen(),
+    homeContainerScreen: (context) => const HomeContainerScreen(),
     payment: (context) => TicketsScreen(),
-    userProfileDetailsScreen:(context) => UserProfileScreen(),
-    userTickets :(context) => UserTicketsScreen()
+    userProfileDetailsScreen: (context) => const UserProfileScreen(),
+    userTickets: (context) => const UserTicketsScreen(),
   };
 }
