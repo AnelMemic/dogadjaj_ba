@@ -22,5 +22,6 @@ namespace dogadjaj_ba.Model
 
         public string? StateMachine { get; set; }
         public byte[]? EventImage { get; set; } = null;
+
     }
 }

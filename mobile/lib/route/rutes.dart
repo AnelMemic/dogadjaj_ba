@@ -7,8 +7,8 @@ import 'package:mobile/init_screen/register_screen.dart';
 import 'package:mobile/user/user_profile.dart';
 import 'package:mobile/user/user_tickets_screen.dart';
 
-import '../event_details_screen.dart';
 
+import 'package:mobile/lists/event_details_screen.dart';
 class AppRoutes {
   static const String startScreen = '/start_screen';
 

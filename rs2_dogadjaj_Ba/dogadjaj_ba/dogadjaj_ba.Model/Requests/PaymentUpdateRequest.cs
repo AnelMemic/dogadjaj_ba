@@ -8,10 +8,9 @@ namespace dogadjaj_ba.Model.Requests
 {
     public  class PaymentUpdateRequest 
     {
-        public string CardNumber { get; set; } = null!;
-
-        public string ExpiryDate { get; set; } = null!;
-
-        public string Cvv { get; set; } = null!;
+  
+        public DateTime PaymentDate { get; set; } = DateTime.Now;
+        public string PaymentMethod { get; set; }
+        public string PaymentStatus { get; set; }
     }
 }

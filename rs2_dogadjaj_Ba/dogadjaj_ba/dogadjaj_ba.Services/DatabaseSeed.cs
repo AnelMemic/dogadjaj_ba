@@ -48,6 +48,7 @@ namespace dogadjaj_ba.Services
                    ImeGrada = "Banja Luka",
                    Drzava = "BIH",
                });
+
         }
 
         private void SeedLocation(ModelBuilder modelBuilder)

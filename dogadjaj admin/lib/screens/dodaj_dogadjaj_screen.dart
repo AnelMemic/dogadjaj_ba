@@ -15,7 +15,6 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController locationIdController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController eventDateController = TextEditingController();
   final TextEditingController eventTypeController = TextEditingController();
@@ -24,25 +23,64 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
   int selectedEventType = 1;
   int selectedsubEventType = 1;
   DateTime endDate = DateTime.now();
+  String? selectedLocation;
+  List<Map<String, dynamic>> locations = [];
+  Map<int, String> gradNames = {};
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLocationsAndGradNames();
+  }
 
   void clearForm() {
     nameController.clear();
-    locationIdController.clear();
     descriptionController.clear();
     eventDateController.clear();
     setState(() {
       selectedEventType = 1;
       selectedsubEventType = 1;
       endDate = DateTime.now();
+      selectedLocation = null;
     });
   }
 
-  Future<bool> insertEvent() async {
+  Future<void> fetchLocationsAndGradNames() async {
+    try {
+      var fetchedLocations = await eventProvider.getLocations();
+      Set<int> uniqueGradIds = {};
+      for (var location in fetchedLocations) {
+        uniqueGradIds.add(location['gradId']);
+      }
+      for (var gradId in uniqueGradIds) {
+        var grad = await eventProvider.getGrad(gradId);
+        print('Fetched grad: $grad'); 
+        gradNames[gradId] = grad['imeGrada'] ?? 'Unknown';
+      }
+      print('Locations: $fetchedLocations');  
+      print('Grad Names: $gradNames');  
+      setState(() {
+        locations = fetchedLocations;
+      });
+    } catch (e) {
+      showErrorDialog(context, 'Failed to load locations and grad names');
+    }
+  }
+
+  Future<void> showSuccessSnackbar() async {
+    final snackBar = SnackBar(
+      content: const Text('You successfully saved to database'),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Future<void> insertEvent() async {
     if (_formKey.currentState!.validate()) {
       try {
         var newEvent = {
           "eventName": nameController.text,
-          "lokacijaId": locationIdController.text,
+          "lokacijaId": selectedLocation,
           "eventDate": endDate.toUtc().toIso8601String(),
           "opis": descriptionController.text,
           "stateMachine": "string",
@@ -51,16 +89,14 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
         };
         await eventProvider.insert(newEvent).then((value) {
           if (value != null) {
-            return true;
+            clearForm();
+            showSuccessSnackbar();
           }
         });
-        return true;
       } on Exception catch (e) {
         showErrorDialog(context, e.toString().substring(11));
-        return false;
       }
     }
-    return false;
   }
 
   @override
@@ -68,6 +104,12 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dodaj Novi Dogadjaj'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(true);  
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -87,12 +129,25 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
                 },
               ),
               const SizedBox(height: 16.0),
-              TextFormField(
-                controller: locationIdController,
-                decoration: const InputDecoration(labelText: 'Lokacija ID'),
+              DropdownButtonFormField<String>(
+                value: selectedLocation,
+                onChanged: (value) {
+                  setState(() {
+                    selectedLocation = value!;
+                  });
+                },
+                items: locations.map((location) {
+                  return DropdownMenuItem<String>(
+                    value: location['id'].toString(),
+                    child: Text(
+                      '${location['nazivObjekta']} - ${gradNames[location['gradId']] ?? 'Unknown'}'
+                    ),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(labelText: 'Lokacija'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Unesite lokacija ID!';
+                    return 'Odaberite lokaciju!';
                   }
                   return null;
                 },
@@ -118,8 +173,8 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
                 onTap: () {
                   showDatePicker(
                     context: context,
-                    initialDate: endDate,
-                    firstDate: DateTime(1950),
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),  
                     lastDate: DateTime(2101),
                   ).then((date) {
                     if (date != null) {
@@ -134,6 +189,9 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Unesite datum!';
+                  }
+                  if (DateTime.parse(value).isBefore(DateTime.now())) {
+                    return 'Datum ne može biti u prošlosti!';
                   }
                   return null;
                 },
@@ -151,10 +209,7 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
                     value: 1,
                     child: Text('Konferencija'),
                   ),
-                  DropdownMenuItem<int>(
-                    value: 2,
-                    child: Text('Kongres'),
-                  ),
+                  
                   DropdownMenuItem<int>(
                     value: 3,
                     child: Text('Seminar'),
@@ -190,10 +245,7 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  await insertEvent().then((value) {
-                    clearForm();
-                    Navigator.of(context).pop();
-                  });
+                  await insertEvent();
                 },
                 child: const Text('Save to Database'),
               ),

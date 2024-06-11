@@ -57,7 +57,71 @@ class EventProvider extends BaseProvider<Event> {
       return [];
     }
   }
+  
+
+
+
+    Future<List<Map<String, dynamic>>> getLocations() async {
+    final response = await http!.get(Uri.parse('https://localhost:7056/Lokacija'));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((location) => {
+        'id': location['lokacijaId'],
+        'gradId': location['gradId'],
+        'adresa': location['adresa'] ?? '',
+        'nazivObjekta': location['nazivObjekta'] ?? ''
+      }).toList();
+    } else {
+      throw Exception('Failed to load locations');
+    }
+  }
+
+
+ Future<bool> updateEvent(int eventId, Event event) async {
+    final response = await http!.put(
+      Uri.parse('https://localhost:7056/Eventi/$eventId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(event.toJson()),
+    );
+
+   
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+
+  Future<Map<String, dynamic>> getGrad(int gradId) async {
+    final response = await http!.get(Uri.parse('https://localhost:7056/Grad/$gradId'));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load grad');
+    }
+  }
+
 }
+
+class Location {
+  int id;
+  String nazivObjekta;
+
+  Location({required this.id, required this.nazivObjekta});
+
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      id: json['id'],
+      nazivObjekta: json['nazivObjekta'],
+    );
+  }
+}
+
+
 
 class EventCategoryMapper {
   static String mapCategory(int categoryValue) {

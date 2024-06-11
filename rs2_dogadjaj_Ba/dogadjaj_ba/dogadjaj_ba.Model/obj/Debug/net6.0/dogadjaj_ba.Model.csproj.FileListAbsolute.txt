@@ -44,3 +44,15 @@ C:\Users\User\Desktop\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba
 C:\Users\User\Desktop\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\refint\dogadjaj_ba.Model.dll
 C:\Users\User\Desktop\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.pdb
 C:\Users\User\Desktop\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\ref\dogadjaj_ba.Model.dll
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\bin\Debug\net6.0\dogadjaj_ba.Model.deps.json
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\bin\Debug\net6.0\dogadjaj_ba.Model.dll
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\bin\Debug\net6.0\dogadjaj_ba.Model.pdb
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.AssemblyInfoInputs.cache
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.AssemblyInfo.cs
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.csproj.CoreCompileInputs.cache
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.sourcelink.json
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.dll
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\refint\dogadjaj_ba.Model.dll
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\dogadjaj_ba.Model.pdb
+C:\Users\Comp\Documents\GitHub\dogadjaj_ba\rs2_dogadjaj_Ba\dogadjaj_ba\dogadjaj_ba.Model\obj\Debug\net6.0\ref\dogadjaj_ba.Model.dll

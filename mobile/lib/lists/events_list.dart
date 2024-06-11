@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/constants.dart';
-import 'package:mobile/event_details_screen.dart';
+
+
 import 'package:mobile/helpers/error_dialog.dart';
 import 'package:mobile/lists/event_categories_list.dart';
+import 'package:mobile/lists/event_details_screen.dart';
 import 'package:mobile/models/SearchObjects/event_search_object.dart';
 import 'package:mobile/models/event.dart';
 import 'package:mobile/providers/event_provider.dart';

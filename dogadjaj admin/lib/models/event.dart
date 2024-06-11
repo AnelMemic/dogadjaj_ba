@@ -28,19 +28,24 @@ class Event {
     eventType = json['eventType'];
     eventName = json['eventName'];
     eventDate = DateTime.parse(json['eventDate']);
-    stateMachine = json['stateMachine'];
+    stateMachine = json['stateMachine'] ?? 'draft';
     eventImage = json['eventImage'];
     opis = json['opis'];
     subType = json['subType'];
+     lokacijaId = json['lokacijaId'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+     final Map<String, dynamic> data = <String, dynamic>{};
     data['eventId'] = eventId;
     data['eventName'] = eventName;
     data['eventType'] = eventType;
-    data['opis'] = opis;
     data['subType'] = subType;
+    data['eventDate'] = eventDate?.toIso8601String();
+    data['stateMachine'] = stateMachine ?? 'draft';
+    data['eventImage'] = eventImage;
+    data['opis'] = opis;
+    data['lokacijaId'] = lokacijaId;
     return data;
   }
 

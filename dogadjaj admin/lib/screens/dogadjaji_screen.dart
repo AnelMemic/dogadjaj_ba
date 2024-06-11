@@ -1,6 +1,7 @@
 import 'package:dogadjaj_ba/models/event.dart';
 import 'package:dogadjaj_ba/providers/eventprovider.dart';
 import 'package:dogadjaj_ba/screens/dodaj_dogadjaj_screen.dart';
+import 'package:dogadjaj_ba/screens/edit_event_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,14 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
   TextEditingController searchController = TextEditingController(text: '');
   final ScrollController controller = ScrollController();
   final EventProvider eventProvider = EventProvider();
-  String searchEventName = ''; 
+  String searchEventName = '';
+  Map<int, String> locationNames = {};
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLocationNames();
+  }
 
   @override
   void dispose() {
@@ -24,12 +32,41 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
     super.dispose();
   }
 
-  void _openAddEventScreen(BuildContext context) {
-    Navigator.of(context).push(
+  void _openAddEventScreen(BuildContext context) async {
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const DodajDogadjajScreen(),
       ),
     );
+
+    if (result == true) {
+      setState(() {});
+    }
+  }
+
+  void _openEditEventScreen(BuildContext context, Event event) async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EditEventScreen(event: event),
+      ),
+    );
+
+    if (result == true) {
+      setState(() {});
+    }
+  }
+
+  Future<void> fetchLocationNames() async {
+    try {
+      List<Map<String, dynamic>> locations = await eventProvider.getLocations();
+      setState(() {
+        locationNames = {
+          for (var loc in locations) loc['id']: loc['nazivObjekta']
+        };
+      });
+    } catch (e) {
+      print("Failed to load locations: $e");
+    }
   }
 
   @override
@@ -38,11 +75,15 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
       appBar: AppBar(
         title: Text('Dogadjaji'),
         actions: [
-          IconButton(
+          TextButton.icon(
+            icon: Icon(Icons.add, size: 24.0),
+            label: Text('Add Dogadjaj', style: TextStyle(fontSize: 18.0)),
             onPressed: () {
               _openAddEventScreen(context);
             },
-            icon: Icon(Icons.add),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white, 
+            ),
           ),
         ],
       ),
@@ -106,6 +147,8 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
                               DataColumn(label: Text('Datum')),
                               DataColumn(label: Text('Kategorija')),
                               DataColumn(label: Text('Opis')),
+                              DataColumn(label: Text('Lokacija')),
+                              DataColumn(label: Text('Edit')),
                             ],
                             rows: events
                                 .where((event) =>
@@ -123,6 +166,16 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
                                                   event.eventType!) ??
                                               'N/A')),
                                       DataCell(Text(event.opis ?? 'N/A')),
+                                      DataCell(Text(
+                                          locationNames[event.lokacijaId] ?? 'N/A')),
+                                      DataCell(
+                                        IconButton(
+                                          icon: Icon(Icons.edit),
+                                          onPressed: () {
+                                            _openEditEventScreen(context, event);
+                                          },
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 )

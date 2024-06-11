@@ -12,12 +12,12 @@ Console.WriteLine("Hello, World!");
 //using var connection = factory.CreateConnection();
 //using var channel = connection.CreateModel();
 
-//channel.QueueDeclare(queue : "event_added",
-//    durable:false,
-//    exclusive:false,
-//    autoDelete:false,
-//    arguments:null
-    
+//channel.QueueDeclare(queue: "event_added",
+//    durable: false,
+//    exclusive: false,
+//    autoDelete: false,
+//    arguments: null
+
 //    );
 
 //Console.WriteLine("Waiting for message");

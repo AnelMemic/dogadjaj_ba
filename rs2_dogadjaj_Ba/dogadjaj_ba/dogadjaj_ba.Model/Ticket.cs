@@ -11,6 +11,11 @@ namespace dogadjaj_ba.Model
         public int TicketId { get; set; }
 
         public int? UserId { get; set; }
+        public string? title { get; set; }
+
+        public string? description { get; set; }
+
+        public string? ticketNumber { get; set; }
 
         public int? EventId { get; set; }
 

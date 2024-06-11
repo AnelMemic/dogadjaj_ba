@@ -9,11 +9,8 @@ namespace dogadjaj_ba.Model
     public  class Payment
     {
         public int PaymentId { get; set; }
-
-        public string CardNumber { get; set; } = null!;
-
-        public string ExpiryDate { get; set; } = null!;
-
-        public string Cvv { get; set; } = null!;
+        public DateTime PaymentDate { get; set; } = DateTime.Now;
+        public string PaymentMethod { get; set; }
+        public string PaymentStatus { get; set; }
     }
 }

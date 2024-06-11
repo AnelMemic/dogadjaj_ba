@@ -22,6 +22,39 @@ namespace dogadjaj_ba.Services.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.Country", b =>
+                {
+                    b.Property<int>("countryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("countryId"));
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("countryId");
+
+                    b.ToTable("Country");
+
+                    b.HasData(
+                        new
+                        {
+                            countryId = 1,
+                            name = "BIH"
+                        },
+                        new
+                        {
+                            countryId = 2,
+                            name = "CRO"
+                        },
+                        new
+                        {
+                            countryId = 3,
+                            name = "SRB"
+                        });
+                });
+
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Event", b =>
                 {
                     b.Property<int>("EventId")
@@ -72,6 +105,7 @@ namespace dogadjaj_ba.Services.Migrations
                             EventName = "Test1",
                             LokacijaId = 1,
                             Opis = "Test",
+                            StateMachine = "draft",
                             eventType = 1,
                             subType = 1
                         },
@@ -81,7 +115,8 @@ namespace dogadjaj_ba.Services.Migrations
                             EventDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             EventName = "Test2",
                             LokacijaId = 1,
-                            Opis = "Test",
+                            Opis = "Test2",
+                            StateMachine = "draft",
                             eventType = 1,
                             subType = 1
                         },
@@ -91,7 +126,8 @@ namespace dogadjaj_ba.Services.Migrations
                             EventDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             EventName = "Test3",
                             LokacijaId = 1,
-                            Opis = "Test",
+                            Opis = "Test3",
+                            StateMachine = "draft",
                             eventType = 1,
                             subType = 1
                         });
@@ -139,6 +175,22 @@ namespace dogadjaj_ba.Services.Migrations
                         });
                 });
 
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.Images", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Lokacija", b =>
                 {
                     b.Property<int>("LokacijaId")
@@ -169,23 +221,23 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             LokacijaId = 1,
-                            Adresa = "Mostar 88000",
+                            Adresa = "Mostar ",
                             GradId = 2,
-                            NazivObjekta = "Plaza Mostar"
+                            NazivObjekta = "Era Mostar"
                         },
                         new
                         {
                             LokacijaId = 2,
-                            Adresa = "Mostar 88000",
+                            Adresa = "Bisce polje",
                             GradId = 1,
-                            NazivObjekta = "Plaza Mostar"
+                            NazivObjekta = "Plaza "
                         },
                         new
                         {
                             LokacijaId = 3,
-                            Adresa = "Mostar 88000",
+                            Adresa = "MostarGrad",
                             GradId = 1,
-                            NazivObjekta = "Plaza Mostar"
+                            NazivObjekta = "Mepas"
                         });
                 });
 
@@ -229,7 +281,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8739),
+                            SendOnDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1362),
                             UserId = 1
                         },
                         new
@@ -238,7 +290,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8768),
+                            SendOnDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1395),
                             UserId = 2
                         },
                         new
@@ -247,7 +299,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8770),
+                            SendOnDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1397),
                             UserId = 3
                         });
                 });
@@ -260,26 +312,44 @@ namespace dogadjaj_ba.Services.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
 
-                    b.Property<string>("CardNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Cvv")
+                    b.Property<string>("PaymentMethod")
                         .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)")
-                        .HasColumnName("CVV");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ExpiryDate")
+                    b.Property<string>("PaymentStatus")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentId")
                         .HasName("PK__Payment__9B556A38A734EA5B");
 
                     b.ToTable("Payment", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PaymentId = 1,
+                            PaymentDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1405),
+                            PaymentMethod = "card",
+                            PaymentStatus = "true"
+                        },
+                        new
+                        {
+                            PaymentId = 2,
+                            PaymentDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1408),
+                            PaymentMethod = "card",
+                            PaymentStatus = "true"
+                        },
+                        new
+                        {
+                            PaymentId = 3,
+                            PaymentDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1410),
+                            PaymentMethod = "card",
+                            PaymentStatus = "true"
+                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.ReportDatum", b =>
@@ -304,6 +374,26 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ReportData");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportDataId = 1,
+                            EventId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ReportDataId = 2,
+                            EventId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ReportDataId = 3,
+                            EventId = 1,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Reservation", b =>
@@ -446,7 +536,7 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             UserId = 2,
-                            Email = "test@test",
+                            Email = "test1@test",
                             ImePrezime = "t2",
                             KorisnickoIme = "dogadjaj2",
                             Sifra = "test"
@@ -454,7 +544,7 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             UserId = 3,
-                            Email = "test@test",
+                            Email = "test2@test",
                             ImePrezime = "t3",
                             KorisnickoIme = "dogadjaj3",
                             Sifra = "test"
@@ -486,6 +576,29 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserTicket");
+
+                    b.HasData(
+                        new
+                        {
+                            UserTicketID = 1,
+                            Kolicina = 1,
+                            TicketId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserTicketID = 2,
+                            Kolicina = 1,
+                            TicketId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserTicketID = 3,
+                            Kolicina = 1,
+                            TicketId = 1,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Event", b =>

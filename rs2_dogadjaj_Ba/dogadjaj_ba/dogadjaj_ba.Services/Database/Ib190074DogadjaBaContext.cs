@@ -37,10 +37,12 @@ public partial class Ib190074DogadjaBaContext : DbContext
     public virtual DbSet<Ticket> Tickets { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Country> Country { get; set; }
+    public virtual DbSet<Images> Images { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=dogadjaj;TrustServerCertificate=True;Trusted_Connection=True;");
+    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+    //        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=dogadjaj;TrustServerCertificate=True;Trusted_Connection=True;");
 
 
     private readonly DateTime _dateTime = new(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local);
@@ -53,12 +55,104 @@ public partial class Ib190074DogadjaBaContext : DbContext
         SeedUsers(modelBuilder);
         SeedTicket(modelBuilder);
         SeedNotifications(modelBuilder);
-
-
-
-        //LokacijaId
+        SeedPayment(modelBuilder);
+        SeedCountry(modelBuilder);
+        SeedReportData(modelBuilder);
+        SeedUserTicket(modelBuilder);
 
     }
+    private void SeedUserTicket(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<UserTicket>().HasData(
+           new()
+           {
+               TicketId = 1,
+               UserId = 1,
+               Kolicina=1,
+               UserTicketID=1,
+           },
+           new()
+           {
+               TicketId = 1,
+               UserId = 1,
+               Kolicina = 1,
+               UserTicketID = 2,
+           },
+           new()
+           {
+               TicketId = 1,
+               UserId = 1,
+               Kolicina = 1,
+               UserTicketID = 3,
+           });
+    }
+    private void SeedReportData(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ReportDatum>().HasData(
+           new()
+           {
+                ReportDataId=1,
+                UserId=1,
+                EventId=1,
+           },
+           new()
+           {
+               ReportDataId = 2,
+               UserId = 1,
+               EventId = 1,
+           },
+           new()
+           {
+               ReportDataId = 3,
+               UserId = 1,
+               EventId = 1,
+           });
+    }
+    private void SeedCountry(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Country>().HasData(
+           new()
+           {
+               countryId=1,
+               name="BIH"
+           },
+           new()
+           {
+               countryId = 2,
+               name = "CRO"
+           },
+           new()
+           {
+               countryId = 3,
+               name = "SRB"
+           });
+    }
+    private void SeedPayment(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Payment>().HasData(
+           new()
+           {
+              PaymentId=1,
+PaymentDate=DateTime.Now,
+       PaymentMethod="card",
+       PaymentStatus="true"
+           },
+           new()
+           {
+               PaymentId = 2,
+               PaymentDate = DateTime.Now,
+               PaymentMethod = "card",
+               PaymentStatus = "true"
+           },
+           new()
+           {
+               PaymentId = 3,
+               PaymentDate = DateTime.Now,
+               PaymentMethod = "card",
+               PaymentStatus = "true"
+           });
+    }
+
     private void SeedTicket(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Ticket>().HasData(
@@ -107,6 +201,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
                Sifra ="test",
                Email= "test@test",
                
+               
 
            },
            new()
@@ -115,7 +210,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
                KorisnickoIme = "dogadjaj2",
                ImePrezime = "t2",
                Sifra = "test",
-               Email = "test@test",
+               Email = "test1@test",
 
            },
            new()
@@ -124,7 +219,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
                KorisnickoIme = "dogadjaj3",
                ImePrezime = "t3",
                Sifra = "test",
-               Email = "test@test",
+               Email = "test2@test",
 
            });
     }
@@ -135,8 +230,8 @@ public partial class Ib190074DogadjaBaContext : DbContext
            {
                LokacijaId = 1,
                GradId = 2,
-               Adresa= "Mostar 88000",
-               NazivObjekta= "Plaza Mostar"
+               Adresa= "Mostar ",
+               NazivObjekta= "Era Mostar"
 
 
            },
@@ -144,16 +239,16 @@ public partial class Ib190074DogadjaBaContext : DbContext
            {
                LokacijaId = 2,
                GradId = 1,
-               Adresa = "Mostar 88000",
-               NazivObjekta = "Plaza Mostar"
+               Adresa = "Bisce polje",
+               NazivObjekta = "Plaza "
 
            },
            new()
            {
                LokacijaId = 3,
                GradId = 1,
-               Adresa = "Mostar 88000",
-               NazivObjekta = "Plaza Mostar"
+               Adresa = "MostarGrad",
+               NazivObjekta = "Mepas"
 
            });
     }
@@ -170,7 +265,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
                EventDate = _dateTime,
                Opis = "Test",
                eventType = dogadjaj_ba.Model.Enums.TypeEvent.Konferencija,
-               subType = dogadjaj_ba.Model.Enums.SubtypeOfEventType.Gradjevinarstvo
+               subType = dogadjaj_ba.Model.Enums.SubtypeOfEventType.Gradjevinarstvo,StateMachine="draft"
                
 
            },
@@ -180,9 +275,10 @@ public partial class Ib190074DogadjaBaContext : DbContext
                EventName = "Test2",
                LokacijaId = 1,
                EventDate = _dateTime,
-               Opis = "Test",
+               Opis = "Test2",
                eventType = dogadjaj_ba.Model.Enums.TypeEvent.Konferencija,
-               subType = dogadjaj_ba.Model.Enums.SubtypeOfEventType.Gradjevinarstvo
+               subType = dogadjaj_ba.Model.Enums.SubtypeOfEventType.Gradjevinarstvo,
+               StateMachine = "draft"
            },
            new()
            {
@@ -190,8 +286,9 @@ public partial class Ib190074DogadjaBaContext : DbContext
                EventName = "Test3",
                LokacijaId = 1,
                EventDate = _dateTime,
-               Opis = "Test",
+               Opis = "Test3",
                eventType = dogadjaj_ba.Model.Enums.TypeEvent.Konferencija,
+               StateMachine = "draft",
                subType = dogadjaj_ba.Model.Enums.SubtypeOfEventType.Gradjevinarstvo
            });
     }
@@ -302,11 +399,11 @@ public partial class Ib190074DogadjaBaContext : DbContext
 
             entity.ToTable("Payment");
 
-            entity.Property(e => e.CardNumber).HasMaxLength(50);
-            entity.Property(e => e.Cvv)
-                .HasMaxLength(3)
-                .HasColumnName("CVV");
-            entity.Property(e => e.ExpiryDate).HasMaxLength(10);
+            //entity.Property(e => e.CardNumber).HasMaxLength(50);
+            //entity.Property(e => e.Cvv)
+            //    .HasMaxLength(3)
+            //    .HasColumnName("CVV");
+            //entity.Property(e => e.ExpiryDate).HasMaxLength(10);
         });
 
         //modelBuilder.Entity<Payment1>(entity =>

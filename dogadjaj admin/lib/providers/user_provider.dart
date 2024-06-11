@@ -6,6 +6,8 @@ class UserProvider extends BaseProvider<User> {
   UserProvider() : super('User');
   User? user;
 
+   final String baseUrl = 'https://localhost:7056/User';
+
 //  Future<T> insert(dynamic request) async {
 //     var url = "$_baseUrl$_endpoint";
 //     var uri = Uri.parse(url);
@@ -89,6 +91,48 @@ class UserProvider extends BaseProvider<User> {
   @override
   User fromJson(data) {
     return User.fromJson(data);
+  }
+
+ Future<bool> addUser(User user) async {
+    final Map<String, dynamic> userJson = user.toJson();
+    //userJson['sifra'] = 'defaultPassword';
+    //userJson['sifraPotvrda'] = 'defaultPassword';
+
+    final response = await http!.post(
+      Uri.parse('https://localhost:7056/User'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userJson),
+    );
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return true;
+    } else {
+      print('Failed to add user: ${response.body}');
+      return false;
+    }
+  }
+
+  Future<bool> updateUser(int id, User user) async {
+    final Map<String, dynamic> userJson = user.toJson();
+   //userJson['sifra'] = 'defaultPassword';
+    //userJson['sifraPotvrda'] = 'defaultPassword';
+
+    final response = await http!.put(
+      Uri.parse('https://localhost:7056/User/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userJson),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      print('Failed to update user: ${response.body}');
+      return false;
+    }
   }
 
   // Future<dynamic> insertUser(dynamic resource) async {
