@@ -281,7 +281,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1362),
+                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9827),
                             UserId = 1
                         },
                         new
@@ -290,7 +290,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1395),
+                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9859),
                             UserId = 2
                         },
                         new
@@ -299,7 +299,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1397),
+                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9861),
                             UserId = 3
                         });
                 });
@@ -332,24 +332,48 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             PaymentId = 1,
-                            PaymentDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1405),
+                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9875),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         },
                         new
                         {
                             PaymentId = 2,
-                            PaymentDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1408),
+                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9878),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         },
                         new
                         {
                             PaymentId = 3,
-                            PaymentDate = new DateTime(2024, 6, 11, 21, 14, 52, 851, DateTimeKind.Local).AddTicks(1410),
+                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9881),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         });
+                });
+
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.ReportDatum", b =>

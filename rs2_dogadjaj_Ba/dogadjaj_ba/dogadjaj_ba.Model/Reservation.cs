@@ -12,6 +12,6 @@ namespace dogadjaj_ba.Model
 
         public int? UserId { get; set; }
 
-        public DateTime ReservationDate { get; set; }
+        public DateTime ReservationDate { get; set; } 
     }
 }

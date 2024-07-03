@@ -14,6 +14,19 @@ namespace dogadjaj_ba.Services.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Country",
+                columns: table => new
+                {
+                    countryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Country", x => x.countryId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Grad",
                 columns: table => new
                 {
@@ -28,18 +41,46 @@ namespace dogadjaj_ba.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    url = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Payment",
                 columns: table => new
                 {
                     PaymentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CardNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ExpiryDate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    CVV = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false)
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__Payment__9B556A38A734EA5B", x => x.PaymentId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PublishDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,6 +268,16 @@ namespace dogadjaj_ba.Services.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Country",
+                columns: new[] { "countryId", "name" },
+                values: new object[,]
+                {
+                    { 1, "BIH" },
+                    { 2, "CRO" },
+                    { 3, "SRB" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Grad",
                 columns: new[] { "GradId", "Drzava", "ImeGrada" },
                 values: new object[,]
@@ -237,13 +288,23 @@ namespace dogadjaj_ba.Services.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Payment",
+                columns: new[] { "PaymentId", "PaymentDate", "PaymentMethod", "PaymentStatus" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9875), "card", "true" },
+                    { 2, new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9878), "card", "true" },
+                    { 3, new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9881), "card", "true" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Email", "ImePrezime", "KorisnickoIme", "Sifra" },
                 values: new object[,]
                 {
                     { 1, "test@test", "t1", "dogadjaj1", "test" },
-                    { 2, "test@test", "t2", "dogadjaj2", "test" },
-                    { 3, "test@test", "t3", "dogadjaj3", "test" }
+                    { 2, "test1@test", "t2", "dogadjaj2", "test" },
+                    { 3, "test2@test", "t3", "dogadjaj3", "test" }
                 });
 
             migrationBuilder.InsertData(
@@ -251,9 +312,9 @@ namespace dogadjaj_ba.Services.Migrations
                 columns: new[] { "LokacijaId", "Adresa", "GradId", "NazivObjekta" },
                 values: new object[,]
                 {
-                    { 1, "Mostar 88000", 2, "Plaza Mostar" },
-                    { 2, "Mostar 88000", 1, "Plaza Mostar" },
-                    { 3, "Mostar 88000", 1, "Plaza Mostar" }
+                    { 1, "Mostar ", 2, "Era Mostar" },
+                    { 2, "Bisce polje", 1, "Plaza " },
+                    { 3, "MostarGrad", 1, "Mepas" }
                 });
 
             migrationBuilder.InsertData(
@@ -261,9 +322,9 @@ namespace dogadjaj_ba.Services.Migrations
                 columns: new[] { "Id", "Content", "DateRead", "Deleted", "Read", "SendOnDate", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!", null, false, false, new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8739), 1 },
-                    { 2, "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!", null, false, false, new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8768), 2 },
-                    { 3, "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!", null, false, false, new DateTime(2024, 3, 6, 13, 7, 33, 377, DateTimeKind.Local).AddTicks(8770), 3 }
+                    { 1, "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!", null, false, false, new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9827), 1 },
+                    { 2, "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!", null, false, false, new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9859), 2 },
+                    { 3, "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!", null, false, false, new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9861), 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -271,9 +332,19 @@ namespace dogadjaj_ba.Services.Migrations
                 columns: new[] { "EventId", "EventDate", "EventImage", "EventName", "LokacijaId", "Opis", "StateMachine", "eventType", "subType" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local), null, "Test1", 1, "Test", null, 1, 1 },
-                    { 2, new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local), null, "Test2", 1, "Test", null, 1, 1 },
-                    { 3, new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local), null, "Test3", 1, "Test", null, 1, 1 }
+                    { 1, new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local), null, "Test1", 1, "Test", "draft", 1, 1 },
+                    { 2, new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local), null, "Test2", 1, "Test2", "draft", 1, 1 },
+                    { 3, new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local), null, "Test3", 1, "Test3", "draft", 1, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReportData",
+                columns: new[] { "ReportDataId", "EventId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 1, 1 },
+                    { 3, 1, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -284,6 +355,16 @@ namespace dogadjaj_ba.Services.Migrations
                     { 1, 1, 100m, 1, 1, "Opis", "2", "Title" },
                     { 2, 1, 100m, 3, 2, "Opis2", "2", "Title2" },
                     { 3, 1, 100m, 2, 1, "Opis3", "2", "Title3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserTicket",
+                columns: new[] { "UserTicketID", "Kolicina", "TicketId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, 1 },
+                    { 2, 1, 1, 1 },
+                    { 3, 1, 1, 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -341,10 +422,19 @@ namespace dogadjaj_ba.Services.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Country");
+
+            migrationBuilder.DropTable(
+                name: "Images");
+
+            migrationBuilder.DropTable(
                 name: "Notiffications");
 
             migrationBuilder.DropTable(
                 name: "Payment");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "ReportData");

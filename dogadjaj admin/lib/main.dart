@@ -2,12 +2,14 @@ import 'package:dogadjaj_ba/custom_container.dart';
 import 'package:dogadjaj_ba/providers/dataprovider.dart';
 import 'package:dogadjaj_ba/providers/eventprovider.dart';
 import 'package:dogadjaj_ba/providers/notification_provider.dart';
+import 'package:dogadjaj_ba/providers/post_provider.dart';
 import 'package:dogadjaj_ba/providers/ticket_provider.dart';
 import 'package:dogadjaj_ba/providers/user_provider.dart';
 import 'package:dogadjaj_ba/screens/dogadjaji_screen.dart';
 import 'package:dogadjaj_ba/screens/izvjestajscreen.dart';
 import 'package:dogadjaj_ba/screens/karte_screen.dart';
 import 'package:dogadjaj_ba/screens/notifications_screen.dart';
+import 'package:dogadjaj_ba/screens/post_screen.dart';
 import 'package:dogadjaj_ba/screens/pregled_korisnika_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +20,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => TicketProvider()),
     ChangeNotifierProvider(create: (_) => UserProvider()),
     ChangeNotifierProvider(create: (_) => NotificationProvider()),
+    ChangeNotifierProvider(create: (_) => PostProvider()),
     // ChangeNotifierProvider(create: (_) => DataProvider()),
   ], child: MyApp()));
 }
@@ -69,6 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
           return IzvjestajWidget();
         case 4:
           return NotificationsScreen();
+           case 5:
+          return PostScreen();
         default:
           return Container();
       }
@@ -123,6 +128,15 @@ class _MyHomePageState extends State<MyHomePage> {
               onNavItemTapped(4);
             },
             child: const Text('Obavijesti',
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+          ),
+             TextButton(
+            onPressed: () {
+              onNavItemTapped(5);
+            },
+            child: const Text('Postovi',
                 style: TextStyle(
                   color: Colors.white,
                 )),

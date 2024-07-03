@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using dogadjaj_ba.Model;
-using dogadjaj_ba.Model.Requests;
-
-namespace dogadjaj_ba.Services
+﻿namespace dogadjaj_ba.Services
 {
     public interface IUserService : ICRUDServices<Model.Users, Model.SearchObjects.UserSearchObject,Model.Requests.UsersInsertRequest,Model.Requests.UsersUpdateRequest>
     {

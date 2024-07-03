@@ -12,8 +12,8 @@ using dogadjaj_ba.Services.Database;
 namespace dogadjaj_ba.Services.Migrations
 {
     [DbContext(typeof(Ib190074DogadjaBaContext))]
-    [Migration("20240611170809_.")]
-    partial class _
+    [Migration("20240702162504_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,23 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasKey("countryId");
 
                     b.ToTable("Country");
+
+                    b.HasData(
+                        new
+                        {
+                            countryId = 1,
+                            name = "BIH"
+                        },
+                        new
+                        {
+                            countryId = 2,
+                            name = "CRO"
+                        },
+                        new
+                        {
+                            countryId = 3,
+                            name = "SRB"
+                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Event", b =>
@@ -207,21 +224,21 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             LokacijaId = 1,
-                            Adresa = "Mostar 88000",
+                            Adresa = "Mostar ",
                             GradId = 2,
                             NazivObjekta = "Era Mostar"
                         },
                         new
                         {
                             LokacijaId = 2,
-                            Adresa = "Mostar 88000",
+                            Adresa = "Bisce polje",
                             GradId = 1,
                             NazivObjekta = "Plaza "
                         },
                         new
                         {
                             LokacijaId = 3,
-                            Adresa = "Mostar 88000",
+                            Adresa = "MostarGrad",
                             GradId = 1,
                             NazivObjekta = "Mepas"
                         });
@@ -267,7 +284,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 6, 11, 19, 8, 9, 866, DateTimeKind.Local).AddTicks(7257),
+                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9827),
                             UserId = 1
                         },
                         new
@@ -276,7 +293,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 6, 11, 19, 8, 9, 866, DateTimeKind.Local).AddTicks(7289),
+                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9859),
                             UserId = 2
                         },
                         new
@@ -285,7 +302,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 6, 11, 19, 8, 9, 866, DateTimeKind.Local).AddTicks(7291),
+                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9861),
                             UserId = 3
                         });
                 });
@@ -313,6 +330,53 @@ namespace dogadjaj_ba.Services.Migrations
                         .HasName("PK__Payment__9B556A38A734EA5B");
 
                     b.ToTable("Payment", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PaymentId = 1,
+                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9875),
+                            PaymentMethod = "card",
+                            PaymentStatus = "true"
+                        },
+                        new
+                        {
+                            PaymentId = 2,
+                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9878),
+                            PaymentMethod = "card",
+                            PaymentStatus = "true"
+                        },
+                        new
+                        {
+                            PaymentId = 3,
+                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9881),
+                            PaymentMethod = "card",
+                            PaymentStatus = "true"
+                        });
+                });
+
+            modelBuilder.Entity("dogadjaj_ba.Services.Database.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.ReportDatum", b =>
@@ -337,6 +401,26 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ReportData");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportDataId = 1,
+                            EventId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ReportDataId = 2,
+                            EventId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ReportDataId = 3,
+                            EventId = 1,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Reservation", b =>
@@ -519,6 +603,29 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserTicket");
+
+                    b.HasData(
+                        new
+                        {
+                            UserTicketID = 1,
+                            Kolicina = 1,
+                            TicketId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserTicketID = 2,
+                            Kolicina = 1,
+                            TicketId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            UserTicketID = 3,
+                            Kolicina = 1,
+                            TicketId = 1,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.Event", b =>

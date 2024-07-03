@@ -31,6 +31,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
     public virtual DbSet<Notiffication> Notiffications { get; set; }
 
     public virtual DbSet<ReportDatum> ReportData { get; set; }
+    public virtual DbSet<Post> Posts { get; set; }
 
     public virtual DbSet<Reservation> Reservations { get; set; }
 
@@ -40,9 +41,9 @@ public partial class Ib190074DogadjaBaContext : DbContext
     public virtual DbSet<Country> Country { get; set; }
     public virtual DbSet<Images> Images { get; set; }
 
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-    //        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=dogadjaj;TrustServerCertificate=True;Trusted_Connection=True;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=dogadjaj;TrustServerCertificate=True;Trusted_Connection=True;");
 
 
     private readonly DateTime _dateTime = new(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local);

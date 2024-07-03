@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj": {}
+    "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj": {
+    "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj",
         "projectName": "dogadjaj_ba.Model",
-        "projectPath": "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj",
-        "packagesPath": "C:\\Users\\Comp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Comp\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -65,25 +55,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj": {
+    "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj",
         "projectName": "dogadjaj_ba.Services",
-        "projectPath": "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj",
-        "packagesPath": "C:\\Users\\Comp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\dogadjaj_ba.Services.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Services\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Comp\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -91,15 +77,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj": {
-                "projectPath": "C:\\Users\\Comp\\Documents\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj"
+              "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj": {
+                "projectPath": "C:\\Users\\User\\Desktop\\GitHub\\dogadjaj_ba\\rs2_dogadjaj_Ba\\dogadjaj_ba\\dogadjaj_ba.Model\\dogadjaj_ba.Model.csproj"
               }
             }
           }
@@ -108,11 +93,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -176,7 +156,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

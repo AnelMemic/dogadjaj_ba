@@ -45,6 +45,9 @@ namespace dogadjaj_ba.Services
             CreateMap<Model.Requests.NotificationInsertRequest  , Services.Database.Notiffication>();
             CreateMap<Model.Country, Services.Database.Country>();
             CreateMap<Model.Images, Services.Database.Images>();
+            CreateMap<Database.Post, Model.Post>();
+            CreateMap<Model.Requests.PostUpdateRequest, Database.Post>();
+            CreateMap<Model.Requests.PostInsertRequest, Services.Database.Post>();
         }
     }
     //public UserProfile()

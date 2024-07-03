@@ -1,6 +1,5 @@
 using dogadjaj_ba;
 using dogadjaj_ba.Filters;
-using dogadjaj_ba.Model.SearchObjects;
 using dogadjaj_ba.Services;
 using dogadjaj_ba.Services.Database;
 using dogadjaj_ba.Services.EventiStateMachine;
@@ -9,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
-using ServiceStack;
-using System;
 using System.Text;
 using dogadjaj_ba.Model.Requests;
 using System.Text.Json;
@@ -33,6 +30,7 @@ builder.Services.AddTransient<IReservationService, ReservationService>();
 builder.Services.AddTransient<ITicketService, TicketServices>();
 builder.Services.AddTransient<IUserTicketService, UserTicketService>();
 builder.Services.AddTransient<INotificationService, NotificationService>();
+builder.Services.AddTransient<IPostService, PostService>();
 
 
 
