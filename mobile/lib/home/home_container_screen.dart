@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/cart_screen.dart';
 import 'package:mobile/constants.dart';
-import 'package:mobile/event_details_screen.dart';
 import 'package:mobile/helpers/app_decoration.dart';
 import 'package:mobile/helpers/bottom_bar.dart';
 import 'package:mobile/helpers/error_dialog.dart';

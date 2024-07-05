@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using Microsoft.EntityFrameworkCore;
 using dogadjaj_ba.Services;
 using System.Numerics;
+using System.Reflection.Metadata;
 namespace dogadjaj_ba.Services.Database;
 
 public partial class Ib190074DogadjaBaContext : DbContext
@@ -41,9 +42,9 @@ public partial class Ib190074DogadjaBaContext : DbContext
     public virtual DbSet<Country> Country { get; set; }
     public virtual DbSet<Images> Images { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=dogadjaj;TrustServerCertificate=True;Trusted_Connection=True;");
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=dogadjajBa;TrustServerCertificate=True;Trusted_Connection=True;");
 
 
     private readonly DateTime _dateTime = new(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Local);
@@ -60,6 +61,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
         SeedCountry(modelBuilder);
         SeedReportData(modelBuilder);
         SeedUserTicket(modelBuilder);
+        SeedPosts(modelBuilder);
 
     }
     private void SeedUserTicket(ModelBuilder modelBuilder)
@@ -352,6 +354,55 @@ PaymentDate=DateTime.Now,
                Read = false,
                UserId = 3,
            });
+    }
+
+    private void SeedPosts(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Post>().HasData(
+           new()
+           {
+               Id = 1,
+               content = "Pridružite nam se na koncertu u Mostaru, zabava je zagarantovana!",
+               title = "Koncert u Mostaru!",
+               PublishDate = DateTime.Now,
+
+           },
+           new()
+           {
+                Id= 2,
+                content = "Novi događaj u Sarajevu, pogledajte naše događaje i kupite kartu!",
+                title= "Novi događaj!",
+                PublishDate = DateTime.Now,
+           },
+           new()
+           {
+               Id = 3,
+               content = "Dođite na filmski festival u Banjoj Luci i uživajte u najnovijim filmovima!",
+               title = "Filmski Festival",
+               PublishDate = DateTime.Now,
+           },
+           new()
+              {
+               Id = 4,
+               content = "Pozivamo vas na umjetničku izložbu u Tuzli, inspirativna djela očekuju vas!",
+               title = "Umjetnička Izložba",
+               PublishDate = DateTime.Now,
+           },
+           new()
+           {
+               Id = 5,
+               content = "Sportski događaj godine u Zenici! Ne propustite spektakl.",
+               title = "Sportski Spektakl",
+               PublishDate = DateTime.Now,
+           }, 
+           new()
+           {
+               Id = 6,
+               content = "Pripremite se za tehnološku konferenciju u Mostaru, najnoviji trendovi i inovacije.",
+               title = "Tehnološka Konferencija",
+               PublishDate = DateTime.Now,
+           }
+           );
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

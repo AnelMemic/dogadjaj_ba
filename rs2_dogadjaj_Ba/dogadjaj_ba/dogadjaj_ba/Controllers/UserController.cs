@@ -30,6 +30,13 @@ namespace dogadjaj_ba.Controllers
 
         }
 
+        [HttpGet("getRecommendedEvents")]
+        public async Task<List<Model.Event>> getRecommendedEvents(int userID)
+        {
+
+            return await (_service as IUserService).Recommend(userID);
+
+        }
 
         //[HttpGet()]
         //public async Task<IEnumerable<Model.Users>> Get()

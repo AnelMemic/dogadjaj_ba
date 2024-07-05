@@ -5,6 +5,8 @@
         Task<Model.Users> GetUserById(string username);
         public Task<Model.Users> Login(string username, string password);
 
+        Task<List<Model.Event>> Recommend(int userId);
+
         //Task<List<Model.Users>> Get();
         //Model.Users Insert(UsersInsertRequest request);
         //Model.Users Update(int id, UsersInsertRequest request);

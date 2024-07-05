@@ -9,7 +9,7 @@ class TicketProvider extends BaseProvider<Ticket> {
   TicketProvider() : super("Ticket");
 
   Future<List<Ticket>> getPaged({TicketSearchObject? searchObject}) async {
-    var url = 'https://10.0.2.2:7056/Ticket/getPaged';
+    var url = 'http://10.0.2.2:7056/Ticket/getPaged';
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();

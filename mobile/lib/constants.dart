@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // const apiUrl = String.fromEnvironment('baseUrl', defaultValue: 'https://10.0.2.2:7056');
 const apiUrl =
-    String.fromEnvironment('baseUrl', defaultValue: 'https://10.0.2.2:7056');
+    String.fromEnvironment('baseUrl', defaultValue: 'http://10.0.2.2:7056');
 
 const stripePublishKey = String.fromEnvironment('stripePublishKey',
     defaultValue:

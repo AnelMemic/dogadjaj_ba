@@ -62,6 +62,8 @@ class UserProvider extends BaseProvider<User> {
     }
   }
 
+
+
   int? getUserId() {
     if (user != null) {
       return user!.id;

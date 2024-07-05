@@ -48,6 +48,10 @@ namespace dogadjaj_ba.Services
             CreateMap<Database.Post, Model.Post>();
             CreateMap<Model.Requests.PostUpdateRequest, Database.Post>();
             CreateMap<Model.Requests.PostInsertRequest, Services.Database.Post>();
+
+            CreateMap<Database.Country, Model.Country>();
+            CreateMap<Model.Requests.CountryUpdateRequest, Database.Country>();
+            CreateMap<Model.Requests.CuntryInsertRequest, Services.Database.Country>();
         }
     }
     //public UserProfile()

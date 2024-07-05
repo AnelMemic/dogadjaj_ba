@@ -42,6 +42,25 @@ class EventProvider extends BaseProvider<Event> {
     }
   }
 
+   Future<List<Event>> getRecommendedEvents(int userId) async {
+     var url = '$apiUrl/User/getRecommendedEvents?userID=$userId';
+    var uri = Uri.parse(url);
+
+    Map<String, String> headers = createHeaders();
+    headers['Content-Type'] = 'application/json'; 
+    // final Map<String, String> queryParameters = {};
+   
+    // uri = uri.replace(queryParameters: queryParameters);
+    final response = await http!.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      print(data);
+      return data.map((d) => fromJson(d)).cast<Event>().toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Event fromJson(data) {
     return Event.fromJson(data);

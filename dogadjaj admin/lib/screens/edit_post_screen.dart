@@ -52,20 +52,19 @@ class _EditPostScreenState extends State<EditPostScreen> {
     super.dispose();
   }
 
-  Future<bool> updateEvent() async {
+  Future<bool> updatePost() async {
     if (_formKey.currentState!.validate()) {
       try {
-        Post updatedEvent = Post(
-          id: widget.event.id,
-          title: nameController.text,
-          publishDate: endDate,
-          content: descriptionController.text,
-        );
+         var post = {
+        "id": 0,
+        "title": nameController.text,
+        "content": descriptionController.text,
+        "publishDate": DateTime.now().toUtc().toIso8601String(),
+      };
 
         
-        developer.log('Updating post: ${updatedEvent.toJson()}');
 
-        var result = await postProvider.update(widget.event.id, updatedEvent);
+        var result = await postProvider.edit(post, widget.event.id);
         if (result != null) {
           return true;
         }
@@ -150,7 +149,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  if (await updateEvent()) {
+                  if (await updatePost()) {
                     Navigator.of(context).pop(true);
                   }
                 },

@@ -12,6 +12,7 @@ namespace dogadjaj_ba.Services.Database
 
         public string? name { get; set; }
 
+        public ICollection<Grad>? Cities { get; set; } = null;
 
     }
 }

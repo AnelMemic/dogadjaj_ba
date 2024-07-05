@@ -38,6 +38,6 @@ namespace dogadjaj_ba.Controllers
             return await (_service as IEventiService).GetFiltered(search);
         }
 
-
+       
     }
 }

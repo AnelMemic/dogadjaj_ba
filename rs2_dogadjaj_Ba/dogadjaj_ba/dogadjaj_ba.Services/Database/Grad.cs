@@ -12,4 +12,6 @@ public partial class Grad
     public string? Drzava { get; set; }
 
     public virtual ICollection<Lokacija> Lokacijas { get; set; } = new List<Lokacija>();
+    public int? CountryId { get; set; }
+    public Country? Country { get; set; } = null!;
 }

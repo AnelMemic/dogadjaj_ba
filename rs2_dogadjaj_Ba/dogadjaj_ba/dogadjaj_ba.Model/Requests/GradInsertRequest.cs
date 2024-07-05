@@ -11,5 +11,7 @@ namespace dogadjaj_ba.Model.Requests
         public string? ImeGrada { get; set; }
 
         public string? Drzava { get; set; }
+        public int? countryId { get; set; } = null!;
+
     }
 }

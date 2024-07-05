@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/constants.dart';
+import 'package:mobile/helpers/app_decoration.dart';
 
 
 import 'package:mobile/helpers/error_dialog.dart';
@@ -10,7 +11,9 @@ import 'package:mobile/lists/event_categories_list.dart';
 import 'package:mobile/lists/event_details_screen.dart';
 import 'package:mobile/models/SearchObjects/event_search_object.dart';
 import 'package:mobile/models/event.dart';
+import 'package:mobile/models/user.dart';
 import 'package:mobile/providers/event_provider.dart';
+import 'package:mobile/providers/user_provider.dart';
 import 'package:mobile/route/rutes.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
@@ -42,15 +45,34 @@ class _EventsListState extends State<EventsList> {
   int selectedCategory = 0;
   int selectedSubcategory = 0;
   late EventProvider _eventProvider;
+  late UserProvider _userProvider;
   List<Event> _events = <Event>[];
+  List<Event> _recommendedEvents = <Event>[];
+  User? user;
 
   @override
   void initState() {
     super.initState();
     _eventProvider = context.read<EventProvider>();
+    _userProvider = context.read<UserProvider>();
+    loadUser();
     loadEvents();
+    loadRecommendedEvents();
   }
 
+
+void loadUser() async {
+    var id = _userProvider.getUserId();
+    print(id);
+    try {
+      var usersResponse = await _userProvider.getUserById(id!);
+      setState(() {
+        user = usersResponse;
+      });
+    } on Exception catch (e) {
+      showErrorDialog(context, e.toString().substring(11));
+    }
+  }
 //TODO
   List<Event> generateEvents() {
     List<Event> events = [];
@@ -89,6 +111,20 @@ class _EventsListState extends State<EventsList> {
 
       setState(() {
         _events = Response;
+      });
+    } on Exception catch (e) {
+      showErrorDialog(context, e.toString().substring(11));
+    }
+  }
+
+  void loadRecommendedEvents() async {
+    try {
+    var id = _userProvider.getUserId();
+      
+      var Response = await _eventProvider.getRecommendedEvents(id!);
+
+      setState(() {
+        _recommendedEvents = Response;
       });
     } on Exception catch (e) {
       showErrorDialog(context, e.toString().substring(11));
@@ -299,6 +335,9 @@ class _EventsListState extends State<EventsList> {
                     ),
                   ),
                 ),
+                SizedBox(height: 15,),
+                _buildRecommendedTrainersWithInfo(context,)
+
               ],
             ),
           ],
@@ -307,6 +346,115 @@ class _EventsListState extends State<EventsList> {
     );
   }
 
+
+Widget _buildRecommendedTrainersWithInfo(BuildContext context) {
+  if (_recommendedEvents.isEmpty) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
+      decoration: AppDecoration.fillBlack.copyWith(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        'Nema preporučenih eventa',
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  return Column(
+    children: [
+      Text('Preporučeni eventi' ,style: TextStyle(color: white, fontSize: 20),),
+      SizedBox(height: 10, ),
+      Container(
+        margin: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
+        decoration: AppDecoration.fillBlack.copyWith(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: ListView.builder(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  itemCount: _recommendedEvents.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EventDetailsScreen(
+                                                    event: _recommendedEvents[index]),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        color: _generateRandomColor(),
+                                        margin:
+                                            const EdgeInsets.symmetric(vertical: 8),
+                                        child: Row(
+                                          children: [
+                                            // Image container
+                                            Container(
+                                              padding: const EdgeInsets.all(8),
+                                              child: Image.asset(
+                                                "assets/images/logo.png", // Replace with the actual property name
+                                                height: 80,
+                                                width: 80,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            // Event details container
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    _recommendedEvents[index].eventName!,
+                                                    style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 4),
+                                                  Text(
+                                                    _recommendedEvents[index].opis!,
+                                                    softWrap: true,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 4),
+                                                  Text(
+                                                    _events[index].eventDate != null
+                                                        ? DateFormat('dd/MM/yyyy')
+                                                            .format(_events[index]
+                                                                .eventDate!)
+                                                        : "--",
+                                                    style: TextStyle(color: white),
+                                                  ),
+                                                  SizedBox(height: 4),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )
+      ),
+    ],
+  );
+}
   Color _generateRandomColor() {
     return Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
   }

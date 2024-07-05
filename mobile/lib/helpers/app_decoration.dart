@@ -6,6 +6,9 @@ class AppDecoration {
   static BoxDecoration get fillBlack => BoxDecoration(
         color: appTheme.black200,
       );
+      static BoxDecoration get fillgrey => BoxDecoration(
+        color: appTheme.gray100,
+      );
   static BoxDecoration get fillBlueCc => BoxDecoration(
         color: appTheme.blue600Cc,
       );

@@ -1,11 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants.dart';
 import 'package:mobile/custom%20widgets/logo_widget.dart';
+import 'package:mobile/helpers/app_decoration.dart';
+import 'package:mobile/helpers/error_dialog.dart';
+import 'package:mobile/models/post.dart';
+import 'package:mobile/providers/post_provider.dart';
 import '../lists/event_types_list.dart';
 import '../models/test_models.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Post> posts = <Post>[];
+  late PostProvider _postProvider;
+
+
+ @override
+  void initState() {
+    super.initState();
+    _postProvider = PostProvider();
+    loadPosts();
+  
+  }
+ 
+
+ void loadPosts() async {
+    try {
+      var Response =
+          await _postProvider.get();
+      setState(() {
+        posts = Response;
+      });
+    } on Exception catch (e) {
+      showErrorDialog(context, e.toString().substring(11));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,9 +133,69 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            SizedBox(height: 10,),
+           _buildPosts(context),
+            SizedBox(height: 10,),
+
           ],
         ),
+      ),
+    );
+  }
+
+
+   Widget _buildPosts(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        left: 10,
+        right: 10,
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 10,
+      ),
+      decoration: AppDecoration.fillBlack.copyWith(
+        borderRadius: BorderRadiusStyle.roundedBorder10,
+      ),
+      child: Column(
+        children: [
+          Text("Objave", style: TextStyle(color: white, fontSize: 18, fontWeight: FontWeight.bold),),
+          SizedBox(height: 4,),
+          Container(
+            height: 250,
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.only(bottom: 6),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.white, // Set the border color
+                      width: 1.0, // Set the border width
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          posts[index].title!,
+                          style: TextStyle(fontWeight: FontWeight.bold, color: white),
+                        ),
+                        Text(posts[index].content!,
+                        style: TextStyle(color: white),),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

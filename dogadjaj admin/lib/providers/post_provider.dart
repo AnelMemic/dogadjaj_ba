@@ -83,6 +83,21 @@ class PostProvider extends BaseProvider<Post> {
     }
   }
 
+   Future<dynamic> edit(dynamic resource, int id) async {
+    var uri = Uri.parse('$url/$id');
+    var jsonRequest = jsonEncode(resource);
+    var response = await http!.put(uri, headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      }, body: jsonRequest);
+
+    if (response.statusCode == 200) {
+      return "OK";
+    } else {
+      throw Exception('Greška prilikom unosa');
+    }
+  }
+
+
   Future<List<Post>> getAll() async {
     var uri = Uri.parse(url);
 
@@ -112,23 +127,23 @@ class PostProvider extends BaseProvider<Post> {
 
     
 
- Future<bool> updatePost(int eventId, Post event) async {
-    final response = await http!.put(
-      Uri.parse('$url/$eventId'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(event.toJson()),
-    );
+//  Future<bool> updatePost(int eventId, Post event) async {
+//     final response = await http!.put(
+//       Uri.parse('$url/$eventId'),
+//       headers: <String, String>{
+//         'Content-Type': 'application/json; charset=UTF-8',
+//       },
+//       body: jsonEncode(event.toJson()),
+//     );
 
    
 
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+//     if (response.statusCode == 200) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
   
 
 }

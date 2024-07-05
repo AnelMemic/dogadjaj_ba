@@ -281,7 +281,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9827),
+                            SendOnDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9789),
                             UserId = 1
                         },
                         new
@@ -290,7 +290,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9859),
+                            SendOnDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9824),
                             UserId = 2
                         },
                         new
@@ -299,7 +299,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9861),
+                            SendOnDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9827),
                             UserId = 3
                         });
                 });
@@ -332,21 +332,21 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             PaymentId = 1,
-                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9875),
+                            PaymentDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9840),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         },
                         new
                         {
                             PaymentId = 2,
-                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9878),
+                            PaymentDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9844),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         },
                         new
                         {
                             PaymentId = 3,
-                            PaymentDate = new DateTime(2024, 7, 2, 18, 25, 4, 113, DateTimeKind.Local).AddTicks(9881),
+                            PaymentDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9846),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         });
@@ -374,6 +374,50 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Posts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PublishDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9917),
+                            content = "Pridružite nam se na koncertu u Mostaru, zabava je zagarantovana!",
+                            title = "Koncert u Mostaru!"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PublishDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9920),
+                            content = "Novi događaj u Sarajevu, pogledajte naše događaje i kupite kartu!",
+                            title = "Novi događaj!"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PublishDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9921),
+                            content = "Dođite na filmski festival u Banjoj Luci i uživajte u najnovijim filmovima!",
+                            title = "Filmski Festival"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            PublishDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9923),
+                            content = "Pozivamo vas na umjetničku izložbu u Tuzli, inspirativna djela očekuju vas!",
+                            title = "Umjetnička Izložba"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            PublishDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9924),
+                            content = "Sportski događaj godine u Zenici! Ne propustite spektakl.",
+                            title = "Sportski Spektakl"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            PublishDate = new DateTime(2024, 7, 5, 16, 51, 8, 463, DateTimeKind.Local).AddTicks(9926),
+                            content = "Pripremite se za tehnološku konferenciju u Mostaru, najnoviji trendovi i inovacije.",
+                            title = "Tehnološka Konferencija"
+                        });
                 });
 
             modelBuilder.Entity("dogadjaj_ba.Services.Database.ReportDatum", b =>
@@ -456,7 +500,7 @@ namespace dogadjaj_ba.Services.Migrations
                     b.Property<decimal?>("Cijena")
                         .HasColumnType("decimal(10, 2)");
 
-                    b.Property<int?>("EventId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserId")
@@ -688,6 +732,8 @@ namespace dogadjaj_ba.Services.Migrations
                     b.HasOne("dogadjaj_ba.Services.Database.Event", "Event")
                         .WithMany("Tickets")
                         .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("FK__Tickets__EventId__5535A963");
 
                     b.HasOne("dogadjaj_ba.Services.Database.User", "User")

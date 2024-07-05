@@ -17,7 +17,7 @@ public partial class Ticket
 
     public int Available { get; set; }
 
-    public int? EventId { get; set; }
+    public int EventId { get; set; }
 
     public decimal? Cijena { get; set; }
 
