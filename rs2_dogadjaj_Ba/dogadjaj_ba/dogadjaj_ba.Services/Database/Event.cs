@@ -28,5 +28,6 @@ public partial class Event
     public virtual ICollection<ReportDatum> ReportData { get; set; } = new List<ReportDatum>();
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
-    
+    public virtual ICollection<Images> Images { get; set; } = new List<Images>();
+
 }

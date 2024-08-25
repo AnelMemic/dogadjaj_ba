@@ -15,5 +15,6 @@ namespace dogadjaj_ba.Model
         public string? Drzava { get; set; }
 
        // public virtual ICollection<Lokacija> Lokacijas { get; set; } = new List<Lokacija>();
+       public int? countryId { get; set; }
     }
 }

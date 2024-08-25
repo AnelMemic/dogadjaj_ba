@@ -12,7 +12,8 @@ namespace dogadjaj_ba.Services.Database
 
         public string? url { get; set; }
 
-     
+        public int? eventId { get; set; }
+        public Event? Event { get; set; } = null!;
     }
 
 }

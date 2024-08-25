@@ -23,4 +23,5 @@ public partial class User
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     public virtual ICollection<UserTicket> UserTicket { get; set; } = new List<UserTicket>();
+    public virtual ICollection<Payment> Payment { get; set; } = new List<Payment>();
 }

@@ -62,7 +62,30 @@ public partial class Ib190074DogadjaBaContext : DbContext
         SeedReportData(modelBuilder);
         SeedUserTicket(modelBuilder);
         SeedPosts(modelBuilder);
-
+        SeedReservation(modelBuilder);
+        SeedImages(modelBuilder);
+    }
+    private void SeedImages(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Images>().HasData(
+           new()
+           {
+              eventId = 1,
+              id = 2,
+                url= "https://spotme.com/wp-content/uploads/2020/07/Hero-1.jpg"
+           },
+           new()
+           {
+               eventId = 3,
+               id = 1,
+               url = "https://spotme.com/wp-content/uploads/2020/07/Hero-1.jpg"
+           },
+           new()
+           {
+               eventId = 2,
+               id = 3,
+               url = "https://spotme.com/wp-content/uploads/2020/07/Hero-1.jpg"
+           });
     }
     private void SeedUserTicket(ModelBuilder modelBuilder)
     {
@@ -87,6 +110,31 @@ public partial class Ib190074DogadjaBaContext : DbContext
                UserId = 1,
                Kolicina = 1,
                UserTicketID = 3,
+           });
+    }
+    private void SeedReservation(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Reservation>().HasData(
+           new()
+           {
+              
+               UserId = 1,
+                ReservationDate = DateTime.Now,
+                ReservationId = 1,
+                
+              
+           },
+           new()
+           {
+               UserId = 1,
+               ReservationDate = DateTime.Now,
+               ReservationId = 2,
+           },
+           new()
+           {
+               UserId = 1,
+               ReservationDate = DateTime.Now,
+               ReservationId = 3,
            });
     }
     private void SeedReportData(ModelBuilder modelBuilder)

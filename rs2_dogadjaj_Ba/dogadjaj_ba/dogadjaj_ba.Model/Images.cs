@@ -11,5 +11,9 @@ namespace dogadjaj_ba.Model
         public int id { get; set; }
 
         public string? url { get; set; }
+
+        public int eventId { get; set; }
+
+
     }
 }
