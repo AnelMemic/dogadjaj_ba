@@ -39,7 +39,7 @@ class TicketProvider extends BaseProvider<Ticket> {
 
       Future<bool> updateTicket(Ticket ticket) async {
     final response = await http.put(
-      Uri.parse('http://localhost:7056/Ticket/${ticket.ticketId}'),
+      Uri.parse('https://localhost:7056/Ticket/${ticket.ticketId}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -52,7 +52,7 @@ class TicketProvider extends BaseProvider<Ticket> {
 
 
   Future<List<Ticket>> getTicket() async {
-    final response = await http.get(Uri.parse('http://localhost:7056/Ticket'));
+    final response = await http.get(Uri.parse('https://localhost:7056/Ticket'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -63,7 +63,7 @@ class TicketProvider extends BaseProvider<Ticket> {
   }
 
   Future<User> getUser(int userId) async {
-    final response = await http.get(Uri.parse('http://localhost:7056/User/$userId'));
+    final response = await http.get(Uri.parse('https://localhost:7056/User/$userId'));
 
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
@@ -73,7 +73,7 @@ class TicketProvider extends BaseProvider<Ticket> {
   }
 
   Future<Event> getEvent(int eventId) async {
-    final response = await http.get(Uri.parse('http://localhost:7056/Eventi/$eventId'));
+    final response = await http.get(Uri.parse('https://localhost:7056/Eventi/$eventId'));
 
     if (response.statusCode == 200) {
       return Event.fromJson(json.decode(response.body));
@@ -83,7 +83,7 @@ class TicketProvider extends BaseProvider<Ticket> {
   }
 
   Future<List<Ticket>> getAll() async {
-    var url = 'http://localhost:7056/Ticket';
+    var url = 'https://localhost:7056/Ticket';
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();

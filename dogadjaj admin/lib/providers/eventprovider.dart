@@ -14,7 +14,7 @@ class EventProvider extends BaseProvider<Event> {
   }
 
   Future<Event> saveEvent(Event event) async {
-    var url = 'http://localhost:7056/Eventi';
+    var url = 'https://localhost:7056/Eventi';
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
@@ -34,7 +34,7 @@ class EventProvider extends BaseProvider<Event> {
   }
 
   Future<List<Event>> getAll() async {
-    var url = 'http://localhost:7056/Eventi';
+    var url = 'https://localhost:7056/Eventi';
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
@@ -62,7 +62,7 @@ class EventProvider extends BaseProvider<Event> {
 
 
     Future<List<Map<String, dynamic>>> getLocations() async {
-    final response = await http!.get(Uri.parse('http://localhost:7056/Lokacija'));
+    final response = await http!.get(Uri.parse('https://localhost:7056/Lokacija'));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       return data.map((location) => {
@@ -79,7 +79,7 @@ class EventProvider extends BaseProvider<Event> {
 
  Future<bool> updateEvent(int eventId, Event event) async {
     final response = await http!.put(
-      Uri.parse('http://localhost:7056/Eventi/$eventId'),
+      Uri.parse('https://localhost:7056/Eventi/$eventId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

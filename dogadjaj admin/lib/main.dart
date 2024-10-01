@@ -1,28 +1,26 @@
-import 'package:dogadjaj_ba/custom_container.dart';
-import 'package:dogadjaj_ba/providers/dataprovider.dart';
+import 'package:dogadjaj_ba/screens/login_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:dogadjaj_ba/screens/app_routes.dart';
 import 'package:dogadjaj_ba/providers/eventprovider.dart';
 import 'package:dogadjaj_ba/providers/notification_provider.dart';
 import 'package:dogadjaj_ba/providers/post_provider.dart';
 import 'package:dogadjaj_ba/providers/ticket_provider.dart';
 import 'package:dogadjaj_ba/providers/user_provider.dart';
-import 'package:dogadjaj_ba/screens/dogadjaji_screen.dart';
-import 'package:dogadjaj_ba/screens/izvjestajscreen.dart';
-import 'package:dogadjaj_ba/screens/karte_screen.dart';
-import 'package:dogadjaj_ba/screens/notifications_screen.dart';
-import 'package:dogadjaj_ba/screens/post_screen.dart';
-import 'package:dogadjaj_ba/screens/pregled_korisnika_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => EventProvider()),
-    ChangeNotifierProvider(create: (_) => TicketProvider()),
-    ChangeNotifierProvider(create: (_) => UserProvider()),
-    ChangeNotifierProvider(create: (_) => NotificationProvider()),
-    ChangeNotifierProvider(create: (_) => PostProvider()),
-    // ChangeNotifierProvider(create: (_) => DataProvider()),
-  ], child: MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => EventProvider()),
+        ChangeNotifierProvider(create: (_) => TicketProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => PostProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -36,12 +34,14 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      home: const MyHomePage(),
+      home: const LoginScreen(),
+      routes: AppRoutes.routes,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+   static const String routeName = '/main.dart';
   const MyHomePage({super.key});
 
   @override
@@ -49,42 +49,44 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Widget _buildKarteScreen() {
-    return Container(
-      child: Center(
-        child: Text('Karte Screen'),
-      ),
+  int _selectedIndex = 0;
+
+  void onNavItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, AppRoutes.dogadjajiScreen);
+        break;
+      case 1:
+        Navigator.pushNamed(context, AppRoutes.pregledKorisnikaScreen);
+        break;
+      case 2:
+        Navigator.pushNamed(context, AppRoutes.karteScreen);
+        break;
+      case 3:
+        Navigator.pushNamed(context, AppRoutes.izvjestajScreen);
+        break;
+      case 4:
+        Navigator.pushNamed(context, AppRoutes.notificationsScreen);
+        break;
+      case 5:
+        Navigator.pushNamed(context, AppRoutes.postScreen);
+        break;
+    }
+  }
+
+  void logOut() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
 
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    Widget buildScreen() {
-      switch (_selectedIndex) {
-        case 0:
-          return const DogadjajiScreen();
-        case 1:
-          return const PregledKorisnikaScreen();
-        case 2:
-          return const KarteScreen();
-        case 3:
-          return IzvjestajWidget();
-        case 4:
-          return NotificationsScreen();
-           case 5:
-          return PostScreen();
-        default:
-          return Container();
-      }
-    }
-
-    void onNavItemTapped(int index) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -123,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.white,
                 )),
           ),
-           TextButton(
+          TextButton(
             onPressed: () {
               onNavItemTapped(4);
             },
@@ -132,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.white,
                 )),
           ),
-             TextButton(
+          TextButton(
             onPressed: () {
               onNavItemTapped(5);
             },
@@ -143,7 +145,29 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: buildScreen(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,  // Center everything vertically
+        crossAxisAlignment: CrossAxisAlignment.center,  // Center everything horizontally
+        children: [
+          const Center(
+            child: Text(
+              'Welcome to Dogadjaj.ba desktop app ',
+              style: TextStyle(fontSize: 24, color: Colors.white),
+            ),
+          ),
+          const SizedBox(height: 40),
+          // Center the Log Out button
+          ElevatedButton.icon(
+            onPressed: logOut,
+            icon: const Icon(Icons.logout),
+            label: const Text('Log Out'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.yellow,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

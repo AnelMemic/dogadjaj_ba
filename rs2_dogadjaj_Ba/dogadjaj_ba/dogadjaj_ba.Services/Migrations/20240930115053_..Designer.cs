@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dogadjaj_ba.Services.Database;
 
@@ -11,9 +12,11 @@ using dogadjaj_ba.Services.Database;
 namespace dogadjaj_ba.Services.Migrations
 {
     [DbContext(typeof(Ib190074DogadjaBaContext))]
-    partial class Ib190074DogadjaBaContextModelSnapshot : ModelSnapshot
+    [Migration("20240930115053_.")]
+    partial class _
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,7 +314,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9578),
+                            SendOnDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5596),
                             UserId = 1
                         },
                         new
@@ -320,7 +323,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9605),
+                            SendOnDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5646),
                             UserId = 2
                         },
                         new
@@ -329,7 +332,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9607),
+                            SendOnDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5649),
                             UserId = 3
                         });
                 });
@@ -367,21 +370,21 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             PaymentId = 1,
-                            PaymentDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9616),
+                            PaymentDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5656),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         },
                         new
                         {
                             PaymentId = 2,
-                            PaymentDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9619),
+                            PaymentDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5659),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         },
                         new
                         {
                             PaymentId = 3,
-                            PaymentDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9621),
+                            PaymentDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5661),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         });
@@ -414,42 +417,42 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             Id = 1,
-                            PublishDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9667),
+                            PublishDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5689),
                             content = "Pridružite nam se na koncertu u Mostaru, zabava je zagarantovana!",
                             title = "Koncert u Mostaru!"
                         },
                         new
                         {
                             Id = 2,
-                            PublishDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9669),
+                            PublishDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5691),
                             content = "Novi događaj u Sarajevu, pogledajte naše događaje i kupite kartu!",
                             title = "Novi događaj!"
                         },
                         new
                         {
                             Id = 3,
-                            PublishDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9670),
+                            PublishDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5692),
                             content = "Dođite na filmski festival u Banjoj Luci i uživajte u najnovijim filmovima!",
                             title = "Filmski Festival"
                         },
                         new
                         {
                             Id = 4,
-                            PublishDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9671),
+                            PublishDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5693),
                             content = "Pozivamo vas na umjetničku izložbu u Tuzli, inspirativna djela očekuju vas!",
                             title = "Umjetnička Izložba"
                         },
                         new
                         {
                             Id = 5,
-                            PublishDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9672),
+                            PublishDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5694),
                             content = "Sportski događaj godine u Zenici! Ne propustite spektakl.",
                             title = "Sportski Spektakl"
                         },
                         new
                         {
                             Id = 6,
-                            PublishDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9673),
+                            PublishDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5695),
                             content = "Pripremite se za tehnološku konferenciju u Mostaru, najnoviji trendovi i inovacije.",
                             title = "Tehnološka Konferencija"
                         });
@@ -524,19 +527,19 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             ReservationId = 1,
-                            ReservationDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9681),
+                            ReservationDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5704),
                             UserId = 1
                         },
                         new
                         {
                             ReservationId = 2,
-                            ReservationDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9683),
+                            ReservationDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5705),
                             UserId = 1
                         },
                         new
                         {
                             ReservationId = 3,
-                            ReservationDate = new DateTime(2024, 10, 1, 9, 57, 29, 176, DateTimeKind.Local).AddTicks(9684),
+                            ReservationDate = new DateTime(2024, 9, 30, 13, 50, 53, 155, DateTimeKind.Local).AddTicks(5706),
                             UserId = 1
                         });
                 });
@@ -652,17 +655,17 @@ namespace dogadjaj_ba.Services.Migrations
                         {
                             UserId = 1,
                             Email = "test@test",
-                            ImePrezime = "admin",
-                            KorisnickoIme = "admin",
-                            Sifra = "admin"
+                            ImePrezime = "t1",
+                            KorisnickoIme = "dogadjaj1",
+                            Sifra = "test"
                         },
                         new
                         {
                             UserId = 2,
                             Email = "test1@test",
                             ImePrezime = "t2",
-                            KorisnickoIme = "mobile",
-                            Sifra = "mobile"
+                            KorisnickoIme = "dogadjaj2",
+                            Sifra = "test"
                         },
                         new
                         {

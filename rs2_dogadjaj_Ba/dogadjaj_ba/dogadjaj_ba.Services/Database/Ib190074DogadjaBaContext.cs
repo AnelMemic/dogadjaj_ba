@@ -247,9 +247,9 @@ PaymentDate=DateTime.Now,
            new()
            {
                UserId = 1,
-               KorisnickoIme = "dogadjaj1",
-               ImePrezime = "t1",
-               Sifra ="test",
+               KorisnickoIme = "admin",
+               ImePrezime = "admin",
+               Sifra ="admin",
                Email= "test@test",
                
                
@@ -258,9 +258,9 @@ PaymentDate=DateTime.Now,
            new()
            {
                UserId = 2,
-               KorisnickoIme = "dogadjaj2",
+               KorisnickoIme = "mobile",
                ImePrezime = "t2",
-               Sifra = "test",
+               Sifra = "mobile",
                Email = "test1@test",
 
            },

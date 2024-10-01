@@ -85,7 +85,7 @@ class NotificationProvider extends BaseProvider<Notifications> {
     }
   }
 //  Future<Event> saveEvent(Event event) async {
-//     var url = 'http://localhost:7056/Eventi';
+//     var url = 'https://localhost:7056/Eventi';
 //     var uri = Uri.parse(url);
 
 //     Map<String, String> headers = createHeaders();
@@ -104,7 +104,7 @@ class NotificationProvider extends BaseProvider<Notifications> {
 //     }
 //   }
   Future<dynamic> sendRabbitNotification(dynamic object) async {
-    var url = 'http://localhost:7144/api/Notification/SendNotification';
+    var url = 'https://localhost:7144/api/Notification/SendNotification';
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
