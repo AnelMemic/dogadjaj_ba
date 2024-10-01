@@ -1,8 +1,14 @@
 # dogadjaj_ba
 
 Dogadjaj_ba is mobile app for online ticket purchase and reservation
-User : dogadjaj1
-Password : test
+ADMIN DESKTOP:
+User : admin
+Password : admin
+
+MOBILE APP:
+User : mobile
+Password : mobile
+
 Payment: 
 4242 4242 4242 4242
 12/27, cvv: 123
