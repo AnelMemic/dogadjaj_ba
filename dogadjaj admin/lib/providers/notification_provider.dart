@@ -20,7 +20,7 @@ class NotificationProvider extends BaseProvider<Notifications> {
 
   Future<List<Notifications>> getAll() async {
     var url =
-        'https://localhost:7056/Notification'; // Replace with your API endpoint
+        'http://localhost:7056/Notification'; 
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
@@ -39,11 +39,11 @@ class NotificationProvider extends BaseProvider<Notifications> {
         print(
             'Error fetching notifications. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
-        return []; // Return an empty list in case of an error
+        return [];
       }
     } catch (e) {
       print('Exception during API call: $e');
-      return []; // Return an empty list in case of an exception
+      return []; 
     }
   }
 
@@ -104,7 +104,7 @@ class NotificationProvider extends BaseProvider<Notifications> {
 //     }
 //   }
   Future<dynamic> sendRabbitNotification(dynamic object) async {
-    var url = 'https://localhost:7144/api/Notification/SendNotification';
+    var url = 'http://localhost:7144/api/Notification/SendNotification';
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();

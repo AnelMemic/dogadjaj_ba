@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 class DataProvider {
   Future<List<T>> getUsersDistinctIdCount<T>() async {
     final response =
-        await http.get(Uri.parse('https://localhost:7056/Users/id'));
+        await http.get(Uri.parse('http://localhost:7056/Users/id'));
 
     if (response.statusCode == 200) {
       final List<T> data = (jsonDecode(response.body) as List)

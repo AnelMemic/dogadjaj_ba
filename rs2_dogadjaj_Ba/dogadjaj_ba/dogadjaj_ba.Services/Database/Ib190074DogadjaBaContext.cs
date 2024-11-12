@@ -62,7 +62,6 @@ public partial class Ib190074DogadjaBaContext : DbContext
         SeedReportData(modelBuilder);
         SeedUserTicket(modelBuilder);
         SeedPosts(modelBuilder);
-        SeedReservation(modelBuilder);
         SeedImages(modelBuilder);
     }
     private void SeedImages(ModelBuilder modelBuilder)
@@ -112,31 +111,7 @@ public partial class Ib190074DogadjaBaContext : DbContext
                UserTicketID = 3,
            });
     }
-    private void SeedReservation(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Reservation>().HasData(
-           new()
-           {
-              
-               UserId = 1,
-                ReservationDate = DateTime.Now,
-                ReservationId = 1,
-                
-              
-           },
-           new()
-           {
-               UserId = 1,
-               ReservationDate = DateTime.Now,
-               ReservationId = 2,
-           },
-           new()
-           {
-               UserId = 1,
-               ReservationDate = DateTime.Now,
-               ReservationId = 3,
-           });
-    }
+   
     private void SeedReportData(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ReportDatum>().HasData(
@@ -413,14 +388,15 @@ PaymentDate=DateTime.Now,
                content = "Pridružite nam se na koncertu u Mostaru, zabava je zagarantovana!",
                title = "Koncert u Mostaru!",
                PublishDate = DateTime.Now,
-
+               eventId = 1
            },
            new()
            {
-                Id= 2,
-                content = "Novi događaj u Sarajevu, pogledajte naše događaje i kupite kartu!",
-                title= "Novi događaj!",
-                PublishDate = DateTime.Now,
+               Id = 2,
+               content = "Novi događaj u Sarajevu, pogledajte naše događaje i kupite kartu!",
+               title = "Novi događaj!",
+               PublishDate = DateTime.Now,
+               eventId = 1
            },
            new()
            {
@@ -428,13 +404,15 @@ PaymentDate=DateTime.Now,
                content = "Dođite na filmski festival u Banjoj Luci i uživajte u najnovijim filmovima!",
                title = "Filmski Festival",
                PublishDate = DateTime.Now,
+               eventId = 1
            },
            new()
-              {
+           {
                Id = 4,
                content = "Pozivamo vas na umjetničku izložbu u Tuzli, inspirativna djela očekuju vas!",
                title = "Umjetnička Izložba",
                PublishDate = DateTime.Now,
+               eventId = 1
            },
            new()
            {
@@ -442,13 +420,14 @@ PaymentDate=DateTime.Now,
                content = "Sportski događaj godine u Zenici! Ne propustite spektakl.",
                title = "Sportski Spektakl",
                PublishDate = DateTime.Now,
-           }, 
+           },
            new()
            {
                Id = 6,
                content = "Pripremite se za tehnološku konferenciju u Mostaru, najnoviji trendovi i inovacije.",
                title = "Tehnološka Konferencija",
                PublishDate = DateTime.Now,
+               eventId = 1
            }
            );
     }

@@ -16,7 +16,7 @@ class BaseProvider<T> with ChangeNotifier {
 
   BaseProvider(String endpoint) {
     _baseUrl = const String.fromEnvironment("baseUrl",
-        defaultValue: "https://localhost:7056/");
+        defaultValue: "http://localhost:7056/");
     print("baseurl: $_baseUrl");
 
     if (_baseUrl!.endsWith("/") == false) {
@@ -218,7 +218,7 @@ class BaseProvider<T> with ChangeNotifier {
   }
 
   Future<List<T>> getAll() async {
-    var url = "https://localhost:7056/";
+    var url = "http://localhost:7056/";
     var uri = Uri.parse(url);
 
     Map<String, String> headers = createHeaders();
