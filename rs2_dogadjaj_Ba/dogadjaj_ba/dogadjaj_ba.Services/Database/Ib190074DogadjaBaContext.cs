@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using dogadjaj_ba.Services;
 using System.Numerics;
 using System.Reflection.Metadata;
+using System.Text;
+using dogadjaj_ba.Model;
 namespace dogadjaj_ba.Services.Database;
 
 public partial class Ib190074DogadjaBaContext : DbContext
@@ -63,6 +65,48 @@ public partial class Ib190074DogadjaBaContext : DbContext
         SeedUserTicket(modelBuilder);
         SeedPosts(modelBuilder);
         SeedImages(modelBuilder);
+    }
+    private void SeedUsers(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>().HasData(
+           new()
+           {
+               UserId = 1,
+               KorisnickoIme = "admin",
+               ImePrezime = "admin",
+               Sifra = PasswordHelper.HashPasswordSimple("admin"),
+               Email = "test@test",
+
+
+
+           },
+           new()
+           {
+               UserId = 2,
+               KorisnickoIme = "mobile",
+               ImePrezime = "t2",
+               Sifra = PasswordHelper.HashPasswordSimple("test2"),
+               Email = "test1@test",
+
+           },
+           new()
+           {
+               UserId = 3,
+               KorisnickoIme = "dogadjaj3",
+               ImePrezime = "t3",
+               Sifra = PasswordHelper.HashPasswordSimple("test3"),
+               Email = "test2@test",
+
+           });
+    }
+    public static string HashPassword(string password)
+    {
+        using (var sha256 = System.Security.Cryptography.SHA256.Create())
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(password);
+            byte[] hash = sha256.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
+        }
     }
     private void SeedImages(ModelBuilder modelBuilder)
     {
@@ -216,39 +260,7 @@ PaymentDate=DateTime.Now,
                Cijena = 100
            });
     }
-    private void SeedUsers(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<User>().HasData(
-           new()
-           {
-               UserId = 1,
-               KorisnickoIme = "admin",
-               ImePrezime = "admin",
-               Sifra ="admin",
-               Email= "test@test",
-               
-               
-
-           },
-           new()
-           {
-               UserId = 2,
-               KorisnickoIme = "mobile",
-               ImePrezime = "t2",
-               Sifra = "mobile",
-               Email = "test1@test",
-
-           },
-           new()
-           {
-               UserId = 3,
-               KorisnickoIme = "dogadjaj3",
-               ImePrezime = "t3",
-               Sifra = "test",
-               Email = "test2@test",
-
-           });
-    }
+   
     private void SeedLocation(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Lokacija>().HasData(
@@ -413,13 +425,6 @@ PaymentDate=DateTime.Now,
                title = "Umjetnička Izložba",
                PublishDate = DateTime.Now,
                eventId = 1
-           },
-           new()
-           {
-               Id = 5,
-               content = "Sportski događaj godine u Zenici! Ne propustite spektakl.",
-               title = "Sportski Spektakl",
-               PublishDate = DateTime.Now,
            },
            new()
            {

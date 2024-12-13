@@ -20,28 +20,27 @@ namespace dogadjaj_ba.Services
         //public IMapper _mapper { get; set; }
 
         public UserService(Ib190074DogadjaBaContext context, IMapper mapper) : base(context, mapper) { }
-        
-       
+
+
         public override async Task<Model.Users> Insert(UsersInsertRequest insert)
         {
-            var korisnik = new User();
-            _mapper.Map(insert, korisnik);
+           
+            var hashedPassword = PasswordHelper.HashPasswordSimple(insert.Sifra);
+
+            var korisnik = new User
+            {
+                KorisnickoIme = insert.KorisnickoIme,
+                ImePrezime = insert.ImePrezime,
+                Email = insert.Email,
+                Sifra = hashedPassword 
+            };
+
             _context.Users.Add(korisnik);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return _mapper.Map<Model.Users>(korisnik);
         }
-        public override async Task<Model.Users> Update(int id, UsersUpdateRequest insert)
-        {
-            var entity = _context.Users.Find(id);
 
-            _mapper.Map(insert, entity);
-
-            _context.SaveChanges();
-
-            return _mapper.Map<Model.Users>(entity);
-        }
-        
 
 
         public override async Task BeforeInsert(User entity, UsersInsertRequest insert)
@@ -88,17 +87,22 @@ namespace dogadjaj_ba.Services
 
         public async Task<Model.Users> Login(string username, string password)
         {
-            var entity = await _context.Users.FirstOrDefaultAsync(x=> x.KorisnickoIme == username);
+            
+            var entity = await _context.Users.FirstOrDefaultAsync(x => x.KorisnickoIme == username);
 
             if (entity == null)
-                return null;
+            {
+                return null; 
+            }
 
-            if (entity.Sifra != password)
-            { return null; }
-            else
-                return _mapper.Map<Model.Users>(entity);
-            
-            
+            var hashedPassword = PasswordHelper.HashPasswordSimple(password);
+            if (entity.Sifra != hashedPassword)
+            {
+                return null; 
+            }
+
+          
+            return _mapper.Map<Model.Users>(entity);
         }
         public async Task<List<Model.Event>> Recommend(int userId)
         {

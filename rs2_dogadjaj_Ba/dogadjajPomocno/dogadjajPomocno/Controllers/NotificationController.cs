@@ -1,42 +1,43 @@
 ﻿using dogadjajPomocno.Requests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 
 namespace dogadjajPomocno.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class NotificationController : ControllerBase
     {
-        private readonly string hostname = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "rabbitMQ";
-        private readonly string username = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest";
-        private readonly string password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest";
-        private readonly string virtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VIRTUALHOST") ?? "/";
+        private readonly RabbitMQConfig _config;
 
+        public NotificationController(IOptions<RabbitMQConfig> config)
+        {
+            _config = config.Value;
+        }
 
         [HttpPost("SendNotification")]
         public async Task<IActionResult> SendNotification(NotificationUpsertDto notification)
         {
             if (notification == null)
-                return BadRequest("Cann't send null object");
+                return BadRequest("Cannot send null object");
 
-            if (notification.Id > 0 && notification.Id < 0)
+            if (notification.Id < 0)
                 return BadRequest("Id must be 0");
 
             if (notification.UserId <= 0)
                 return BadRequest("UserId must be greater than 0");
 
-
-
             var factory = new ConnectionFactory
             {
-                HostName = hostname,
-                UserName = username,
-                Password = password,
-                VirtualHost = virtualHost,
+                HostName = _config.HostName,
+                UserName = _config.UserName,
+                Password = _config.Password,
+                VirtualHost = _config.VirtualHost,
             };
+
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
 
@@ -46,14 +47,11 @@ namespace dogadjajPomocno.Controllers
                                  autoDelete: true,
                                  arguments: null);
 
-
             var json = JsonConvert.SerializeObject(notification);
-
             var body = Encoding.UTF8.GetBytes(json);
 
             channel.BasicPublish(exchange: string.Empty,
                                  routingKey: "notification",
-
                                  body: body);
 
             return Ok(notification);

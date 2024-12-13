@@ -11,7 +11,8 @@ using RabbitMQ.Client;
 using System.Text;
 using dogadjaj_ba.Model.Requests;
 using System.Text.Json;
-
+using dogadjaj_ba.Model;
+using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,56 +35,40 @@ builder.Services.AddTransient<IPostService, PostService>();
 
 
 
-
-
 builder.Services.AddControllers(x =>
 {
     x.Filters.Add<ErrorFilter>();
 });
 
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => {
-    c.AddSecurityDefinition("basicAuth", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("basicAuth", new OpenApiSecurityScheme()
     {
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Type = SecuritySchemeType.Http,
         Scheme = "Basic"
     });
 
-    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
     {
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference{ Type = ReferenceType.SecurityScheme, Id ="basicAuth"}
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "basicAuth" }
             },
-            new string[]{}
+            new string[] { }
         }
     });
 });
 
-builder.Services.AddScoped<IMessageProducer, MessageProducer>();
-
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<Ib190074DogadjaBaContext>(options =>
-    options.UseSqlServer(connectionString));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAutoMapper(typeof(IUserService));
 
-
 builder.Services.AddAuthentication("QueryStringAuthentication")
         .AddScheme<AuthenticationSchemeOptions, QueryStringAuthenticationHandler>("QueryStringAuthentication", null);
-
-//builder.Services.AddAuthentication("QueryStringAuthentication")
-//        .AddScheme<AuthenticationSchemeOptions, QueryStringAuthenticationHandler>("QueryStringAuthentication", null);
-
-
-//builder.Services.AddDbContext<Ib190074DogadjaBaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 
 var app = builder.Build();
 
@@ -91,12 +76,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(); 
+    app.UseSwaggerUI();
 }
-
-
-app.UseSwagger();
-app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -109,18 +90,12 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<Ib190074DogadjaBaContext>();
-  
-
-    var conn = dataContext.Database.GetConnectionString();
-
-     await dataContext.Database.MigrateAsync();
-
+    await dataContext.Database.MigrateAsync();
     dataContext.Database.EnsureCreated();
-
-
 }
 
-string hostname = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "";
+
+string hostname = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
 string username = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest";
 string password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest";
 string virtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VIRTUALHOST") ?? "/";
@@ -132,6 +107,10 @@ var factory = new ConnectionFactory
     Password = password,
     VirtualHost = virtualHost,
 };
+
+Console.WriteLine("Povezivanje na RabbitMQ...");
+Console.WriteLine($"Host: {factory.HostName}, User: {factory.UserName}");
+
 using var connection = factory.CreateConnection();
 using var channel = connection.CreateModel();
 
@@ -145,33 +124,37 @@ channel.QueueDeclare(queue: "notification",
 Console.WriteLine(" [*] Waiting for messages.");
 
 var consumer = new EventingBasicConsumer(channel);
+
 consumer.Received += async (model, ea) =>
 {
     var body = ea.Body.ToArray();
     var message = Encoding.UTF8.GetString(body);
-    Console.WriteLine(message.ToString());
-    var notification = JsonSerializer.Deserialize<NotificationInsertRequest>(message);
-    using (var scope = app.Services.CreateScope())
+    Console.WriteLine($"Primljena poruka: {message}"); 
+
+    
+    try
     {
-        var notificationsService = scope.ServiceProvider.GetRequiredService<INotificationService>();
-
-        if (notification != null)
+        var notification = JsonSerializer.Deserialize<NotificationInsertRequest>(message);
+        using (var scope = app.Services.CreateScope())
         {
-            try
+            var notificationsService = scope.ServiceProvider.GetRequiredService<INotificationService>();
+            if (notification != null)
             {
-
                 await notificationsService.Insert(notification);
-            }
-            catch (Exception e)
-            {
-
             }
         }
     }
-    Console.WriteLine(Environment.GetEnvironmentVariable("Some"));
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Greška pri obradi poruke: {ex.Message}");
+    }
 };
+
+
 channel.BasicConsume(queue: "notification",
                      autoAck: true,
                      consumer: consumer);
+
+Console.WriteLine("Konzument povezan na queue.");
 
 app.Run();
