@@ -6,8 +6,8 @@ User : admin
 Password : admin
 
 MOBILE APP:
-User : mobile
-Password : mobile
+User : admin
+Password : admin
 
 Payment: 
 4242 4242 4242 4242
