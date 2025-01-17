@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   rabbitMQ:
     image: rabbitmq:3-management
@@ -12,8 +12,8 @@ services:
     expose:
       - 5672
     networks: 
-    - dogadjajnetwork
-  # SQL Server Docker Container
+      - dogadjajnetwork
+
   sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     restart: unless-stopped
@@ -25,8 +25,10 @@ services:
       - 1435:1433
     networks:
       - dogadjajnetwork
+    volumes:
+      - rs2_dogadjaj_ba_sql_data:/var/opt/mssql
+      
 
-  # ASP.NET Core Application Docker Container
   api:
     restart: unless-stopped
     build:
@@ -63,9 +65,10 @@ services:
       - dogadjajnetwork
     depends_on:
       - rabbitMQ
+
 networks:
   dogadjajnetwork:
     driver: bridge
 
-
-
+volumes:
+  rs2_dogadjaj_ba_sql_data:
