@@ -238,7 +238,7 @@ class _DodajDogadjajScreenState extends State<DodajDogadjajScreen> {
                     child: Text('IT'),
                   ),
                 ],
-                decoration: const InputDecoration(labelText: 'subEvent type'),
+                decoration: const InputDecoration(labelText: 'Sub type'),
               ),
               const SizedBox(
                 height: 25,

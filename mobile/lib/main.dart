@@ -6,6 +6,7 @@ import 'package:mobile/constants.dart';
 import 'package:mobile/helpers/my_overrides.dart';
 import 'package:mobile/helpers/theme_helper.dart';
 import 'package:mobile/providers/event_provider.dart';
+import 'package:mobile/providers/location_provider.dart';
 import 'package:mobile/providers/notification_provider.dart';
 import 'package:mobile/providers/post_provider.dart';
 import 'package:mobile/providers/ticket_provider.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
          ChangeNotifierProvider(create: (_) => UserTicketProvider()),
          ChangeNotifierProvider(create: (_) => NotificationsProvider()),
          ChangeNotifierProvider(create: (_) => PostProvider()),
+          ChangeNotifierProvider(create: (_) => LocationProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData.light(),

@@ -49,10 +49,11 @@ namespace dogadjaj_ba.Controllers
         //    return _service.Insert(request);    
         //}
 
-        //[HttpPut("{id}")]
-        //public Model.Users Update(int id,UsersInsertRequest request)
-        //{
-        //    return _service.Update(id,request);
-        //}
+        [HttpPut("updateCovjeka/{id}")]
+        public async Task<Model.Users> UpdateCovjeka(int id, UsersUpdateRequest? request)
+        {
+            return await _service.Update(id, request);
+        }
+
     }
 }

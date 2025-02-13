@@ -1,5 +1,5 @@
 class User {
-  late int id;
+  late int? id;
   late String imePrezime;
   late String korisnickoIme;
   late String email;
@@ -7,7 +7,7 @@ class User {
   String? sifraPotvrda;
 
   User({
-    required this.id,
+     this.id,
     required this.imePrezime,
     required this.korisnickoIme,
     required this.email,

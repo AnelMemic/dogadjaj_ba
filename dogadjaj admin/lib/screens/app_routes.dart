@@ -34,6 +34,8 @@ class AppRoutes {
   static const String editEventScreen = '/edit_event_screen';
   static const String editPostScreen = '/edit_post_screen';
   static const String editUserScreen = '/edit_user_screen';
+    static const String addUserScreen = '/new_user_screen';
+  
    static const String homeScreen = '/main'; 
 
   

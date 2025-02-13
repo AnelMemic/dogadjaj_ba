@@ -16,7 +16,7 @@ public partial class Event
 
     public string? Opis { get; set; }
 
-
+    public int ViewCount { get; set; } = 0;
     public byte[]? EventImage { get; set; } = null;
     public string? StateMachine { get; set; }
 

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:dogadjaj_ba/screens/new_user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dogadjaj_ba/models/user.dart';
 import 'package:dogadjaj_ba/providers/user_provider.dart';
@@ -51,7 +52,18 @@ class _PregledKorisnikaScreenState extends State<PregledKorisnikaScreen> {
       fetchUsers();
     }
   }
+void _openNewUserScreen(BuildContext context, User? user) async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => NewUserScreen(),
+      ),
+    );
 
+    if (result == true) {
+      
+      fetchUsers();
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +74,7 @@ class _PregledKorisnikaScreenState extends State<PregledKorisnikaScreen> {
             icon: Icon(Icons.add, size: 24.0),
             label: Text('Add User', style: TextStyle(fontSize: 18.0)),
             onPressed: () {
-              _openEditUserScreen(context, null);
+              _openNewUserScreen(context, null);
             },
             style: TextButton.styleFrom(
               foregroundColor: Colors.white, // Text color

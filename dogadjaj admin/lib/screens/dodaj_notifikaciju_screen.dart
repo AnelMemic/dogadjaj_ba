@@ -86,7 +86,7 @@ class _DodajNotifikacijuScreenState extends State<DodajNotifikacijuScreen> {
             ElevatedButton(
               onPressed: () async {
                 for (var user in users) {
-                  insertNotification(user.id);
+                  insertNotification(user.id!);
                 }
                 Navigator.of(context).pop();
               },

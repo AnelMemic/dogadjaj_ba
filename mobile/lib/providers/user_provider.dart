@@ -34,6 +34,35 @@ class UserProvider extends BaseProvider<User> {
       throw Exception(response.body);
     }
   }
+Future<User> updateUser(User updatedUser) async {
+  var url = '$apiUrl/User/${updatedUser.id}';
+  var uri = Uri.parse(url);
+
+  Map<String, String> headers = createHeaders();
+  headers['Content-Type'] = 'application/json';
+
+  var jsonRequest = jsonEncode({
+    "id": updatedUser.id,
+    "korisnickoIme": updatedUser.korisnickoIme,
+    "imePrezime": updatedUser.imePrezime,
+    "email": updatedUser.email,
+  
+  });
+
+  var response = await http!.put(uri, headers: headers, body: jsonRequest);
+
+  print("PUT Request Sent: $jsonRequest");
+  print("Response: ${response.body}");
+
+  if (response.statusCode == 200) {
+    var data = jsonDecode(response.body);
+    user = User.fromJson(data);
+    notifyListeners();
+    return user!;
+  } else {
+    throw Exception("Greška prilikom ažuriranja korisnika: ${response.body}");
+  }
+}
 
   Future<User> getUserById(int id, [dynamic additionalData]) async {
     var url = '$apiUrl/User/$id';

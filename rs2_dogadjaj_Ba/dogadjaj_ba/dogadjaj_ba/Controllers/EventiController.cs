@@ -10,9 +10,10 @@ namespace dogadjaj_ba.Controllers
     [Route("[controller]")]
     public class EventiController : BaseCRUDController<Model.Event,EventiSearchObject,EventInsertRequest,Model.Requests.EventUpdateRequest>
     {
-        public EventiController(ILogger<BaseController<Model.Event, EventiSearchObject>> logger,IEventiService service) : base(logger,service)
+        private readonly IEventRecommendationService _eventRecommendationService;
+        public EventiController(ILogger<BaseController<Model.Event, EventiSearchObject>> logger,IEventiService service, IEventRecommendationService eventRecommendationService) : base(logger,service)
         {
-
+            _eventRecommendationService = eventRecommendationService;
         }
         [HttpPut("{id}/activate")]
         public virtual async Task<Model.Event> Activate(int id)
@@ -37,7 +38,11 @@ namespace dogadjaj_ba.Controllers
         {
             return await (_service as IEventiService).GetFiltered(search);
         }
+        [HttpGet("recommend")]
+        public List<Event> Recommend()
+        {
+            return _eventRecommendationService.GetRecommendedEvents();
+        }
 
-       
     }
 }

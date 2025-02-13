@@ -32,7 +32,7 @@ builder.Services.AddTransient<ITicketService, TicketServices>();
 builder.Services.AddTransient<IUserTicketService, UserTicketService>();
 builder.Services.AddTransient<INotificationService, NotificationService>();
 builder.Services.AddTransient<IPostService, PostService>();
-
+builder.Services.AddScoped<IEventRecommendationService, EventRecommendationService>();
 
 
 builder.Services.AddControllers(x =>

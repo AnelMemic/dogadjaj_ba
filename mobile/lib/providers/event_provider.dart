@@ -42,27 +42,28 @@ class EventProvider extends BaseProvider<Event> {
     }
   }
 
-   Future<List<Event>> getRecommendedEvents(int userId) async {
-     var url = '$apiUrl/User/getRecommendedEvents?userID=$userId';
-    var uri = Uri.parse(url);
+   Future<List<Event>> getRecommendedEvents() async {
+  var url = '$apiUrl/Eventi/recommend'; // Pravi API endpoint
+  var uri = Uri.parse(url);
 
-    Map<String, String> headers = createHeaders();
-    headers['Content-Type'] = 'application/json'; 
-    // final Map<String, String> queryParameters = {};
-   
-    // uri = uri.replace(queryParameters: queryParameters);
-    final response = await http!.get(uri, headers: headers);
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      print(data);
-      return data.map((d) => fromJson(d)).cast<Event>().toList();
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
+  Map<String, String> headers = createHeaders();
+  headers['Content-Type'] = 'application/json'; 
 
-  @override
-  Event fromJson(data) {
-    return Event.fromJson(data);
+  final response = await http!.get(uri, headers: headers);
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    print("✅ Preporučeni eventi: $data"); 
+
+    return data.map((d) => fromJson(d)).cast<Event>().toList();
+  } else {
+    throw Exception('❌ Greška pri dohvaćanju preporučenih eventa');
   }
+}
+
+@override
+Event fromJson(data) {
+  return Event.fromJson(data);
+}
+
 }

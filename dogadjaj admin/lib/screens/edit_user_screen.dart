@@ -27,8 +27,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     imePrezimeController = TextEditingController(text: widget.user?.imePrezime ?? '');
     korisnickoImeController = TextEditingController(text: widget.user?.korisnickoIme ?? '');
     emailController = TextEditingController(text: widget.user?.email ?? '');
-    sifraController = TextEditingController();
-    sifraPotvrdaController = TextEditingController();
+    
   }
 
   @override
@@ -36,8 +35,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     imePrezimeController.dispose();
     korisnickoImeController.dispose();
     emailController.dispose();
-    sifraController.dispose();
-    sifraPotvrdaController.dispose();
+   
     super.dispose();
   }
 
@@ -49,15 +47,14 @@ class _EditUserScreenState extends State<EditUserScreen> {
           imePrezime: imePrezimeController.text,
           korisnickoIme: korisnickoImeController.text,
           email: emailController.text,
-          sifra: sifraController.text,
-          sifraPotvrda: sifraPotvrdaController.text,
+   
         );
 
         bool result;
         if (widget.user == null) {
           result = await userProvider.addUser(newUser);
         } else {
-          result = await userProvider.updateUser(widget.user!.id, newUser);
+          result = await userProvider.updateUser(widget.user!.id!, newUser);
         }
 
         return result;
@@ -72,8 +69,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     imePrezimeController.clear();
     korisnickoImeController.clear();
     emailController.clear();
-    sifraController.clear();
-    sifraPotvrdaController.clear();
+
   }
 
   @override
@@ -125,35 +121,9 @@ class _EditUserScreenState extends State<EditUserScreen> {
                 },
               ),
               const SizedBox(height: 16.0),
-              TextFormField(
-                controller: sifraController,
-                decoration: const InputDecoration(labelText: 'Šifra'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Morate promijeniti šifru!';
-                  }
-                  if (value.length < 2) {
-                    return 'Šifra mora imati najmanje 2 znakova!';
-                  }
-                  return null;
-                },
-              ),
+            
               const SizedBox(height: 16.0),
-              TextFormField(
-                controller: sifraPotvrdaController,
-                decoration: const InputDecoration(labelText: 'Potvrda šifre'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Unesite potvrdu šifre!';
-                  }
-                  if (value != sifraController.text) {
-                    return 'Šifre se ne podudaraju!';
-                  }
-                  return null;
-                },
-              ),
+              
               const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: () async {

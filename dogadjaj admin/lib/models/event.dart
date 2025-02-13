@@ -27,7 +27,8 @@ class Event {
     eventName = json['eventName'];
     eventType = json['eventType'];
     eventName = json['eventName'];
-    eventDate = DateTime.parse(json['eventDate']);
+eventDate = DateTime.parse(json['eventDate']).toLocal();
+eventDate = DateTime(eventDate!.year, eventDate!.month, eventDate!.day);
     stateMachine = json['stateMachine'] ?? 'draft';
     eventImage = json['eventImage'];
     opis = json['opis'];

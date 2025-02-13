@@ -11,5 +11,6 @@ namespace dogadjaj_ba.Model.Requests
         public string title { get; set; }
         public string content { get; set; }
         public DateTime PublishDate { get; set; }
+        public int eventId { get; set; }
     }
 }

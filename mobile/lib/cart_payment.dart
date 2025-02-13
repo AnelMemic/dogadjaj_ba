@@ -100,65 +100,64 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
     }
   }
 
-  Future<void> showPaymentSheet() async {
-    if (_selectedTicket == null ||
-        _numberOfTickets == null ||
-        _numberOfTickets == 0) {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          backgroundColor: black,
-          content: Text(
-            "Molimo odaberite ulaznicu i broj ulaznica.",
-            style: TextStyle(color: white),
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                "OK",
-              ),
-            ),
-          ],
+ Future<void> showPaymentSheet() async {
+  if (_selectedTicket == null || _numberOfTickets == null || _numberOfTickets == 0) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: black,
+        content: Text(
+          "Molimo odaberite ulaznicu i broj ulaznica.",
+          style: TextStyle(color: white),
         ),
-      );
-      return;
-    }
-
-    var paymentIntentData = await createPaymentIntent(
-        (calculateTotalPrice() * 100).round().toString(), 'BAM');
-    await Stripe.instance
-        .initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-            paymentIntentClientSecret: paymentIntentData!['client_secret'],
-            merchantDisplayName: 'dogadjajBa',
-            appearance: const PaymentSheetAppearance(
-              primaryButton: PaymentSheetPrimaryButtonAppearance(
-                  colors: PaymentSheetPrimaryButtonTheme(
-                      light: PaymentSheetPrimaryButtonThemeColors(
-                          background: Colors.teal))),
-            ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("OK"),
           ),
-        )
-        .then((value) {})
-        .onError((error, stackTrace) {
-      showDialog(
-          context: context,
-          builder: (_) => const AlertDialog(
-                content: Text("Poništena transakcija"),
-              ));
-    });
-
-    try {
-      await Stripe.instance.presentPaymentSheet();
-
-      insertUserPackage();
-    } catch (e) {
-      //silent
-    }
+        ],
+      ),
+    );
+    return;
   }
+
+  var paymentIntentData = await createPaymentIntent(
+      (calculateTotalPrice() * 100).round().toString(), 'BAM');
+
+  await Stripe.instance
+      .initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntentData!['client_secret'],
+          merchantDisplayName: 'dogadjajBa',
+          appearance: const PaymentSheetAppearance(
+            primaryButton: PaymentSheetPrimaryButtonAppearance(
+                colors: PaymentSheetPrimaryButtonTheme(
+                    light: PaymentSheetPrimaryButtonThemeColors(
+                        background: Colors.teal))),
+          ),
+        ),
+      )
+      .onError((error, stackTrace) {
+    showDialog(
+        context: context,
+        builder: (_) => const AlertDialog(
+              content: Text("Poništena transakcija"),
+            ));
+  });
+
+  try {
+    await Stripe.instance.presentPaymentSheet();
+
+    insertUserPackage();
+
+    // **Zatvori popup nakon uspješne kupovine**
+    Navigator.pop(context);
+  } catch (e) {
+    //silent
+  }
+}
 
   createPaymentIntent(String amount, String currency) async {
     try {
@@ -321,6 +320,7 @@ class _KupiKartuDialogState extends State<KupiKartuDialog> {
         ),
       ),
     );
+    
   }
 
   Widget _buildTitle() {

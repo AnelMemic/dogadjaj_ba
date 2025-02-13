@@ -68,6 +68,14 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
       print("Failed to load locations: $e");
     }
   }
+  String formatDate(DateTime date) {
+    String day = date.day.toString().padLeft(2, '0');
+    String month = date.month.toString().padLeft(2, '0');
+    String hour = date.month.toString().padLeft(2, '0');
+      String minute = date.month.toString().padLeft(2, '0');
+    String year = date.year.toString();
+    return '$day-$month-$year $hour:$minute';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +168,7 @@ class _DogadjajiScreenState extends State<DogadjajiScreen> {
                                     cells: [
                                       DataCell(Text(event.eventName ?? 'N/A')),
                                       DataCell(Text(
-                                          event.eventDate.toString() ?? 'N/A')),
+                                          event.eventDate!=null ? formatDate(event.eventDate!) : 'N/A')),
                                       DataCell(Text(
                                           EventCategoryMapper.mapCategory(
                                                   event.eventType!) ??

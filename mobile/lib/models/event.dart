@@ -1,34 +1,41 @@
-class Event  {
-  late int eventId;
-  late int? lokacijaId;
-  late int? eventTypeId;
-  late String? eventName;
-  late DateTime? eventDate;
-  late String? stateMachine;
-  late String? eventImage;
-  late String? opis;
+class Event {
+  final int? eventId;
+  final String? eventName;
+  final int? lokacijaId; 
+  final DateTime? eventDate;
+  final int? eventTypeId;
+  final int? subType;
+  final String? opis;
+  final String? stateMachine;
+  final String? eventImage;
 
   Event({
-    required this.eventId,
-    this.lokacijaId,
-    this.eventTypeId,
+    this.eventId,
     this.eventName,
+    this.lokacijaId, 
     this.eventDate,
+    this.eventTypeId,
+    this.subType,
+    this.opis,
     this.stateMachine,
     this.eventImage,
-    this.opis,
   });
 
-  Event.fromJson(Map<String, dynamic> json) {
-    eventId = json['eventId'];
-    eventName = json['eventName'];
-    eventTypeId = json['eventTypeId'];
-    eventName = json['eventName'];
-    eventDate = DateTime.parse(json['eventDate']);
-    stateMachine = json['stateMachine'];
-    eventImage = json['eventImage'];
-    opis = json['opis'];
-    }
+  factory Event.fromJson(Map<String, dynamic> json) {
+    return Event(
+      eventId: json['eventId'],
+      eventName: json['eventName'] ?? "Nepoznat događaj",
+      lokacijaId: json['lokacijaId'], 
+      eventDate: json['eventDate'] != null ? DateTime.parse(json['eventDate']) : null,
+      eventTypeId: json['eventType'],
+      subType: json['subType'],
+      opis: json['opis'],
+      stateMachine: json['stateMachine'],
+      eventImage: json['eventImage'],
+    );
+  }
+
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -36,7 +43,8 @@ class Event  {
     data['eventName'] = eventName;
     data['eventTypeId'] = eventTypeId;
     data['opis'] = opis;
-
+ data['lokacijaId'] = lokacijaId;
     return data;
   }
+
 }
