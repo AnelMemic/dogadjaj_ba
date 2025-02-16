@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("dogadjaj_ba.Model")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55794235d82315891ae114563e19f0bb8febbc2a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a07b32e1df9a58ca4942063efe8e32a9370d6ff4")]
 [assembly: System.Reflection.AssemblyProductAttribute("dogadjaj_ba.Model")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dogadjaj_ba.Model")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

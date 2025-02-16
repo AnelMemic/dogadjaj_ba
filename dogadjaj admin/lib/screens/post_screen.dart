@@ -151,17 +151,28 @@ void _openAddEventScreen(BuildContext context) {
   }
 
 
-  void _openEditEventScreen(BuildContext context, Post event) async {
-    final result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => EditPostScreen(event: event),
+void _openEditEventScreen(BuildContext context, Post event) async {
+  final result = await Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => EditPostScreen(event: event),
+    ),
+  );
+
+  if (result == true) {
+     loadPosts(); // 
+    setState(() {});
+
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Post uspješno ažuriran!"),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 2), 
       ),
     );
-
-    if (result == true) {
-      setState(() {});
-    }
   }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

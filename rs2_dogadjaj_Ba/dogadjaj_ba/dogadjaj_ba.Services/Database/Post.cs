@@ -12,7 +12,7 @@ namespace dogadjaj_ba.Services.Database
         public string title { get; set; } = null!;
         public string content { get; set; } = null!;
         public DateTime PublishDate { get; set; }
-        public int eventId { get; set; }
-        public virtual Event Event { get; set; }
+        public int eventId { get; set; } = 1;
+        public virtual Event? Event { get; set; }
     }
 }

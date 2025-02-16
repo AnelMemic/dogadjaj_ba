@@ -317,7 +317,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5548),
+                            SendOnDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6875),
                             UserId = 1
                         },
                         new
@@ -326,7 +326,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5582),
+                            SendOnDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6904),
                             UserId = 2
                         },
                         new
@@ -335,7 +335,7 @@ namespace dogadjaj_ba.Services.Migrations
                             Content = "Novi događaj u Mostaru, pogledajte naše događaje i kupite kartu!",
                             Deleted = false,
                             Read = false,
-                            SendOnDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5584),
+                            SendOnDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6906),
                             UserId = 3
                         });
                 });
@@ -373,21 +373,21 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             PaymentId = 1,
-                            PaymentDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5593),
+                            PaymentDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6913),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         },
                         new
                         {
                             PaymentId = 2,
-                            PaymentDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5596),
+                            PaymentDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6916),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         },
                         new
                         {
                             PaymentId = 3,
-                            PaymentDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5598),
+                            PaymentDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6918),
                             PaymentMethod = "card",
                             PaymentStatus = "true"
                         });
@@ -425,7 +425,7 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             Id = 1,
-                            PublishDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5629),
+                            PublishDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6946),
                             content = "Pridružite nam se na koncertu u Mostaru, zabava je zagarantovana!",
                             eventId = 1,
                             title = "Koncert u Mostaru!"
@@ -433,7 +433,7 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             Id = 2,
-                            PublishDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5631),
+                            PublishDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6948),
                             content = "Novi događaj u Sarajevu, pogledajte naše događaje i kupite kartu!",
                             eventId = 1,
                             title = "Novi događaj!"
@@ -441,7 +441,7 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             Id = 3,
-                            PublishDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5633),
+                            PublishDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6949),
                             content = "Dođite na filmski festival u Banjoj Luci i uživajte u najnovijim filmovima!",
                             eventId = 1,
                             title = "Filmski Festival"
@@ -449,7 +449,7 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             Id = 4,
-                            PublishDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5634),
+                            PublishDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6950),
                             content = "Pozivamo vas na umjetničku izložbu u Tuzli, inspirativna djela očekuju vas!",
                             eventId = 1,
                             title = "Umjetnička Izložba"
@@ -457,7 +457,7 @@ namespace dogadjaj_ba.Services.Migrations
                         new
                         {
                             Id = 6,
-                            PublishDate = new DateTime(2025, 2, 13, 19, 44, 33, 692, DateTimeKind.Local).AddTicks(5635),
+                            PublishDate = new DateTime(2025, 2, 16, 15, 22, 31, 195, DateTimeKind.Local).AddTicks(6952),
                             content = "Pripremite se za tehnološku konferenciju u Mostaru, najnoviji trendovi i inovacije.",
                             eventId = 1,
                             title = "Tehnološka Konferencija"
